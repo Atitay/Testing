@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Testing.Models
+{
+    public class Topic
+    {
+        public Guid TopicId { get; set; }
+        public Guid ParentId { get; set; }
+        public Guid ChildId { get; set; }
+        public string TopicName { get; set; }
+    }
+}
