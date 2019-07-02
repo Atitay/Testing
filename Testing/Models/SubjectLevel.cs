@@ -6,8 +6,8 @@ namespace Testing.Models
 {
     public enum SubjectLevel
     {
-        Easy = 1,
-        Medium = 2,
-        Hard = 3
+        Beginner = 100,
+        Intermediate = 200,
+        Expert = 300
     }
 }

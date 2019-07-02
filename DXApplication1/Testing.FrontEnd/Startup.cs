@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using Testing.DAL;
 
 namespace Testing_FrontEnd
 {
@@ -22,6 +24,11 @@ namespace Testing_FrontEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //sql server
+
+            services.AddDbContext<TestingDbContext>();
+
+
             // Add framework services.
             services
                 .AddMvc()
@@ -48,9 +55,11 @@ namespace Testing_FrontEnd
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                  name: "areas",
+                  template: "{area=Admin}/{controller=Question}/{action=Index}/{id?}"
+                );
             });
+
         }
     }
 }

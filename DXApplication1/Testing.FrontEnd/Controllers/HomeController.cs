@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Testing_FrontEnd.Controllers
 {
+    [Area("Admin")]
     public class HomeController : Controller
     {
         public IActionResult Index()

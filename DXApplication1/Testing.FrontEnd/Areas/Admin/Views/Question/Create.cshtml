@@ -1,0 +1,57 @@
+﻿@model Testing.Models.Question
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form method="post" asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h2 class="text-info text-center">New Question</h2>
+    <br /><br />
+
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+                       
+            <div style="background-color:lavenderblush;">
+                <div class="form-group rounded">
+                    <div class="col">
+                        <label asp-for="QuestionString"></label>
+                    </div>
+                    <div class="col">
+                        @(Html.DevExtreme().TextAreaFor(m => m.QuestionString).Width(250).Height(80))
+                    </div>
+                    <span asp-validation-for="QuestionString" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="col">
+                        <label asp-for="QuestionType"></label>
+                    </div>
+                    <div class="col">
+                        @(Html.DevExtreme().TextBoxFor(m => m.QuestionType).Width(250).Height(30))
+                    </div>
+                    <span asp-validation-for="QuestionType" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="col ">
+                        <label asp-for="Topic"></label>
+                    </div>
+                    <div class="col ">
+                        @(Html.DevExtreme().TextBoxFor(m => m.Topic).Mask("000-000-0000").Width(200).Height(30))
+                    </div>
+                    <span asp-validation-for="Topic" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+        </div>
+     
+            <div class="form-group text-center">
+                <a asp-action="Index" class="btn btn-outline-success">Back</a>
+                <input type="submit" class="btn btn-outline-info" value="Create" />
+            </div>
+            <div class="col-sm-1"></div>
+    
+    </div>
+</form>
