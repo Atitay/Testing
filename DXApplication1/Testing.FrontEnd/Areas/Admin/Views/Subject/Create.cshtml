@@ -1,14 +1,12 @@
-﻿@using Testing.FrontEnd.Extension
+﻿@model Testing.Models.Subject
 @using Testing.Models
-@model Testing.FrontEnd.Models.ViewModel.QuestionViewModel
-
 @{
     ViewData["Title"] = "Create";
 }
 
 <form method="post" asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <h2 class="text-info text-center">New Question</h2>
+    <h2 class="text-info text-center">New Subject</h2>
     <br /><br />
 
     <div class="row">
@@ -19,33 +17,23 @@
                 <div class="form-group rounded">
                     <br />
                     <div class="col">
-                        <label asp-for="Questions.QuestionString"></label>
+                        <label asp-for="SubjectName"></label>
                     </div>
                     <div class="col">
-                        @(Html.DevExtreme().TextAreaFor(m => m.Questions.QuestionString).Width(350).Height(100))
+                        @(Html.DevExtreme().TextAreaFor(m => m.SubjectName).Width(250).Height(30))
                     </div>
-                    <span asp-validation-for="Questions.QuestionString" class="text-danger"></span>
+                    <span asp-validation-for="SubjectName" class="text-danger"></span>
                 </div>
-
-                <div class="form-group">
+                <div class="form-group rounded">
                     <div class="col">
-                        <label asp-for="Questions.QuestionType"></label>
+                        <label asp-for="SubjectLevel"></label>
                     </div>
                     <div class="col">
-                        @Html.DropDownListFor(m => m.Questions.QuestionType, new SelectList(Enum.GetValues(typeof(QuestionType))), "Select Question Type")
+                        @Html.DropDownListFor(m => m.SubjectLevel, new SelectList(Enum.GetValues(typeof(SubjectLevel))), "Select Subject Level")
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col ">
-                        <label asp-for="Questions.Topic"></label>
-                    </div>
-                    <div class="col ">
-                        <select asp-for="@Model.Questions.TopicId" asp-items="Model.Topics.ToSelectListItem(Model.Questions.TopicId)" class="form-control"></select>
-                    </div>
+                    <span asp-validation-for="SubjectLevel" class="text-danger"></span>
                 </div>
                 <br />
-
             </div>
             <br />
 
@@ -57,9 +45,8 @@
                     <input type="submit" class="btn btn-outline-info" value="Create" />
                 </div>
             </div>
-
+            <div class="col-sm-2"></div>
         </div>
-        <div class="col-sm-2"></div>
     </div>
 </form>
 

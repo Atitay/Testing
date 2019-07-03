@@ -12,6 +12,8 @@ namespace Testing.Models
 
         public Guid ParentId { get; set; }
         public Guid ChildId { get; set; }
+
+        [Display(Name =("Topic Name"))]
         public string TopicName { get; set; }
     }
 }

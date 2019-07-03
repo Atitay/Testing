@@ -3,12 +3,13 @@
 @model Testing.FrontEnd.Models.ViewModel.QuestionViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Delete";
 }
 
-<form method="post" asp-action="Create">
+<form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <h2 class="text-info text-center">New Question</h2>
+    <h2 class="text-info text-center">Delete Question</h2>
+    <input hidden asp-for="Questions.QuestionId" />
     <br /><br />
 
     <div class="row">
@@ -16,15 +17,15 @@
         <div class="col-sm-8">
 
             <div style="background-color:lavenderblush;">
+
                 <div class="form-group rounded">
                     <br />
                     <div class="col">
                         <label asp-for="Questions.QuestionString"></label>
                     </div>
                     <div class="col">
-                        @(Html.DevExtreme().TextAreaFor(m => m.Questions.QuestionString).Width(350).Height(100))
-                    </div>
-                    <span asp-validation-for="Questions.QuestionString" class="text-danger"></span>
+                        @(Html.DevExtreme().TextAreaFor(m => m.Questions.QuestionString).Width(350).Height(100).ReadOnly(true))
+                    </div>                  
                 </div>
 
                 <div class="form-group">
@@ -32,7 +33,7 @@
                         <label asp-for="Questions.QuestionType"></label>
                     </div>
                     <div class="col">
-                        @Html.DropDownListFor(m => m.Questions.QuestionType, new SelectList(Enum.GetValues(typeof(QuestionType))), "Select Question Type")
+                        @(Html.DevExtreme().TextAreaFor(m=>m.Questions.QuestionType).Width(250).Height(30).ReadOnly(true))
                     </div>
                 </div>
 
@@ -41,7 +42,7 @@
                         <label asp-for="Questions.Topic"></label>
                     </div>
                     <div class="col ">
-                        <select asp-for="@Model.Questions.TopicId" asp-items="Model.Topics.ToSelectListItem(Model.Questions.TopicId)" class="form-control"></select>
+                        @(Html.DevExtreme().TextAreaFor(m => m.Questions.Topic).Width(250).Height(30).ReadOnly(true))
                     </div>
                 </div>
                 <br />
@@ -54,7 +55,7 @@
                     <a asp-action="Index" class="btn btn-outline-success">Back</a>
                 </div>
                 <div class="text-right col">
-                    <input type="submit" class="btn btn-outline-info" value="Create" />
+                    <input type="submit" class="btn btn-outline-danger" value="Delete" />
                 </div>
             </div>
 

@@ -26,7 +26,7 @@
                         @Html.DisplayNameFor(m => m.QuestionType)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.Topic)
+                        @Html.DisplayNameFor(m => m.Topic.TopicName)
                     </th>
 
                 </tr>
@@ -41,9 +41,9 @@
                     @Html.DisplayFor(m => question.QuestionType)
                 </td>
                 <td>
-                    @Html.DisplayFor(m => question.Topic)
+                    @Html.DisplayFor(m => question.Topic.TopicName)
                 </td>
-
+                <partial name="_ButtonPartial" model="question.QuestionId"/>
             </tr>
                 }
             </table>

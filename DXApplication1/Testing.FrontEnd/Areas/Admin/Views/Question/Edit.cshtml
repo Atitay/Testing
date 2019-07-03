@@ -1,0 +1,67 @@
+﻿@using Testing.FrontEnd.Extension
+@using Testing.Models
+@model Testing.FrontEnd.Models.ViewModel.QuestionViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+    <form method="post" enctype="multipart/form-data" >
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <h2 class="text-info text-center">Edit Question</h2> 
+        <input hidden asp-for="Questions.QuestionId" />
+        <br /><br />
+
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+
+                <div style="background-color:lavenderblush;">
+
+                    <div class="form-group rounded">
+                        <br />
+                        <div class="col">
+                            <label asp-for="Questions.QuestionString"></label>
+                        </div>
+                        <div class="col">
+                            @(Html.DevExtreme().TextAreaFor(m => m.Questions.QuestionString).Width(350).Height(100))
+                        </div>
+                        <span asp-validation-for="Questions.QuestionString" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col">
+                            <label asp-for="Questions.QuestionType"></label>
+                        </div>
+                        <div class="col">
+                            @Html.DropDownListFor(m => m.Questions.QuestionType, new SelectList(Enum.GetValues(typeof(QuestionType))), "Select Question Type")
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col ">
+                            <label asp-for="Questions.Topic"></label>
+                        </div>
+                        <div class="col ">
+                            <select asp-for="@Model.Questions.TopicId" asp-items="Model.Topics.ToSelectListItem(Model.Questions.TopicId)" class="form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+
+                </div>
+                <br />
+
+                <div class=" form row col" style="margin-left:0px; margin-right:0px">
+                    <div class="text-left col">
+                        <a asp-action="Index" class="btn btn-outline-success">Back</a>
+                    </div>
+                    <div class="text-right col">
+                        <input type="submit" class="btn btn-outline-info" value="Update" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </form>
+
