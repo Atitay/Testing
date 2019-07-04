@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Testing.DAL;
 using Testing.FrontEnd.Models.ViewModel;
 using Testing.Models;
@@ -18,6 +21,56 @@ namespace Testing.FrontEnd.Controllers
 
         [BindProperty]
         public QuestionViewModel QuestionVM { get; set; }
+
+
+        [HttpGet]
+        public object Get(DataSourceLoadOptions loadOptions)
+        {
+            return DataSourceLoader.Load(_db.Questions, loadOptions);
+        }
+
+
+        [HttpPost]
+        public IActionResult Post(string values)
+        {
+            var newQuestion = new Question();
+            newQuestion.QuestionId = new Guid();
+
+            JsonConvert.PopulateObject(values, newQuestion);
+
+            _db.Questions.Add(newQuestion);
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult Put(Guid key, string values)
+        {
+            var employee = _db.Questions.First(a => a.QuestionId == key);
+            JsonConvert.PopulateObject(values, employee);
+
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public void Delete(Guid key)
+        {
+            var employee = _db.Questions.First(a => a.QuestionId == key);
+            _db.Questions.Remove(employee);
+            _db.SaveChanges();
+        }
+
+
+        public IActionResult GetQuestions()
+        {
+            return View();
+        }
+
+
+
         public QuestionController(TestingDbContext db)
         {
             _db = db;
@@ -32,7 +85,7 @@ namespace Testing.FrontEnd.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var lstQuestion = await _db.Questions.Include(t => t.Topic).Include(t => t.Choices).ToListAsync();
+            var lstQuestion = await _db.Questions.Include(t => t.Topic).ToListAsync();
 
             return View(lstQuestion);
         }
@@ -47,21 +100,15 @@ namespace Testing.FrontEnd.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePost()
         {
-            if (ModelState.IsValid)
-            {
-                _db.Questions.Add(QuestionVM.Questions);
 
-                QuestionVM.Choices.QuestionId = QuestionVM.Questions.QuestionId;
-                _db.Choices.Add(QuestionVM.Choices);
-
-                //List<Choice> addListChoice = _db.Choices.Where(c => c.QuestionId == QuestionVM.Questions.QuestionId).ToList();
-
-              
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
+            _db.Questions.Add(QuestionVM.Questions);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+ //QuestionVM.Choices.QuestionId = QuestionVM.Questions.QuestionId;
+            //_db.Choices.Add(QuestionVM.Choices);
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
@@ -73,10 +120,7 @@ namespace Testing.FrontEnd.Controllers
 
             QuestionVM.Questions = await _db.Questions.Include(m => m.Topic).SingleOrDefaultAsync(m => m.QuestionId == id);
             QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
-            //var choiceList = (IEnumerable<Choice>)(from c in _db.Choices
-            //                                       where c.QuestionId ==id select c).ToList();
-
-            //QuestionVM.Choices = choiceList.ToList();
+           
 
             if (QuestionVM.Questions == null)
             {
@@ -95,6 +139,7 @@ namespace Testing.FrontEnd.Controllers
             {
 
                 var questionFromDb = _db.Questions.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
+                var choiceFromDb = _db.Choices.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
 
                 questionFromDb.QuestionString = QuestionVM.Questions.QuestionString;
                 questionFromDb.Hint = QuestionVM.Questions.Hint;
@@ -102,7 +147,7 @@ namespace Testing.FrontEnd.Controllers
                 questionFromDb.QuestionType = QuestionVM.Questions.QuestionType;
                 questionFromDb.QuestionLevel = QuestionVM.Questions.QuestionLevel;
                 questionFromDb.TopicId = QuestionVM.Questions.TopicId;
-                questionFromDb.Choices = QuestionVM.Questions.Choices;
+                choiceFromDb.ChoiceString = QuestionVM.Choices.ChoiceString;
 
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -119,7 +164,7 @@ namespace Testing.FrontEnd.Controllers
             }
 
             QuestionVM.Questions = await _db.Questions.FindAsync(id);
-
+            QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
 
             if (QuestionVM.Questions == null)
             {
@@ -128,20 +173,20 @@ namespace Testing.FrontEnd.Controllers
             return View(QuestionVM);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
 
-        //POST Delete Action  Method
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var lstQuestion = await _db.Questions.FindAsync(id);
+        ////POST Delete Action  Method
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    var lstQuestion = await _db.Questions.FindAsync(id);
 
-            _db.Questions.Remove(lstQuestion);
+        //    _db.Questions.Remove(lstQuestion);
 
-            await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+        //    await _db.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
 
-        }
+        //}
 
 
     }

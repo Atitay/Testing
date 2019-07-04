@@ -66,52 +66,12 @@
 
                 <div class="form-group">
                     <div class="col ">
-                        <label asp-for="Topics"></label>
+                        <label asp-for="Questions.Topic"></label>
                     </div>
                     <div class="col ">
-                        <select asp-for="@Model.Questions.TopicId" asp-items="Model.Topics.ToSelectListItem(Model.Questions.TopicId)" class="form-control"></select>
+                  @*      <select asp-for="@Model.Questions.TopicId" asp-items="Model.Topics.ToSelectListItem()" class="form-control"></select>*@
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col">
-                        <label asp-for="Choices.ChoiceString"></label>
-                    </div>
-                    <div class="col row">
-                        <div class="col">
-                            @(Html.DevExtreme().TextBoxFor(m => m.Choices.ChoiceString).Width(350).Height(30).ShowClearButton(true))
-                        </div>
-                        <div class="col">
-                            @(Html.DevExtreme().CheckBoxFor(m => m.Choices.isCorrect))
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col">
-                        <label asp-for="Choices.ChoiceString"></label>
-                    </div>
-                    <div class="col row">
-                        <div class="col">
-                            @(Html.DevExtreme().TextBoxFor(m => m.Choices.ChoiceString).Width(350).Height(30).ShowClearButton(true))
-                        </div>
-                        <div class="col">
-                            @(Html.DevExtreme().CheckBoxFor(m => m.Choices.isCorrect))
-                        </div>
-                    </div>
-                </div>
-                @*<div class="form-group">
-                    <div class="col">
-                        <label asp-for="Choices.FirstOrDefault().ChoiceString"></label>
-                    </div>
-                    <div class="col row">
-                        <div class="col">
-                            @(Html.DevExtreme().TextBoxFor(m => m.Choices.FirstOrDefault().ChoiceString).Width(350).Height(30).ShowClearButton(true))
-                        </div>
-                        <div class="col">
-                            @(Html.DevExtreme().CheckBoxFor(m => m.Choices.FirstOrDefault().isCorrect))
-                        </div>
-                    </div>
-                </div>*@
 
                 <br />
 

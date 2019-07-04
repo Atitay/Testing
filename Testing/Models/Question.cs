@@ -9,16 +9,22 @@ namespace Testing.Models
     public class Question
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid QuestionId { get; set; }
 
-        [Display(Name = ("Question"))]
 
+        public Question()
+        {
+            Choices = new List<Choice>();
+        }
+
+        [Display(Name = ("Question"))]
         public string QuestionString { get; set; }
         public string Hint { get; set; }
         public int Point { get; set; }
 
 
-        public Guid TopicId { get; set; }
+        public Guid? TopicId { get; set; }
 
         [ForeignKey("TopicId")]
         public virtual Topic Topic { get; set; }

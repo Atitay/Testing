@@ -29,7 +29,14 @@
                         <label asp-for="SubjectLevel"></label>
                     </div>
                     <div class="col">
-                        @Html.DropDownListFor(m => m.SubjectLevel, new SelectList(Enum.GetValues(typeof(SubjectLevel))), "Select Subject Level")
+                        @*@Html.DropDownListFor(m => m.SubjectLevel, new SelectList(Enum.GetValues(typeof(SubjectLevel))), "Select Subject Level")*@
+                        @(Html.DevExtreme().SelectBoxFor(m => m.SubjectLevel)
+    .DataSource(Html.GetEnumSelectList<SubjectLevel>()
+        .Select(i => new { Value = int.Parse(i.Value), Text = i.Text })
+    )
+    .ValueExpr("Value")
+    .DisplayExpr("Text").Width(250).Height(30)
+                        )
                     </div>
                     <span asp-validation-for="SubjectLevel" class="text-danger"></span>
                 </div>

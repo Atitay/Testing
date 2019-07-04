@@ -1,0 +1,39 @@
+﻿@(Html.DevExtreme().DataGrid()
+    .ID("gridContainer")
+     .Editing(editing =>
+         {
+        editing.Mode(GridEditMode.Form);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+        editing.AllowUpdating(true);
+    })
+     .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+        .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Columns(columns =>
+        {
+            columns.Add().DataField("QuestionString");
+            columns.Add().DataField("Point").FormItem(
+                i=> i.Editor(e=>e.Slider()));
+            columns.Add().DataField("TopicName");
+    })
+        .DataSource(d => d.Mvc()
+        .Controller("Question")
+        .LoadAction("Get")
+        .UpdateAction("Put")
+        .InsertAction("Post")
+        .DeleteAction("Delete")
+        .Area("Admin")
+        .Key("QuestionId")
+
+    )
+
+    .ShowBorders(true)
+)

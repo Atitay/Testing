@@ -65,42 +65,18 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="col ">
                         <label asp-for="Questions.Topic"></label>
                     </div>
                     <div class="col ">
                         <select asp-for="@Model.Questions.TopicId" asp-items="Model.Topics.ToSelectListItem(Model.Questions.TopicId)" class="form-control"></select>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col">
-                        <label asp-for="Choices.ChoiceString"></label>
+                    <div class="text-right">
                     </div>
-                    <div class="col row">
-                        <div class="col">
-                            @(Html.DevExtreme().TextBoxFor(m => m.Choices.ChoiceString).Width(350).Height(30).ShowClearButton(true))
-                        </div>
-                        <div class="col">
-                            @(Html.DevExtreme().CheckBoxFor(m => m.Choices.isCorrect))
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col">
-                        <label asp-for="Choices.ChoiceString"></label>
-                    </div>
-                    <div class="col row">
-                        <div class="col">
-                            @(Html.DevExtreme().TextBoxFor(m => m.Choices.ChoiceString).Width(350).Height(30).ShowClearButton(true))
-                        </div>
-                        <div class="col">
-                            @(Html.DevExtreme().CheckBoxFor(m => m.Choices.isCorrect))
-                        </div>
-                    </div>
-                </div>
-
+                </div>*@
+                <br />
+                <a asp-action="AddQuestion" class="btn btn-outline-info"> <i class="fas fa-plus"></i> &nbsp; Add Question</a>
                 <br />
 
             </div>
