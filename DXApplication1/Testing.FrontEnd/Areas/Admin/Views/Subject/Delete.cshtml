@@ -1,7 +1,63 @@
-﻿
+﻿@using Testing.Models
+@model Testing.Models.Subject
+
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h2 class="text-info text-center">Delete Subject</h2>
+    <input type="hidden" asp-for="SubjectId" />
+    <br /><br />
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            <div style="background-color:lavenderblush;">
+
+                <div class="form-group rounded">
+                    <br />
+                    <div class="col">
+                        <label asp-for="SubjectName"></label>
+                    </div>
+                    <div class="col">
+                        @(Html.DevExtreme().TextAreaFor(m => m.SubjectName).Width(350).Height(100).ReadOnly(true))
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col">
+                        <label asp-for="SubjectLevel"></label>
+                    </div>
+                    <div class="col">
+                        @{
+                            var enumType = Model.SubjectLevel.GetType();
+                        }
+
+                        @(Html.DevExtreme()
+                             .SelectBoxFor(m => m.SubjectLevel)
+                             .DataSource(Enum.GetNames(enumType))
+                             .Value(Enum.GetName(enumType, Model.SubjectLevel)).ReadOnly(true)
+                        )
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+
+            <div class=" form row col" style="margin-left:0px; margin-right:0px">
+                <div class="text-left col">
+                    <a asp-action="Index" class="btn btn-outline-success">Back</a>
+                </div>
+                <div class="text-right col">
+                    <input type="submit" class="btn btn-outline-danger" value="Delete" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</form>
 

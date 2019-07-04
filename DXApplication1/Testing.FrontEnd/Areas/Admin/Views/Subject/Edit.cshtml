@@ -1,7 +1,53 @@
-﻿
+﻿@model Testing.Models.Subject
+@using Testing.Models
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<form method="post" asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h2 class="text-info text-center">Edit Subject</h2>
+    <input type="hidden" asp-for="SubjectId" />
+    <br /><br />
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            <div style="background-color:lavenderblush;">
+                <div class="form-group rounded">
+                    <br />
+                    <div class="col">
+                        <label asp-for="SubjectName"></label>
+                    </div>
+                    <div class="col">
+                        @(Html.DevExtreme().TextAreaFor(m => m.SubjectName).Width(250).Height(30))
+                    </div>
+                    <span asp-validation-for="SubjectName" class="text-danger"></span>
+                </div>
+                <div class="form-group rounded">
+                    <div class="col">
+                        <label asp-for="SubjectLevel"></label>
+                    </div>
+                    <div class="col">
+                        @Html.DropDownListFor(m => m.SubjectLevel, new SelectList(Enum.GetValues(typeof(SubjectLevel))), "Select Subject Level")
+                    </div>
+                    <span asp-validation-for="SubjectLevel" class="text-danger"></span>
+                </div>
+                <br />
+            </div>
+            <br />
+
+            <div class=" form row col" style="margin-left:0px; margin-right:0px">
+                <div class="text-left col">
+                    <a asp-action="Index" class="btn btn-outline-success">Back</a>
+                </div>
+                <div class="text-right col">
+                    <input type="submit" class="btn btn-outline-info" asp-route-id="@Model.SubjectId" value="Update" />
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</form>
 

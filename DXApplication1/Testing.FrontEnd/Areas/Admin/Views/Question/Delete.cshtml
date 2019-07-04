@@ -9,7 +9,7 @@
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <h2 class="text-info text-center">Delete Question</h2>
-    <input hidden asp-for="Questions.QuestionId" />
+    <input type="hidden" asp-for="Questions.QuestionId" />
     <br /><br />
 
     <div class="row">
@@ -25,7 +25,26 @@
                     </div>
                     <div class="col">
                         @(Html.DevExtreme().TextAreaFor(m => m.Questions.QuestionString).Width(350).Height(100).ReadOnly(true))
-                    </div>                  
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col">
+                        <label asp-for="Questions.Hint"></label>
+                    </div>
+                    <div class="col">
+                        @(Html.DevExtreme().TextBoxFor(m => m.Questions.Hint).Width(350).Height(30).ShowClearButton(true).ReadOnly(true))
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col">
+                        <label asp-for="Questions.Point"></label>
+                    </div>
+                    <div class="col">
+                        @(Html.DevExtreme().NumberBoxFor(m => m.Questions.Point).Width(350).Height(30).ShowSpinButtons(true).ReadOnly(true))
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -33,16 +52,41 @@
                         <label asp-for="Questions.QuestionType"></label>
                     </div>
                     <div class="col">
-                        @(Html.DevExtreme().TextAreaFor(m=>m.Questions.QuestionType).Width(250).Height(30).ReadOnly(true))
+                        @{
+                            var enumType = Model.Questions.QuestionType.GetType();
+                        }
+
+                        @(Html.DevExtreme()
+                             .SelectBoxFor(m => m.Questions.QuestionType)
+                             .DataSource(Enum.GetNames(enumType))
+                             .Value(Enum.GetName(enumType, Model.Questions.QuestionType)).Width(250).Height(30).ReadOnly(true)
+                        )
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col">
+                        <label asp-for="Questions.QuestionLevel"></label>
+                    </div>
+                    <div class="col">
+                        @{
+                            var enumLevel = Model.Questions.QuestionLevel.GetType();
+                        }
+
+                        @(Html.DevExtreme()
+                             .SelectBoxFor(m => m.Questions.QuestionLevel)
+                             .DataSource(Enum.GetNames(enumLevel))
+                             .Value(Enum.GetName(enumLevel, Model.Questions.QuestionLevel)).Width(250).Height(30).ReadOnly(true)
+                        )
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col ">
-                        <label asp-for="Questions.Topic"></label>
+                        <label asp-for="Topics"></label>
                     </div>
                     <div class="col ">
-                        @(Html.DevExtreme().TextAreaFor(m => m.Questions.Topic).Width(250).Height(30).ReadOnly(true))
+                        @(Html.DevExtreme().TextAreaFor(m => m.Questions.Topic.TopicName).Width(250).Height(30).ReadOnly(true))
                     </div>
                 </div>
                 <br />

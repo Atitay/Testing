@@ -12,8 +12,11 @@ namespace Testing.Models
         public Guid QuestionId { get; set; }
 
         [Display(Name = ("Question"))]
+
         public string QuestionString { get; set; }
         public string Hint { get; set; }
+        public int Point { get; set; }
+
 
         public Guid TopicId { get; set; }
 
@@ -22,5 +25,10 @@ namespace Testing.Models
 
         [Display(Name = ("Question Type"))]
         public QuestionType QuestionType { get; set; }
+
+        [Display(Name = ("Question Level"))]
+        public QuestionLevel QuestionLevel { get; set; }
+
+        public virtual ICollection<Choice> Choices { get; set; }
     }
 }

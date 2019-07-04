@@ -10,5 +10,7 @@ namespace Testing.FrontEnd.Models.ViewModel
     {
         public Question Questions { get; set; }
         public IEnumerable<Topic> Topics { get; set; }
+        // public List<Choice> Choices { get; set; }
+        public Choice Choices { get; set; }
     }
 }

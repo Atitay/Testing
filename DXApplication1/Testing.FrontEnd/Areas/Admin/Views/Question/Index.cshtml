@@ -26,6 +26,9 @@
                         @Html.DisplayNameFor(m => m.QuestionType)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(m => m.QuestionLevel)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(m => m.Topic.TopicName)
                     </th>
 
@@ -33,18 +36,21 @@
 
                 @foreach (var question in Model)
                 {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => question.QuestionString)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => question.QuestionType)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => question.Topic.TopicName)
-                </td>
-                <partial name="_ButtonPartial" model="question.QuestionId"/>
-            </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => question.QuestionString)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => question.QuestionType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => question.QuestionLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => question.Topic.TopicName)
+                        </td>
+                        <partial name="_ButtonPartial" model="question.QuestionId" />
+                    </tr>
                 }
             </table>
         </div>

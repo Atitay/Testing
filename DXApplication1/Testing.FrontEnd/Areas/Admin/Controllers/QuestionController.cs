@@ -24,14 +24,15 @@ namespace Testing.FrontEnd.Controllers
 
             QuestionVM = new QuestionViewModel()
             {
-                Topics = _db.Topics.ToList(),             
+                Topics = _db.Topics.ToList(),
+                //Choices = new List<Testing.Models.Choice>(),
                 Questions = new Testing.Models.Question()
             };
         }
 
         public async Task<IActionResult> Index()
         {
-            var lstQuestion = await _db.Questions.Include(t => t.Topic).ToListAsync();
+            var lstQuestion = await _db.Questions.Include(t => t.Topic).Include(t => t.Choices).ToListAsync();
 
             return View(lstQuestion);
         }
@@ -47,8 +48,15 @@ namespace Testing.FrontEnd.Controllers
         public async Task<IActionResult> CreatePost()
         {
             if (ModelState.IsValid)
-            {               
+            {
                 _db.Questions.Add(QuestionVM.Questions);
+
+                QuestionVM.Choices.QuestionId = QuestionVM.Questions.QuestionId;
+                _db.Choices.Add(QuestionVM.Choices);
+
+                //List<Choice> addListChoice = _db.Choices.Where(c => c.QuestionId == QuestionVM.Questions.QuestionId).ToList();
+
+              
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -63,7 +71,12 @@ namespace Testing.FrontEnd.Controllers
                 return NotFound();
             }
 
-            QuestionVM.Questions = await _db.Questions.FindAsync(id);
+            QuestionVM.Questions = await _db.Questions.Include(m => m.Topic).SingleOrDefaultAsync(m => m.QuestionId == id);
+            QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
+            //var choiceList = (IEnumerable<Choice>)(from c in _db.Choices
+            //                                       where c.QuestionId ==id select c).ToList();
+
+            //QuestionVM.Choices = choiceList.ToList();
 
             if (QuestionVM.Questions == null)
             {
@@ -80,12 +93,16 @@ namespace Testing.FrontEnd.Controllers
         {
             if (ModelState.IsValid)
             {
-                var questionFromDb = _db.Questions.Where(m => m.QuestionId ==QuestionVM.Questions.QuestionId).FirstOrDefault();
-                
-                questionFromDb.QuestionString = QuestionVM.Questions.QuestionString;
-                questionFromDb.QuestionType = QuestionVM.Questions.QuestionType;
-                questionFromDb.Topic = QuestionVM.Questions.Topic;
 
+                var questionFromDb = _db.Questions.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
+
+                questionFromDb.QuestionString = QuestionVM.Questions.QuestionString;
+                questionFromDb.Hint = QuestionVM.Questions.Hint;
+                questionFromDb.Point = QuestionVM.Questions.Point;
+                questionFromDb.QuestionType = QuestionVM.Questions.QuestionType;
+                questionFromDb.QuestionLevel = QuestionVM.Questions.QuestionLevel;
+                questionFromDb.TopicId = QuestionVM.Questions.TopicId;
+                questionFromDb.Choices = QuestionVM.Questions.Choices;
 
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -103,7 +120,7 @@ namespace Testing.FrontEnd.Controllers
 
             QuestionVM.Questions = await _db.Questions.FindAsync(id);
 
-        
+
             if (QuestionVM.Questions == null)
             {
                 return NotFound();

@@ -11,12 +11,12 @@ namespace Testing.Models
         [Key]
         public Guid ChoiceId { get; set; }  
         
+        [Display(Name = "Choice")]
         public string ChoiceString { get; set; }
         public bool isCorrect { get; set; }
 
         public Guid QuestionId { get; set; }
         [ForeignKey("QuestionId")]
-
         public virtual Question Question { get; set; }
     }
 }
