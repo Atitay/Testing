@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Testing.DAL;
 using Testing.Models;
 
@@ -16,99 +19,146 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public object Get(DataSourceLoadOptions loadOptions)
         {
-            var lstTopic = _db.Topics.ToList();
-            return View(lstTopic);
+            return DataSourceLoader.Load(_db.Topics, loadOptions);
         }
 
-        public IActionResult Create()
+        [HttpPost]
+        public IActionResult Post(string values)
         {
+            var newTopic = new Topic();
+            newTopic.TopicId = new Guid();
 
+            JsonConvert.PopulateObject(values, newTopic);
+
+            _db.Topics.Add(newTopic);
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult Put(Guid key, string values)
+        {
+            var _topic = _db.Topics.First(a => a.TopicId == key);
+
+            JsonConvert.PopulateObject(values, _topic);
+
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public void Delete(Guid key)
+        {
+            var _topic = _db.Topics.First(a => a.TopicId == key);
+
+            _db.Topics.Remove(_topic);
+            _db.SaveChanges();
+        }
+
+
+        public IActionResult GetTopics()
+        {
             return View();
         }
+        //public IActionResult Index()
+        //{
+        //    var lstTopic = _db.Topics.ToList();
+        //    return View(lstTopic);
+        //}
 
-        [HttpPost, ActionName("Create")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePost(Topic _topic)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Add(_topic);
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(_topic);
-        }
+        //public IActionResult Create()
+        //{
+
+        //    return View();
+        //}
+
+        //[HttpPost, ActionName("Create")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> CreatePost(Topic _topic)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Add(_topic);
+        //        await _db.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(_topic);
+        //}
 
 
-        //GET Edit Action  Method
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        ////GET Edit Action  Method
+        //public async Task<IActionResult> Edit(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var _topic = await _db.Topics.FindAsync(id);
+        //    var _topic = await _db.Topics.FindAsync(id);
 
-            if (_topic == null)
-            {
-                return NotFound();
-            }
+        //    if (_topic == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(_topic);
-        }
+        //    return View(_topic);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
 
-        //POST Edit Action  Method
-        public async Task<IActionResult> Edit(Guid id, Topic _topic)
-        {
-            if (id != _topic.TopicId)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                _db.Update(_topic);
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(_topic);
-        }
+        ////POST Edit Action  Method
+        //public async Task<IActionResult> Edit(Guid id, Topic _topic)
+        //{
+        //    if (id != _topic.TopicId)
+        //    {
+        //        return NotFound();
+        //    }
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Update(_topic);
+        //        await _db.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(_topic);
+        //}
 
-        //GET Delete Action  Method
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        ////GET Delete Action  Method
+        //public async Task<IActionResult> Delete(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var _topic = await _db.Topics.FindAsync(id);
+        //    var _topic = await _db.Topics.FindAsync(id);
 
-            if (_topic == null)
-            {
-                return NotFound();
-            }
+        //    if (_topic == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(_topic);
-        }
+        //    return View(_topic);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
 
-        //POST Delete Action  Method
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var _topic = await _db.Topics.FindAsync(id);
-            _db.Topics.Remove(_topic);
+        ////POST Delete Action  Method
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    var _topic = await _db.Topics.FindAsync(id);
+        //    _db.Topics.Remove(_topic);
 
-            await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //    await _db.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
     }
 }

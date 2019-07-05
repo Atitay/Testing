@@ -1,0 +1,40 @@
+﻿@using Testing.Models
+@(Html.DevExtreme().DataGrid().DataSource(d => d.Mvc()
+        .Controller("Topic")
+        .LoadAction("Get")
+        .UpdateAction("Put")
+        .InsertAction("Post")
+        .DeleteAction("Delete")
+        .Area("Admin")
+        .Key("TopicId"))
+
+    .ID("gridContainer")
+    
+     .Editing(editing =>
+     {
+         editing.Mode(GridEditMode.Form);
+         editing.AllowAdding(true);
+         editing.AllowDeleting(true);
+         editing.AllowUpdating(true);
+     })
+     .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+        .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Columns(columns =>
+    {
+        columns.Add().DataField("TopicName").Caption("Topic Name");
+
+    })
+
+
+.ShowBorders(true)
+)
+
+

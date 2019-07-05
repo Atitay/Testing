@@ -12,41 +12,30 @@ using Testing.Models;
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ExamController : Controller
+    public class ChoiceController : Controller
     {
         private readonly TestingDbContext _db;
-        public ExamController(TestingDbContext db)
+        public IActionResult Index()
         {
-            _db = db;
+            return View();
         }
 
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Exams, loadOptions);
-        }
-
-        [HttpGet]
-        public object GetSubject(DataSourceLoadOptions loadOptions)
-        {
-            return DataSourceLoader.Load(_db.Subjects, loadOptions);
-        }
-
-        [HttpGet]
-        public object GetChoice(DataSourceLoadOptions loadOptions)
-        {
             return DataSourceLoader.Load(_db.Choices, loadOptions);
         }
+
 
         [HttpPost]
         public IActionResult Post(string values)
         {
-            var newExam = new Exam ();
-            newExam.ExamId = new Guid();
+            var newChoice = new Choice();
+            newChoice.ChoiceId = new Guid();
 
-            JsonConvert.PopulateObject(values, newExam);
+            JsonConvert.PopulateObject(values, newChoice);
 
-            _db.Exams.Add(newExam);
+            _db.Choices.Add(newChoice);
             _db.SaveChanges();
 
             return Ok();
@@ -55,9 +44,9 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var _exam = _db.Exams.First(a => a.ExamId == key);
+            var _Choice = _db.Choices.First(a => a.ChoiceId == key);
 
-            JsonConvert.PopulateObject(values, _exam);
+            JsonConvert.PopulateObject(values, _Choice);
 
             _db.SaveChanges();
 
@@ -67,17 +56,16 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpDelete]
         public void Delete(Guid key)
         {
-            var _exam = _db.Exams.First(a => a.ExamId == key);
+            var _choice = _db.Choices.First(a => a.ChoiceId == key);
 
-            _db.Exams.Remove(_exam);
+            _db.Choices.Remove(_choice);
             _db.SaveChanges();
         }
 
 
-        public IActionResult GetExams()
+        public IActionResult GetChoices()
         {
             return View();
         }
-
     }
 }

@@ -13,10 +13,10 @@ namespace Testing.Models
         public Guid QuestionId { get; set; }
 
 
-        public Question()
-        {
-            Choices = new List<Choice>();
-        }
+        //public Question()
+        //{
+        //    Choices = new List<Choice>();
+        //}
 
         [Display(Name = ("Question"))]
         public string QuestionString { get; set; }
