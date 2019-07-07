@@ -10,8 +10,8 @@ namespace Testing.Models
         [Key]
         public Guid TopicId { get; set; }
 
-        public Guid ParentId { get; set; }
-        public Guid ChildId { get; set; }
+        public Guid? ParentId { get; set; }
+        public Guid? ChildId { get; set; }
 
         [Display(Name =("Topic Name"))]
         public string TopicName { get; set; }

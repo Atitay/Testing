@@ -1,0 +1,58 @@
+﻿@using Testing.Models
+@model  Testing.Models.Question
+ @(Html.DevExtreme().Form<Testing.Models.Question>()
+        .ID("form")
+        
+        .Items(items =>
+        {
+            items.AddSimpleFor(m => m.QuestionString)
+                .ColSpan(2)
+                .Editor(e => e
+                .TextArea().Height(140)
+                      
+            );
+
+            items.AddSimpleFor(m => m.QuestionType)
+            .Editor(e => e.SelectBox()
+            .DataSource(Enum.GetNames(typeof(QuestionType))
+            ));
+
+
+            items.AddSimpleFor(m => m.QuestionLevel)
+            .Editor(e => e.SelectBox()
+            .DataSource(Enum.GetNames(typeof(QuestionLevel))
+            ));
+
+
+            items.AddSimpleFor(m => m.TopicId)
+
+            .Editor(e => e.SelectBox()
+            .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+            .DisplayExpr("TopicName")
+            .ValueExpr("TopicId"));
+
+
+            items.AddSimpleFor(m => m.Point)
+            .Editor(e => e.Slider().Max(100)
+            .Value(10)
+            .Step(1)
+            .Tooltip(t => t.Enabled(true)));
+
+            items.AddSimpleFor(m => m.Hint)
+            .Editor(e => e
+                    .TextBox()
+                    .Disabled(false));
+
+            items.AddSimpleFor(m => m.Choices)
+            .Editor(e => e
+                   .TextBox().Disabled(false));
+                
+  
+        }
+ )
+
+)
+
+
+
+

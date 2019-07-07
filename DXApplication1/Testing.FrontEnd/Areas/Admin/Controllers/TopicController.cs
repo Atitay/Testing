@@ -22,7 +22,7 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
 
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
-        {
+        { 
             return DataSourceLoader.Load(_db.Topics, loadOptions);
         }
 
@@ -30,7 +30,6 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         public IActionResult Post(string values)
         {
             var newTopic = new Topic();
-            newTopic.TopicId = new Guid();
 
             JsonConvert.PopulateObject(values, newTopic);
 

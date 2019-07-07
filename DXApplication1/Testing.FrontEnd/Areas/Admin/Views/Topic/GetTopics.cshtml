@@ -1,40 +1,71 @@
 ﻿@using Testing.Models
-@(Html.DevExtreme().DataGrid().DataSource(d => d.Mvc()
+@(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
         .Controller("Topic")
         .LoadAction("Get")
         .UpdateAction("Put")
         .InsertAction("Post")
         .DeleteAction("Delete")
         .Area("Admin")
-        .Key("TopicId"))
+        .Key("TopicId")
 
-    .ID("gridContainer")
-    
+        )
+
+     .KeyExpr("TopicId")
+     .ParentIdExpr("ParentId")
+
+     //.ShowRowLines(true)
+     .WordWrapEnabled(true)
      .Editing(editing =>
      {
-         editing.Mode(GridEditMode.Form);
+         editing.Mode(GridEditMode.Row);
          editing.AllowAdding(true);
          editing.AllowDeleting(true);
          editing.AllowUpdating(true);
      })
-     .FilterRow(filterRow => filterRow
+
+        .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
+
     .SearchPanel(searchPanel => searchPanel
         .Visible(true)
         .Width(240)
         .Placeholder("Search...")
     )
+
     .HeaderFilter(headerFilter => headerFilter.Visible(true))
+
+
+
     .Columns(columns =>
     {
-        columns.Add().DataField("TopicName").Caption("Topic Name");
+        columns.AddFor(m => m.TopicName).Caption("Topic Name");
+        columns.AddFor(m=>m.ParentId).Caption("Parent Name")
 
+            .Lookup(lookup => lookup
+            .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
+            .DisplayExpr("TopicName")
+            .ValueExpr("TopicId"))
+
+            .FormItem(i => i
+            .Editor(e => e.SelectBox()
+            .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
+            .DisplayExpr("TopicName")
+            .ValueExpr("TopicId"))
+            );
+
+        
     })
 
+    .ShowBorders(true)
+    .OnInitNewRow("treeList_onInitNewRow")
 
-.ShowBorders(true)
 )
 
+<script>
 
+    function treeList_onInitNewRow(e) {
+         e.data.ParentId = null;
+    }
+</script>

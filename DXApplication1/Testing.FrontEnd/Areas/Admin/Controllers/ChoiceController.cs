@@ -26,13 +26,12 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             return DataSourceLoader.Load(_db.Choices, loadOptions);
         }
 
-
         [HttpPost]
         public IActionResult Post(string values)
         {
             var newChoice = new Choice();
             newChoice.ChoiceId = new Guid();
-
+           
             JsonConvert.PopulateObject(values, newChoice);
 
             _db.Choices.Add(newChoice);

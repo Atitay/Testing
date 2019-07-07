@@ -38,13 +38,18 @@ namespace Testing.FrontEnd.Controllers
             return DataSourceLoader.Load(_db.Topics, loadOptions);
         }
 
+        public object GetChoice(DataSourceLoadOptions loadOptions)
+        {
+            return DataSourceLoader.Load(_db.Choices, loadOptions);
+        }
+
 
         [HttpPost]
         public IActionResult Post(string values)
         {
             var newQuestion = new Question();
             newQuestion.QuestionId = new Guid();
-
+            //newQuestion.Choices = new List<Choice>();
             JsonConvert.PopulateObject(values, newQuestion);
          
             _db.Questions.Add(newQuestion);
@@ -79,6 +84,12 @@ namespace Testing.FrontEnd.Controllers
         {
             return View();
         }
+
+        public IActionResult GetQuestionChoice()
+        {
+            return View();
+        }
+
 
 
 

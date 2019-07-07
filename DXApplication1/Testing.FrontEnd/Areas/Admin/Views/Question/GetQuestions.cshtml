@@ -1,87 +1,101 @@
 ﻿@using Testing.Models
-@(Html.DevExtreme().DataGrid().DataSource(d => d.Mvc()
-        .Controller("Question")
-        .LoadAction("Get")
-        .UpdateAction("Put")
-        .InsertAction("Post")
-        .DeleteAction("Delete")
-        .Area("Admin")
-        .Key("QuestionId"))
-
-    .ID("gridContainer")
-     .Editing(editing =>
-     {
-         editing.Mode(GridEditMode.Form);
-         editing.AllowAdding(true);
-         editing.AllowDeleting(true);
-         editing.AllowUpdating(true);
-     })
      .FilterRow(filterRow => filterRow
-        .Visible(true)
-        .ApplyFilter(GridApplyFilterMode.Auto)
-    )
-    .SearchPanel(searchPanel => searchPanel
-        .Visible(true)
-        .Width(240)
-        .Placeholder("Search...")
-    )
+@(Html.DevExtreme().DataGrid<Testing.Models.Question>().DataSource(d => d.Mvc()
+                    .Controller("Question")
+                    .LoadAction("Get")
+                    .UpdateAction("Put")
+                    .InsertAction("Post")
+                    .DeleteAction("Delete")
+                    .Area("Admin")
+                    .Key("QuestionId"))
+
+                 .ID("gridContainer")
+                 .Editing(editing =>
+                 {
+                     editing.Mode(GridEditMode.Form);
+                     editing.AllowAdding(true);
+                     editing.AllowDeleting(true);
+                     editing.AllowUpdating(true);
+                 })
+                 .FilterRow(filterRow => filterRow
+                    .Visible(true)
+                    .ApplyFilter(GridApplyFilterMode.Auto)
+                )
+                .SearchPanel(searchPanel => searchPanel
+                    .Visible(true)
+                    .Width(240)
+                    .Placeholder("Search...")
+                )
+
+                .ShowBorders(true)
+                .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                .Selection(s => s.Mode(SelectionMode.Single))
+                .HoverStateEnabled(true)
+                .Columns(columns =>
+                {
+
+                columns.AddFor(m=>m.QuestionString).Caption("Question")
+                    .CellTemplate(@<text>
+                            <a href="@Url.Action("GetQuestionChoice")/<%= data.QuestionId %>"><%= data.QuestionString %></a>
+                    </text>);
 
 
-    .HeaderFilter(headerFilter => headerFilter.Visible(true))
-    .Columns(columns =>
-    {
-    columns.Add().DataField("QuestionString").Caption("Question");
 
-    columns.Add().DataField("Point").FormItem(i => i.Editor(e => e.Slider().Max(100)
-                .Value(10)
-                .Step(1)
-                .Tooltip(t => t.Enabled(true))));
+            columns.AddFor(m=>m.Point)
+            .FormItem(i => i.Editor(e => e.Slider().Max(100)
+            .Value(10)
+            .Step(1)
+            .Tooltip(t => t.Enabled(true))));
 
-    columns.Add().DataField("TopicId").Caption("Topic Name")
-        .Lookup(lookup => lookup.DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+            columns.AddFor(m=>m.TopicId).Caption("Topic Name")
+            .Lookup(lookup => lookup
+            .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
             .DisplayExpr("TopicName")
             .ValueExpr("TopicId"))
 
-        .FormItem(i => i
+            .FormItem(i => i
             .Editor(e => e.SelectBox()
             .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
             .DisplayExpr("TopicName")
             .ValueExpr("TopicId"))
-     );
+            );
 
-    columns.Add().DataField("QuestionType").Caption("Question Type")
-        .Lookup(lookup => lookup.DataSource(Html.GetEnumSelectList<QuestionType>()
-                    .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                .ValueExpr("Value")
-                .DisplayExpr("Text"))
-        .FormItem(i => i
+            columns.AddFor(m=>m.QuestionType).Caption("Question Type")
+            .Lookup(lookup => lookup
+            .DataSource(Html.GetEnumSelectList<QuestionType>()
+            .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+            .ValueExpr("Value")
+            .DisplayExpr("Text"))
+            .FormItem(i => i
             .Editor(e => e.SelectBox()
-                .ID("QuestionType")
-                .DataSource(Html.GetEnumSelectList<QuestionType>()
-                    .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                .ValueExpr("Value")
-                .DisplayExpr("Text"))
-     );
+            .ID("QuestionType")
+            .DataSource(Html.GetEnumSelectList<QuestionType>()
+            .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+            .ValueExpr("Value")
+            .DisplayExpr("Text"))
+            );
 
-    columns.Add().DataField("QuestionLevel").Caption("Question Level")
-        .Lookup(lookup => lookup.DataSource(Html.GetEnumSelectList<QuestionLevel>()
-                    .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
-                .ValueExpr("Value")
-                .DisplayExpr("Text"))
-        .FormItem(i => i
-            .Editor(e => e.SelectBox()
-                .ID("QuestionLevel")
-                .DataSource(Html.GetEnumSelectList<QuestionLevel>()
-
+            columns.AddFor(m=>m.QuestionLevel).Caption("Question Level")
+            .Lookup(lookup => lookup
+            .DataSource(Html.GetEnumSelectList<QuestionLevel>()
                 .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
-                .ValueExpr("Value")
-                .DisplayExpr("Text")));
+            .ValueExpr("Value")
+            .DisplayExpr("Text"))
+            .FormItem(i => i
+            .Editor(e => e.SelectBox()
+            .ID("QuestionLevel")
+            .DataSource(Html.GetEnumSelectList<QuestionLevel>()
 
-     })
+            .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+            .ValueExpr("Value")
+            .DisplayExpr("Text"))
+                );
 
-    .ShowBorders(true)
-    
-    )
+        })
+
+)
+
+
 
 
 
