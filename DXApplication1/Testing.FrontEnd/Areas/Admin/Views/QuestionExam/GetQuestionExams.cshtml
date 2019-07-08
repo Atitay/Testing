@@ -1,0 +1,158 @@
+﻿@using Testing.Models
+@model Testing.Models.Question
+
+
+@(Html.DevExtreme().DataGrid<Testing.Models.Question>().DataSource(d => d.Mvc()
+                    .Controller("Question")
+                    .LoadAction("Get")
+                    .Key("QuestionId"))
+
+                 .ID("gridContainer")
+
+                 .FilterRow(filterRow => filterRow
+                    .Visible(true)
+                    .ApplyFilter(GridApplyFilterMode.Auto)
+                )
+
+                .SearchPanel(searchPanel => searchPanel
+                    .Visible(true)
+                    .Width(240)
+                    .Placeholder("Search...")
+                )
+
+                .ShowBorders(true)
+                .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                .Selection(s => s.Mode(SelectionMode.Multiple))
+                .OnSelectionChanged(@<text>
+                        function(data) {
+                        var deleteButton = $("#gridDeleteSelected").dxButton("instance");
+                        deleteButton.option("disabled", !data.selectedRowsData.length);
+                        }
+                </text>)
+
+                  .HoverStateEnabled(true)
+                  .Columns(columns =>
+                  {
+
+                      columns.AddFor(m => m.QuestionString).Caption("Question");
+
+                      columns.AddFor(m => m.Point)
+                      .FormItem(i => i.Editor(e => e.Slider().Max(100)
+                      .Value(10)
+                      .Step(1)
+                      .Tooltip(t => t.Enabled(true))));
+
+
+                      columns.AddFor(m => m.QuestionType).Caption("Question Type")
+                      .Lookup(lookup => lookup
+                      .DataSource(Html.GetEnumSelectList<QuestionType>()
+                      .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                      .ValueExpr("Value")
+                      .DisplayExpr("Text"))
+                      .FormItem(i => i
+                      .Editor(e => e.SelectBox()
+                      .ID("QuestionType")
+                      .DataSource(Html.GetEnumSelectList<QuestionType>()
+                      .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                      .ValueExpr("Value")
+                      .DisplayExpr("Text"))
+                      );
+
+                      columns.AddFor(m => m.QuestionLevel).Caption("Question Level")
+                      .Lookup(lookup => lookup
+                      .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+                          .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+                      .ValueExpr("Value")
+                      .DisplayExpr("Text"))
+                      .FormItem(i => i
+                      .Editor(e => e.SelectBox()
+                      .ID("QuestionLevel")
+                      .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+
+                      .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+                      .ValueExpr("Value")
+                      .DisplayExpr("Text"))
+                          );
+
+                      columns.AddFor(m => m.TopicId).Caption("Topic Name")
+         .Lookup(lookup => lookup
+         .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+         .DisplayExpr("TopicName")
+         .ValueExpr("TopicId"))
+
+         .FormItem(i => i
+         .Editor(e => e.Lookup()
+         .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+         .DisplayExpr("TopicName")
+         .ValueExpr("TopicId"))
+         );
+
+                  })
+
+)
+
+@(Html.DevExtreme().Button()
+    .ID("gridDeleteSelected")
+    .Text("Selected Questions")
+    .Height(34)
+    .Width(195)
+    .Disabled(true)
+
+    .OnClick(@<text>
+            function () {
+            var dataGrid = $("#gridContainer").dxDataGrid("instance");
+            $.when.apply($, dataGrid.getSelectedRowsData().map(function(data) {
+            return dataGrid.getDataSource().store().get(data.QuestionId);
+            })).done(function() {
+            dataGrid.refresh();
+            });
+            }
+    </text>)
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

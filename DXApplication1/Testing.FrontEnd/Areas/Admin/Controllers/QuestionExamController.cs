@@ -12,10 +12,10 @@ using Testing.Models;
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ExamController : Controller
+    public class QuestionExamController : Controller
     {
         private readonly TestingDbContext _db;
-        public ExamController(TestingDbContext db)
+        public QuestionExamController(TestingDbContext db)
         {
             _db = db;
         }
@@ -23,30 +23,22 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Exams, loadOptions);
+            return DataSourceLoader.Load(_db.QuestionExams, loadOptions);
         }
-
-        [HttpGet]
-        public object GetSubject(DataSourceLoadOptions loadOptions)
+        public object GetQuestion(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Subjects, loadOptions);
-        }
-
-        [HttpGet]
-        public object GetChoice(DataSourceLoadOptions loadOptions)
-        {
-            return DataSourceLoader.Load(_db.Choices, loadOptions);
+            return DataSourceLoader.Load(_db.Questions, loadOptions);
         }
 
         [HttpPost]
         public IActionResult Post(string values)
         {
-            var newExam = new Exam ();
-            newExam.ExamId = new Guid();
+            var newQuesExam = new QuestionExam();
+            newQuesExam.QuestionExamId = new Guid();
 
-            JsonConvert.PopulateObject(values, newExam);
+            JsonConvert.PopulateObject(values, newQuesExam);
 
-            _db.Exams.Add(newExam);
+            _db.QuestionExams.Add(newQuesExam);
             _db.SaveChanges();
 
             return Ok();
@@ -55,9 +47,9 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var _exam = _db.Exams.First(a => a.ExamId == key);
+            var _quesexam = _db.QuestionExams.First(a => a.QuestionExamId == key);
 
-            JsonConvert.PopulateObject(values, _exam);
+            JsonConvert.PopulateObject(values, _quesexam);
 
             _db.SaveChanges();
 
@@ -67,18 +59,16 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpDelete]
         public void Delete(Guid key)
         {
-            var _exam = _db.Exams.First(a => a.ExamId == key);
+            var _quesexam = _db.QuestionExams.First(a => a.QuestionExamId == key);
 
-            _db.Exams.Remove(_exam);
+            _db.QuestionExams.Remove(_quesexam);
             _db.SaveChanges();
         }
 
 
-        public IActionResult GetExams()
+        public IActionResult GetQuestionExams()
         {
             return View();
         }
-
-
     }
 }
