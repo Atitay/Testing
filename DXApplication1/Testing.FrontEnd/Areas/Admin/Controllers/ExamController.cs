@@ -80,5 +80,10 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         }
 
 
+        public IActionResult GetQuestionExams()
+        {
+            return View();
+        }
+
     }
 }

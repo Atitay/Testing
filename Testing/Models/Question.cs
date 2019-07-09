@@ -35,6 +35,7 @@ namespace Testing.Models
         [Display(Name = ("Question Level"))]
         public QuestionLevel QuestionLevel { get; set; }
 
+
         public virtual ICollection<Choice> Choices { get; set; }
     }
 }

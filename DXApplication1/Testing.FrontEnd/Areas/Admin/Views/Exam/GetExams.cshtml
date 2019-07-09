@@ -36,7 +36,7 @@
         columns.AddFor(m => m.ExamName).Caption("Exam Name")
         .CellTemplate
         (@<text>
-            <a  href ="@Url.Action("GetQuestionExams","QuestionExam")/<%= data.ExamId %>">
+            <a  href ="@Url.Action("GetQuestionExams")/<%= data.ExamId %>">
         <%= data.ExamName %> </a> </text>);
 
     
@@ -53,7 +53,7 @@
 
     columns.AddFor(m => m.StartDate).Caption("Start Date");
     columns.AddFor(m => m.EndDate).Caption("End Date");
-columns.AddFor(m => m.Version).Caption("Version");
+    columns.AddFor(m => m.Version).Caption("Version");
     })
 
     .ShowBorders(true)

@@ -66,6 +66,8 @@
 <script>
 
     function treeList_onInitNewRow(e) {
-         e.data.ParentId = null;
+        if (e.data.ParentId == "") {
+           e.data.ParentId = null;
+        }      
     }
 </script>

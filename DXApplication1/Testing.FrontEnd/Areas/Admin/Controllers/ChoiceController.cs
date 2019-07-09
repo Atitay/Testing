@@ -15,9 +15,9 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
     public class ChoiceController : Controller
     {
         private readonly TestingDbContext _db;
-        public IActionResult Index()
+        public ChoiceController(TestingDbContext db)
         {
-            return View();
+            _db = db;
         }
 
         [HttpGet]
@@ -30,8 +30,9 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         public IActionResult Post(string values)
         {
             var newChoice = new Choice();
+            newChoice.QuestionId = _db.Questions.FirstOrDefault().QuestionId;
             newChoice.ChoiceId = new Guid();
-           
+
             JsonConvert.PopulateObject(values, newChoice);
 
             _db.Choices.Add(newChoice);
@@ -43,7 +44,7 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var _Choice = _db.Choices.First(a => a.ChoiceId == key);
+            var _Choice = _db.Choices.First(a => a.QuestionId == key);
 
             JsonConvert.PopulateObject(values, _Choice);
 
@@ -55,16 +56,11 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpDelete]
         public void Delete(Guid key)
         {
-            var _choice = _db.Choices.First(a => a.ChoiceId == key);
+            var _choice = _db.Choices.First(a => a.QuestionId == key);
 
             _db.Choices.Remove(_choice);
             _db.SaveChanges();
         }
 
-
-        public IActionResult GetChoices()
-        {
-            return View();
-        }
     }
 }

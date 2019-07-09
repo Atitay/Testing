@@ -8,8 +8,7 @@ namespace Testing.Models
     public class Topic
     {
         [Key]
-
-        [Display(Name = ("Topic Name"))]
+        
         public Guid TopicId { get; set; }
 
         public Guid? ParentId { get; set; }

@@ -1,0 +1,25 @@
+﻿@(Html.DevExtreme().DataGrid<Testing.Models.Choice>()
+    .ID("gridContainer")
+    .ShowBorders(true)
+    .Paging(paging => paging.Enabled(false))
+    .Editing(editing =>
+    {
+        editing.Mode(GridEditMode.Row);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+        editing.AllowUpdating(true);
+    })
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.ChoiceString).Caption("Choices");
+
+    })
+    .DataSource(d => d.Mvc()
+        .Controller("Choice")
+        .LoadAction("Get")
+        .UpdateAction("Put")
+        .InsertAction("Post")
+        .DeleteAction("Delete")
+        .Key("ChoiceId")
+    )
+)
