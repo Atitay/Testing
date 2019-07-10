@@ -26,33 +26,39 @@ namespace Testing.FrontEnd.Controllers
             _db = db;
         }
 
-        [HttpGet]
-        public object Get(DataSourceLoadOptions loadOptions)
+
+        public IActionResult Index(Guid id)
         {
-            return DataSourceLoader.Load(_db.Questions, loadOptions);
+            var question = _db.Questions.First(a => a.QuestionId == id);
+            return View(question);
         }
+
+        public IActionResult Choices(Guid id)
+        {
+            var _choice = _db.Questions.First(a => a.QuestionId == id);
+            return View(_choice);
+        }
+
+
 
         [HttpGet]
-        public object GetTopic(DataSourceLoadOptions loadOptions)
+        public object Get(DataSourceLoadOptions loadOptions,Guid id)
         {
-            return DataSourceLoader.Load(_db.Topics, loadOptions);
+            return DataSourceLoader.Load(_db.Choices.Where(m=>m.QuestionId==id), loadOptions);
         }
-
-        public object GetChoice(DataSourceLoadOptions loadOptions)
-        {
-            return DataSourceLoader.Load(_db.Choices, loadOptions);
-        }
-
 
         [HttpPost]
-        public IActionResult Post(string values)
+        public IActionResult Post(Guid key, string values)
         {
-            var newQuestion = new Question();
-            newQuestion.QuestionId = new Guid();
-            //newQuestion.Choices = new List<Choice>();
-            JsonConvert.PopulateObject(values, newQuestion);
-         
-            _db.Questions.Add(newQuestion);
+            var newChoice = new Choice();
+            JsonConvert.PopulateObject(values, newChoice);
+
+
+
+            newChoice.ChoiceId = new Guid();
+         //   newChoice.QuestionId = questionId;
+
+            _db.Choices.Add(newChoice);
             _db.SaveChanges();
 
             return Ok();
@@ -61,34 +67,35 @@ namespace Testing.FrontEnd.Controllers
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var question = _db.Questions.First(a => a.QuestionId == key);
-
-            JsonConvert.PopulateObject(values, question);
+            var _Choice = _db.Choices.First(a => a.ChoiceId == key);
+            JsonConvert.PopulateObject(values, _Choice);
 
             _db.SaveChanges();
-
             return Ok();
         }
 
         [HttpDelete]
         public void Delete(Guid key)
         {
-            var question = _db.Questions.First(a => a.QuestionId == key);
+            var _choice = _db.Choices.First(a => a.ChoiceId == key);
 
-            _db.Questions.Remove(question);
+            _db.Choices.Remove(_choice);
             _db.SaveChanges();
         }
 
-
-        public IActionResult GetQuestions()
-        {
-            return View();
-        }
-
-        public IActionResult GetQuestionChoice()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public object lstChoice (Guid QuestionId, DataSourceLoadOptions loadOptions)
+        //{
+        //    return DataSourceLoader.Load(
+        //        from i in _db.Choices
+        //        where i.QuestionId == QuestionId
+        //        select new
+        //        {
+        //              Choice = i.Question.Choices
+        //        },
+        //        loadOptions
+        //    );
+        //}
 
 
 
