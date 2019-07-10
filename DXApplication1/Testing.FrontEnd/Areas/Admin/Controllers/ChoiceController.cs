@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Testing.DAL;
 using Testing.Models;
@@ -22,17 +23,16 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
 
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
-        {
+        {       
             return DataSourceLoader.Load(_db.Choices, loadOptions);
         }
 
         [HttpPost]
-        public IActionResult Post(string values)
+        public IActionResult Post(Guid key,string values)
         {
-            var newChoice = new Choice();
-            newChoice.QuestionId = _db.Questions.FirstOrDefault().QuestionId;
+            var newChoice = new Choice();            
             newChoice.ChoiceId = new Guid();
-
+            newChoice.QuestionId = key;
             JsonConvert.PopulateObject(values, newChoice);
 
             _db.Choices.Add(newChoice);
@@ -44,7 +44,7 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var _Choice = _db.Choices.First(a => a.QuestionId == key);
+            var _Choice = _db.Choices.First(a => a.ChoiceId == key);
 
             JsonConvert.PopulateObject(values, _Choice);
 
@@ -56,11 +56,12 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpDelete]
         public void Delete(Guid key)
         {
-            var _choice = _db.Choices.First(a => a.QuestionId == key);
+            var _choice = _db.Choices.First(a => a.ChoiceId == key);
 
             _db.Choices.Remove(_choice);
             _db.SaveChanges();
         }
 
+       
     }
 }

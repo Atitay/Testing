@@ -1,4 +1,5 @@
 ﻿@using Testing.Models
+
 @(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
         .Controller("Topic")
         .LoadAction("Get")
@@ -12,7 +13,7 @@
 
      .KeyExpr("TopicId")
      .ParentIdExpr("ParentId")
-
+     
      //.ShowRowLines(true)
      .WordWrapEnabled(true)
      .Editing(editing =>

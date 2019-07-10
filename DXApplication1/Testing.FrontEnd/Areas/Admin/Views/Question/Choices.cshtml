@@ -1,0 +1,35 @@
+﻿@using Testing.Models
+@model Testing.Models.Question
+
+<script>
+    var questionId = 'kihi';
+</script>
+
+@(Html.DevExtreme().DataGrid<Testing.Models.Choice>
+    ()
+    .ID("gridContainer")
+    .ShowBorders(true)
+    .Paging(paging => paging.Enabled(false))
+    .Editing(editing =>
+    {
+        editing.Mode(GridEditMode.Row);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+        editing.AllowUpdating(true);
+    })
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.ChoiceString).Caption("Choices").Width(300);
+
+
+    })
+.DataSource(d => d.Mvc()
+.LoadAction("Get")
+.UpdateAction("Put").LoadParams(new JS("questionId"))
+.InsertAction("Post")
+.DeleteAction("Delete")
+.Key("ChoiceId")
+
+)
+)
+

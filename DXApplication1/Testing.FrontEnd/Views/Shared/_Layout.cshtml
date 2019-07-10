@@ -53,13 +53,10 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
 
-                <li class="active nav-item"><a asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></li>
-                <li class="active nav-item"><a asp-controller="Question" asp-action="GetQuestions" class="nav-link">Questions &nbsp;|</a></li>
-
-                <li class="active nav-item"><a asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></li>
-                <li class="active nav-item"><a asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams &nbsp;|</a></li>
-
-                <li class="active nav-item"><a asp-controller="Choice" asp-action="GetChoices" class="nav-link">Choices</a></li>
+                <li class="active nav-item"><a asp-area="Admin" asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></li>
+                <li class="active nav-item"><a asp-area="Admin"  asp-controller="Questions" asp-action="GetQuestions" class="nav-link">Questions &nbsp;|</a></li>
+                <li class="active nav-item"><a asp-area="Admin"  asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></li>
+                <li class="active nav-item"><a asp-area="Admin"  asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams </a></li>
 
             </ul>
         </div>

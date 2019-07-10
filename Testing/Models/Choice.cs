@@ -18,5 +18,9 @@ namespace Testing.Models
         public Guid QuestionId { get; set; }
         [ForeignKey("QuestionId")]
         public virtual Question Question { get; set; }
+
+      
     }
+
+    
 }

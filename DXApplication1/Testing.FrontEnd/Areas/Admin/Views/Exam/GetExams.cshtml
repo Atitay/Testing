@@ -33,7 +33,7 @@
     .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns =>
     {
-        columns.AddFor(m => m.ExamName).Caption("Exam Name")
+        columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(500)
         .CellTemplate
         (@<text>
             <a  href ="@Url.Action("GetQuestionExams")/<%= data.ExamId %>">
