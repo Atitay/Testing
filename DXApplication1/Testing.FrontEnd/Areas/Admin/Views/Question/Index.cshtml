@@ -34,8 +34,9 @@
    .DisplayExpr("Text"))
    ;
                    groupItems.AddSimpleFor(m => m.TopicId)
+
     .Editor(e => e.Lookup()
-    .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+    .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
     .DisplayExpr("TopicName")
     .ValueExpr("TopicId"))
    ;

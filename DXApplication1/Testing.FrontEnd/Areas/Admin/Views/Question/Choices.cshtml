@@ -1,14 +1,11 @@
 ﻿@using Testing.Models
 @model Testing.Models.Question
 
-<script>
-    var questionId = 'kihi';
-</script>
-
 @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
     ()
     .ID("gridContainer")
     .ShowBorders(true)
+
     .Paging(paging => paging.Enabled(false))
     .Editing(editing =>
     {
@@ -25,11 +22,19 @@
     })
 .DataSource(d => d.Mvc()
 .LoadAction("Get")
-.UpdateAction("Put").LoadParams(new JS("questionId"))
+.LoadParams(new  { id= Model.QuestionId})
+.UpdateAction("Put")
 .InsertAction("Post")
 .DeleteAction("Delete")
 .Key("ChoiceId")
 
 )
+ .OnInitNewRow("getQuestionId")
 )
 
+<script>
+
+    function getQuestionId(e) {       
+            e.data.QuestionId = '@Model.QuestionId.ToString()' ;
+    }
+</script>
