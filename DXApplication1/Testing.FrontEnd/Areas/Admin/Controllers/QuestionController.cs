@@ -51,13 +51,10 @@ namespace Testing.FrontEnd.Controllers
         public IActionResult Post(Guid key, string values)
         {
             var newChoice = new Choice();
-            JsonConvert.PopulateObject(values, newChoice);
-
-
-
             newChoice.ChoiceId = new Guid();
-         //   newChoice.QuestionId = questionId;
 
+            JsonConvert.PopulateObject(values, newChoice);
+            
             _db.Choices.Add(newChoice);
             _db.SaveChanges();
 

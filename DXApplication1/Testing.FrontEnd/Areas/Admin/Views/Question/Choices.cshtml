@@ -1,5 +1,4 @@
-﻿@using Testing.Models
-@model Testing.Models.Question
+﻿@model Testing.Models.Question
 
 @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
     ()
@@ -17,18 +16,16 @@
     .Columns(columns =>
     {
         columns.AddFor(m => m.ChoiceString).Caption("Choices").Width(300);
-
-
     })
 .DataSource(d => d.Mvc()
 .LoadAction("Get")
-.LoadParams(new  { id= Model.QuestionId})
 .UpdateAction("Put")
 .InsertAction("Post")
 .DeleteAction("Delete")
 .Key("ChoiceId")
-
+.LoadParams(new  { id= Model.QuestionId})
 )
+
  .OnInitNewRow("getQuestionId")
 )
 
@@ -37,4 +34,5 @@
     function getQuestionId(e) {       
             e.data.QuestionId = '@Model.QuestionId.ToString()' ;
     }
+
 </script>

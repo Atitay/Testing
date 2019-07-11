@@ -1,110 +1,107 @@
-﻿@using Testing.Models
-@(Html.DevExtreme()
-    .DataGrid<Testing.Models.Question>()
-        .DataSource(d => d.Mvc()
-        .Controller("Questions")
-        .LoadAction("Get")
-        .UpdateAction("Put")
-        .InsertAction("Post")
-        .DeleteAction("Delete")
-        .Area("Admin")
-        .Key("QuestionId")
-        )
+﻿<div class="row">
+    <div class="col"></div>
+    <div class="col-sm-9">
+        <br />
+        <h2 class="text-info">Question List</h2>
+        <br />
+        @using Testing.Models
+        @model  Testing.Models.Question
+        @(Html.DevExtreme()
+            .DataGrid<Testing.Models.Question>()
+                .DataSource(d => d.Mvc()
+                .Controller("Questions")
+                .LoadAction("Get")
+                .UpdateAction("Put")
+                .InsertAction("Post")
+                .DeleteAction("Delete")
+                .Area("Admin")
+                .Key("QuestionId")
+                )
+
+           .ID("gridContainer")
+           .Editing(editing =>
+           {
+               editing.Mode(GridEditMode.Form);
+               editing.AllowAdding(true);
+               editing.AllowDeleting(true);
+               editing.AllowUpdating(true);
+           })
+           .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+           .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+
+           .ShowBorders(true)
+           .HeaderFilter(headerFilter => headerFilter.Visible(true))
+           .Selection(s => s.Mode(SelectionMode.Single))
+           .HoverStateEnabled(true)
+
+           .Columns(columns =>
+           {
+               columns.AddFor(m => m.QuestionString).Caption("Question")
+               .FormItem(i=>i.Editor(e=>e.TextArea().Height(100)));
+
+               columns.AddFor(m => m.Point).Visible(false)
+               .FormItem(i => i.Editor(e => e.Slider().Max(100)
+               .Value(10)
+               .Step(1)
+               .Tooltip(t => t.Enabled(true))));
+
+               columns.AddFor(m => m.TopicId).Caption("Topic Name")
+               .Lookup(lookup => lookup
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+               .DisplayExpr("TopicName")
+               .ValueExpr("TopicId"))
+
+               .FormItem(i => i
+               .Editor(e => e.Lookup()
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+               .DisplayExpr("TopicName")
+               .ValueExpr("TopicId"))
+               );
+
+               columns.AddFor(m => m.QuestionType).Caption("Question Type").Visible(false)
+               .Lookup(lookup => lookup
+               .DataSource(Html.GetEnumSelectList<QuestionType>()
+               .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"))
+               .FormItem(i => i
+               .Editor(e => e.SelectBox()
+               .ID("QuestionType")
+               .DataSource(Html.GetEnumSelectList<QuestionType>()
+               .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"))
+               );
+
+               columns.AddFor(m => m.QuestionLevel).Caption("Question Level").Visible(false)
+               .Lookup(lookup => lookup
+               .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+               .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"))
+               .FormItem(i => i
+               .Editor(e => e.SelectBox()
+               .ID("QuestionLevel")
+               .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+
+               .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"))
+               );
 
 
-   .ID("gridContainer")
-   .Editing(editing =>
-   {
-    editing.Mode(GridEditMode.Form);
-    editing.AllowAdding(true);
-    editing.AllowDeleting(true);
-    editing.AllowUpdating(true);
-   })
-   .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-   .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+           }
 
-   .ShowBorders(true)
-   .HeaderFilter(headerFilter => headerFilter.Visible(true))
-   .Selection(s => s.Mode(SelectionMode.Single))
-   .HoverStateEnabled(true)
+            )
+            .OnCellDblClick("selection_changed")
 
-   .Columns(columns =>
-   {
-    columns.AddFor(m => m.QuestionString).Caption("Question")
-    .CellTemplate(@<text>
-
-        <a href="/Admin/Question/Index/<%= data.QuestionId %>"><%= data.QuestionString %></a>
-    </text>);
-
-    columns.AddFor(m => m.Point).Visible(false)
-    .FormItem(i => i.Editor(e => e.Slider().Max(100)
-    .Value(10)
-    .Step(1)
-    .Tooltip(t => t.Enabled(true))));
-
-
-    columns.AddFor(m => m.TopicId).Caption("Topic Name")
-    .Lookup(lookup => lookup
-    .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-    .DisplayExpr("TopicName")
-    .ValueExpr("TopicId"))
-
-    .FormItem(i => i
-    .Editor(e => e.Lookup()
-    .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-    .DisplayExpr("TopicName")
-    .ValueExpr("TopicId"))
-    );
-
-    columns.AddFor(m => m.QuestionType).Caption("Question Type").Visible(false)
-    .Lookup(lookup => lookup
-    .DataSource(Html.GetEnumSelectList<QuestionType>()
-    .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-    .ValueExpr("Value")
-    .DisplayExpr("Text"))
-    .FormItem(i => i
-    .Editor(e => e.SelectBox()
-    .ID("QuestionType")
-    .DataSource(Html.GetEnumSelectList<QuestionType>()
-    .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-    .ValueExpr("Value")
-    .DisplayExpr("Text"))
-    );
-
-    columns.AddFor(m => m.QuestionLevel).Caption("Question Level").Visible(false)
-    .Lookup(lookup => lookup
-    .DataSource(Html.GetEnumSelectList<QuestionLevel>()
-    .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
-    .ValueExpr("Value")
-    .DisplayExpr("Text"))
-    .FormItem(i => i
-    .Editor(e => e.SelectBox()
-    .ID("QuestionLevel")
-    .DataSource(Html.GetEnumSelectList<QuestionLevel>()
-
-    .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
-    .ValueExpr("Value")
-    .DisplayExpr("Text"))
-    );
-
-    columns.AddFor(m => m.Choices).Visible(false)
-.FormItem(i => i.Editor(e => e.TextBox()));
-}
-
-)
-//.OnCellDblClick("selection_changed")
-
-)
-
-
-
+            )
+    </div>
+    <div class="col"></div>
+</div>
 <script>
-    function selection_changed() {
-
-        /**/ //onlt one ID//
-        //window.location.href = "http://localhost:53708/Admin/Question/GetQuestionChoices/590b72a1-230e-4d0e-4f34-08d7009b0974";
-        /**/
-        //window.location.href = "/Admin/Question/Index/<%= data.QuestionId %>";
+    function selection_changed(e) {
+        window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
     }
 </script>
 

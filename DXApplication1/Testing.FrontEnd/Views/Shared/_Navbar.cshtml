@@ -1,0 +1,18 @@
+﻿<nav class="navbar navbar-dark fixed-top navbar-expand-md" style="background-color:#80c7c7">
+    <a class="navbar-brand" href="/">TESTING</a>
+
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="active nav-item"><a asp-area="Admin" asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></li>
+            <li class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link">Questions &nbsp;|</a></li>
+            <li class="active nav-item"><a asp-area="Admin" asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></li>
+            <li class="active nav-item"><a asp-area="Admin" asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams </a></li>
+
+        </ul>
+    </div>
+</nav>

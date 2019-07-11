@@ -16,60 +16,56 @@
                .Caption("Question Information")
                .Items(groupItems =>
                {
-                   groupItems.AddSimpleFor(m => m.QuestionString);
+                   groupItems.AddSimpleFor(m => m.QuestionString).Editor(e=>e.TextArea().Height(100));
                    groupItems.AddSimpleFor(m => m.QuestionType)
-   .Editor(e => e.SelectBox()
-   .ID("QuestionType")
-   .DataSource(Html.GetEnumSelectList<QuestionType>()
-   .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-   .ValueExpr("Value")
-   .DisplayExpr("Text"))
-   ;
+                                .Editor(e => e.SelectBox()
+                                .ID("QuestionType")
+                   .DataSource(Html.GetEnumSelectList<QuestionType>()
+                   .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                        )
+               ;
                    groupItems.AddSimpleFor(m => m.QuestionLevel)
-   .Editor(e => e.SelectBox()
-   .ID("QuestionLevel")
-   .DataSource(Html.GetEnumSelectList<QuestionLevel>()
-   .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-   .ValueExpr("Value")
-   .DisplayExpr("Text"))
-   ;
+                               .Editor(e => e.SelectBox()
+                               .ID("QuestionLevel")
+                    .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+                    .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                        )
+               ;
                    groupItems.AddSimpleFor(m => m.TopicId)
-
-    .Editor(e => e.Lookup()
-    .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-    .DisplayExpr("TopicName")
-    .ValueExpr("TopicId"))
-   ;
-
+                    .Editor(e => e.Lookup()
+                    .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+                        .ValueExpr("TopicId")
+                        .DisplayExpr("TopicName")                        
+                        )
+               ;
+                   
                    groupItems.AddGroup()
                        .Caption("More Detail")
                        .Items(innerGroupItems =>
                        {
                            innerGroupItems.AddSimpleFor(m => m.Point)
-.Editor(e => e.Slider().Max(100)
-.Step(1)
-.Tooltip(t => t.Enabled(true)));
+                                            .Editor(e => e.Slider().Max(100)
+                                            .Step(1)
+                                            .Tooltip(t => t.Enabled(true)));
                            innerGroupItems.AddSimpleFor(m => m.Hint)
-   .Editor(e => e
-   .TextBox()
-   .Disabled(false));
-                           innerGroupItems.AddSimpleFor(m => m.Choices)
-   .Editor(e => e
-   .TextBox()
-   .Disabled(false));
+                                            .Editor(e => e
+                                            .TextBox()
+                                            .Disabled(false));
 
                             innerGroupItems.AddSimple()
-          .Template(@<text>
-            <a asp-area="Admin" asp-controller="Question" asp-action="Choices" asp-route-id="@Model.QuestionId">choices</a>
-        </text>);
-                                
-
-});
-
-});
+                            .Template(@<text>
+                                   <a asp-area="Admin" asp-controller="Question" asp-action="Choices" asp-route-id="@Model.QuestionId">choices</a>
+                            </text>);
+                       });
+               });
 
 })
 )
+
 <script>
     function getFormInstance() {
         return $("#form").dxForm("instance");

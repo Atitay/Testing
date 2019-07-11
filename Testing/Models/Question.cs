@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,21 +13,15 @@ namespace Testing.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid QuestionId { get; set; }
 
-
-        //public Question()
-        //{
-        //    Choices = new List<Choice>();
-        //}
-
         [Display(Name = ("Question"))]
         public string QuestionString { get; set; }
         public string Hint { get; set; }
         public int Point { get; set; }
 
-
         public Guid? TopicId { get; set; }
 
         [ForeignKey("TopicId")]
+        [JsonIgnore]
         public virtual Topic Topic { get; set; }
 
         [Display(Name = ("Question Type"))]
@@ -35,7 +30,7 @@ namespace Testing.Models
         [Display(Name = ("Question Level"))]
         public QuestionLevel QuestionLevel { get; set; }
 
-
+        [JsonIgnore]
         public virtual ICollection<Choice> Choices { get; set; }
     }
 }

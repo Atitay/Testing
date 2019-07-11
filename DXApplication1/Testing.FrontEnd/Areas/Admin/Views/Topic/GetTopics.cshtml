@@ -1,74 +1,82 @@
-﻿@using Testing.Models
+﻿<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <br />
+        <h2 class="text-info">Topic List</h2>
+        <br />
+        @(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
+                .Controller("Topic")
+                .LoadAction("Get")
+                .UpdateAction("Put")
+                .InsertAction("Post")
+                .DeleteAction("Delete")
+                .Area("Admin")
+                .Key("TopicId")
 
-@(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
-        .Controller("Topic")
-        .LoadAction("Get")
-        .UpdateAction("Put")
-        .InsertAction("Post")
-        .DeleteAction("Delete")
-        .Area("Admin")
-        .Key("TopicId")
+                )
 
+             .KeyExpr("TopicId")
+             .ParentIdExpr("ParentId")
+
+             .HoverStateEnabled(true)
+             .Selection(s => s.Mode(SelectionMode.Single))
+             //.ShowRowLines(true)
+             .WordWrapEnabled(true)
+             .Editing(editing =>
+             {
+                 editing.Mode(GridEditMode.Row);
+                 editing.AllowAdding(true);
+                 editing.AllowDeleting(true);
+                 editing.AllowUpdating(true);
+             })
+
+                .FilterRow(filterRow => filterRow
+                .Visible(true)
+                .ApplyFilter(GridApplyFilterMode.Auto)
+            )
+
+            .SearchPanel(searchPanel => searchPanel
+                .Visible(true)
+                .Width(240)
+                .Placeholder("Search...")
+            )
+
+            .HeaderFilter(headerFilter => headerFilter.Visible(true))
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.TopicName).Caption("Topic Name");
+                columns.AddFor(m => m.ParentId).Caption("Parent Name").Visible(false)
+
+                    .Lookup(lookup => lookup
+                    .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
+                    .DisplayExpr("TopicName")
+                    .ValueExpr("TopicId"))
+
+                    .FormItem(i => i
+                    .Editor(e => e.SelectBox()
+                    .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
+                    .DisplayExpr("TopicName")
+                    .ValueExpr("TopicId"))
+                    );
+
+            })
+            .ShowBorders(true)
+            .OnInitNewRow("treeList_onInitNewRow")
+           //.OnCellDblClick("selection_changed")
         )
 
-     .KeyExpr("TopicId")
-     .ParentIdExpr("ParentId")
-     
-     //.ShowRowLines(true)
-     .WordWrapEnabled(true)
-     .Editing(editing =>
-     {
-         editing.Mode(GridEditMode.Row);
-         editing.AllowAdding(true);
-         editing.AllowDeleting(true);
-         editing.AllowUpdating(true);
-     })
-
-        .FilterRow(filterRow => filterRow
-        .Visible(true)
-        .ApplyFilter(GridApplyFilterMode.Auto)
-    )
-
-    .SearchPanel(searchPanel => searchPanel
-        .Visible(true)
-        .Width(240)
-        .Placeholder("Search...")
-    )
-
-    .HeaderFilter(headerFilter => headerFilter.Visible(true))
-
-
-
-    .Columns(columns =>
-    {
-        columns.AddFor(m => m.TopicName).Caption("Topic Name");
-        columns.AddFor(m=>m.ParentId).Caption("Parent Name")
-
-            .Lookup(lookup => lookup
-            .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
-            .DisplayExpr("TopicName")
-            .ValueExpr("TopicId"))
-
-            .FormItem(i => i
-            .Editor(e => e.SelectBox()
-            .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
-            .DisplayExpr("TopicName")
-            .ValueExpr("TopicId"))
-            );
-
-        
-    })
-
-    .ShowBorders(true)
-    .OnInitNewRow("treeList_onInitNewRow")
-
-)
-
+    </div>
+    <div class="col-sm-2"></div>
+</div>
 <script>
-
+//new row with Null but Othet with Parent
     function treeList_onInitNewRow(e) {
         if (e.data.ParentId == "") {
-           e.data.ParentId = null;
-        }      
+            e.data.ParentId = null;
+        }
+    }
+//Click single row ==> New Page with QuestionId
+     function selection_changed(e) {
+        window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
     }
 </script>
