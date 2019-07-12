@@ -40,7 +40,6 @@ namespace Testing.FrontEnd.Controllers
         }
 
 
-
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions,Guid id)
         {
@@ -80,21 +79,20 @@ namespace Testing.FrontEnd.Controllers
             _db.SaveChanges();
         }
 
-        //[HttpGet]
-        //public object lstChoice (Guid QuestionId, DataSourceLoadOptions loadOptions)
-        //{
-        //    return DataSourceLoader.Load(
-        //        from i in _db.Choices
-        //        where i.QuestionId == QuestionId
-        //        select new
-        //        {
-        //              Choice = i.Question.Choices
-        //        },
-        //        loadOptions
-        //    );
-        //}
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
+        //POST Edit Action  Method
+        public IActionResult Edit(Guid id, string values)
+        {
+            var _question = _db.Questions.First(a => a.QuestionId == id);
+            JsonConvert.PopulateObject(values, _question);
+
+            _db.SaveChanges();
+            return Ok();
+
+        }
 
 
         //       public QuestionController(TestingDbContext db)

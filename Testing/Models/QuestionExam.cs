@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,12 +15,13 @@ namespace Testing.Models
         public Guid QuestionId { get; set; }
 
         [ForeignKey("QuestionId")]
+        [JsonIgnore]
         public virtual Question Question { get; set; }
 
 
         public Guid ExamId { get; set; }
         [ForeignKey("ExamId")]
-
+        [JsonIgnore]
         public virtual Exam Exam { get; set; }
     }
 }

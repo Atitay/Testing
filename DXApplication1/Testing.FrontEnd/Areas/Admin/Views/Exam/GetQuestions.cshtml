@@ -1,10 +1,10 @@
-﻿@using Testing.Models
-@model Testing.Models.Question
-
-
+﻿<br />
+<h2 class="text-info">Assign Question to Exam</h2>
+@using Testing.Models
+@model  Testing.Models.Question
 @(Html.DevExtreme().DataGrid<Testing.Models.Question>().DataSource(d => d.Mvc()
-                    .Controller("Question")
-                    .LoadAction("Get")
+                    .Controller("Questions")
+                    .LoadAction("Get")                   
                     .Key("QuestionId"))
 
                  .ID("gridContainer")
@@ -91,6 +91,7 @@
 
 )
 
+<br />
 @(Html.DevExtreme().Button()
     .ID("gridDeleteSelected")
     .Text("Selected Questions")

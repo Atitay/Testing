@@ -40,11 +40,11 @@
                .FormItem(i=>i.Editor(e=>e.TextArea().Height(100)));
 
                columns.AddFor(m => m.Point).Visible(false)
-               .FormItem(i => i.Editor(e => e.Slider().Max(100)
-               .Value(10)
-               .Step(1)
+               .FormItem(i => i.Editor(e => e.Slider().ID("handler-slider").Max(100).Min(0)
+               .Step(2)
                .Tooltip(t => t.Enabled(true))));
-
+               
+               
                columns.AddFor(m => m.TopicId).Caption("Topic Name")
                .Lookup(lookup => lookup
                .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
@@ -94,14 +94,23 @@
 
             )
             .OnCellDblClick("selection_changed")
-
             )
     </div>
     <div class="col"></div>
 </div>
+
 <script>
     function selection_changed(e) {
-        window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
+        if (e.data.QuestionId != null) {
+            window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
+        }      
+    }
+      function slider_valueChanged(data) {
+        $("#slider-value").dxNumberBox("instance").option("value", data.value);
+    }
+
+    function numberBox_valueChanged(data) {
+        $("#handler-slider").dxSlider("instance").option("value", data.value);
     }
 </script>
 

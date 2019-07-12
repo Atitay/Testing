@@ -37,6 +37,9 @@
             .Placeholder("Search...")
             )
             .HeaderFilter(headerFilter => headerFilter.Visible(true))
+            .HoverStateEnabled(true)
+            .Selection(s=>s.Mode(SelectionMode.Single))
+
             .Columns(columns =>
             {
             columns.AddFor(m => m.SubjectName).Caption("Subject Name");
@@ -62,7 +65,14 @@
                     })
 
             .ShowBorders(true)
+            //.OnCellDblClick("selection_changed")
             )
     </div>
     <div class="col-sm-2"></div>
 </div>
+
+<script>
+    function selection_changed(e) {
+        window.location.href = "/Admin/Subject/Action/" + e.data.QuestionId;
+    }
+</script>

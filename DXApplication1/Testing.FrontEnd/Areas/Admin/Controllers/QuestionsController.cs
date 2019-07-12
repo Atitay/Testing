@@ -41,10 +41,12 @@ namespace Testing.FrontEnd.Controllers
         [HttpPost]
         public IActionResult Post(string values)
         {
-            var newQuestion = new Question();
-            newQuestion.QuestionId = new Guid();
-            newQuestion.Choices = new List<Choice>();
-            newQuestion.Choices.Add(new Choice());
+            var newQuestion = new Question
+            {
+                //QuestionId = new Guid(),
+                //Choices = new List<Choice>()
+            };
+            //newQuestion.Choices.Add(new Choice());
 
             JsonConvert.PopulateObject(values, newQuestion);
          
@@ -58,8 +60,8 @@ namespace Testing.FrontEnd.Controllers
         public IActionResult Put(Guid key, string values)
         {
             var question = _db.Questions.Include(m=>m.Choices).First(a => a.QuestionId == key);
-            question.Choices = new List<Choice>();
-            question.Choices.Add(new Choice());
+            //question.Choices = new List<Choice>();
+            //question.Choices.Add(new Choice());
             JsonConvert.PopulateObject(values, question);
 
             _db.SaveChanges();
@@ -82,30 +84,17 @@ namespace Testing.FrontEnd.Controllers
             return View();
         }
 
-        public IActionResult GetQuestionChoices(Guid id)
-        {
-            var question = _db.Questions.First(a => a.QuestionId == id);
-  
-            _db.SaveChanges();
-            return View(question);
-        }
-
-      
-
-
-        //[HttpGet]
-        //public object lstChoice (Guid QuestionId, DataSourceLoadOptions loadOptions)
+        //public IActionResult GetQuestionChoices(Guid id)
         //{
-        //    return DataSourceLoader.Load(
-        //        from i in _db.Choices
-        //        where i.QuestionId == QuestionId
-        //        select new
-        //        {
-        //              Choice = i.Question.Choices
-        //        },
-        //        loadOptions
-        //    );
+        //    var question = _db.Questions.First(a => a.QuestionId == id);
+
+        //    _db.SaveChanges();
+        //    return View(question);
         //}
+
+
+
+
 
 
 

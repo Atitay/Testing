@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Testing.DAL;
 using Testing.Models;
@@ -33,16 +34,18 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public object GetChoice(DataSourceLoadOptions loadOptions)
+        public object GetQuestion(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Choices, loadOptions);
+            return DataSourceLoader.Load(_db.Questions, loadOptions);
         }
 
         [HttpPost]
         public IActionResult Post(string values)
         {
-            var newExam = new Exam ();
-            newExam.ExamId = new Guid();
+            var newExam = new Exam
+            {
+                ExamId = new Guid()
+            };
 
             JsonConvert.PopulateObject(values, newExam);
 
@@ -80,8 +83,8 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         }
 
 
-        public IActionResult GetQuestionExams()
-        {
+        public IActionResult GetQuestions()
+        {           
             return View();
         }
 

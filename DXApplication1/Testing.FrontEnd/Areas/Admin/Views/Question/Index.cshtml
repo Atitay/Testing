@@ -2,21 +2,22 @@
 @model Testing.Models.Question
 <br />
 <br />
-@(Html.DevExtreme().Form<Testing.Models.Question>()
-.ID("form")
-.ShowColonAfterLabel(true)
-.ColCount(2)
-.LabelLocation(FormLabelLocation.Left)
+<form method="post">
+    @(Html.DevExtreme().Form<Testing.Models.Question>()
+    .ID("form")
+    .ShowColonAfterLabel(true)
+    .ColCount(2)
+    .LabelLocation(FormLabelLocation.Left)
 
-.FormData(Model)
+    .FormData(Model)
 
-.Items(items =>
-{
+    .Items(items =>
+    {
     items.AddGroup()
-               .Caption("Question Information")
+               .Caption("Question Information").CssClass("text-info")
                .Items(groupItems =>
                {
-                   groupItems.AddSimpleFor(m => m.QuestionString).Editor(e=>e.TextArea().Height(100));
+                   groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
                    groupItems.AddSimpleFor(m => m.QuestionType)
                                 .Editor(e => e.SelectBox()
                                 .ID("QuestionType")
@@ -39,35 +40,47 @@
                     .Editor(e => e.Lookup()
                     .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
                         .ValueExpr("TopicId")
-                        .DisplayExpr("TopicName")                        
+                        .DisplayExpr("TopicName")
                         )
                ;
-                   
-                   groupItems.AddGroup()
-                       .Caption("More Detail")
-                       .Items(innerGroupItems =>
+
+
+
+               });
+    items.AddGroup()
+                .Caption("More Detail").CssClass("text-info")
+                       .Items(GroupItems =>
                        {
-                           innerGroupItems.AddSimpleFor(m => m.Point)
+                           GroupItems.AddSimpleFor(m => m.Point)
                                             .Editor(e => e.Slider().Max(100)
                                             .Step(1)
                                             .Tooltip(t => t.Enabled(true)));
-                           innerGroupItems.AddSimpleFor(m => m.Hint)
-                                            .Editor(e => e
-                                            .TextBox()
-                                            .Disabled(false));
+                           GroupItems.AddSimpleFor(m => m.Hint)
+                                                .Editor(e => e
+                                                .TextBox()
+                                                .Disabled(false));
 
-                            innerGroupItems.AddSimple()
-                            .Template(@<text>
-                                   <a asp-area="Admin" asp-controller="Question" asp-action="Choices" asp-route-id="@Model.QuestionId">choices</a>
-                            </text>);
-                       });
-               });
+                           GroupItems.AddSimpleFor(m => m.Choices)
+                           .Template(@<text>@(Html.Partial("Choices"))</text>);
 
+
+});
 })
-)
+    )
+    <partial name="Choices" />
 
-<script>
-    function getFormInstance() {
-        return $("#form").dxForm("instance");
-    }
-</script>
+    <script>
+        function getFormInstance() {
+            return $("#form").dxForm("instance");
+        }
+    </script>
+    <br />
+    <div class=" form row col" style="margin-left:0px; margin-right:0px">
+        <div class="text-left col">
+            <a asp-controller="Questions" asp-action="Index" class="btn btn-outline-success">Back</a>
+        </div>
+        <div class="text-right col">
+            <input type="submit" class="btn btn-outline-info" asp-route-id="@Model.QuestionId" value="Update" />
+        </div>
+    </div>
+</form>

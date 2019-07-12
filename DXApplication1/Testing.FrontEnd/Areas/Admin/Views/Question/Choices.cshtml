@@ -15,7 +15,7 @@
     })
     .Columns(columns =>
     {
-        columns.AddFor(m => m.ChoiceString).Caption("Choices").Width(300);
+        columns.AddFor(m => m.ChoiceString).Caption("Choices");
     })
 .DataSource(d => d.Mvc()
 .LoadAction("Get")
