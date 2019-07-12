@@ -1,18 +1,79 @@
 ﻿<nav class="navbar navbar-dark fixed-top navbar-expand-md" style="background-color:#80c7c7">
-    <a class="navbar-brand" href="/">TESTING</a>
+    @*<a class="navbar-brand" href="/">TESTING</a>*@
+    <span style="font-size:22px;cursor:pointer" class="text-light" onclick="openNav()">&#9776; TESTING</span>
 
-    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    @*<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div id="navbar" class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
+        <div id="navbar" class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
 
-            <li class="active nav-item"><a asp-area="Admin" asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></li>
-            <li class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link">Questions &nbsp;|</a></li>
-            <li class="active nav-item"><a asp-area="Admin" asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></li>
-            <li class="active nav-item"><a asp-area="Admin" asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams </a></li>
+                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></li>
+                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link">Questions &nbsp;|</a></li>
+                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></li>
+                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams </a></li>
 
-        </ul>
-    </div>
+                </ul>
+            </div>*@
 </nav>
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link"><i class="fas fa-home"></i></a></a>
+    <a class="active nav-item"><a asp-area="Admin" asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></a>
+    <a class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link">Questions</a></a>
+    <a class="active nav-item"><a asp-area="Admin" asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></a>
+    <a class="active nav-item"><a asp-area="Admin" asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams </a></a>
+</div>
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "210px";       
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+
+
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:#80c7c7;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #808080;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  padding: 0px 0px 0px 140px;
+  top: 0;
+  right: 25px;
+  font-size: 25px;
+  margin-left: 30px;
+}
+
+</style>

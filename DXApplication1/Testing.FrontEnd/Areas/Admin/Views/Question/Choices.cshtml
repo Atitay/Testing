@@ -5,34 +5,37 @@
     .ID("gridContainer")
     .ShowBorders(true)
 
-    .Paging(paging => paging.Enabled(false))
-    .Editing(editing =>
-    {
-        editing.Mode(GridEditMode.Row);
-        editing.AllowAdding(true);
-        editing.AllowDeleting(true);
-        editing.AllowUpdating(true);
-    })
-    .Columns(columns =>
-    {
-        columns.AddFor(m => m.ChoiceString).Caption("Choices");
-    })
+    .Paging(paging => paging.Enabled(true))
+
+.Editing(editing =>
+{
+    editing.Mode(GridEditMode.Row);
+    editing.AllowAdding(true);
+    editing.AllowDeleting(true);
+    editing.AllowUpdating(true);
+})
+.Columns(columns =>
+{
+    columns.AddFor(m => m.isCorrect).Width(100).Caption("Correct!").FormItem(i => i.Editor(e => e.CheckBox()));
+    columns.AddFor(m => m.ChoiceString).Caption("Choices");
+})
 .DataSource(d => d.Mvc()
 .LoadAction("Get")
 .UpdateAction("Put")
 .InsertAction("Post")
 .DeleteAction("Delete")
 .Key("ChoiceId")
-.LoadParams(new  { id= Model.QuestionId})
+.LoadParams(new { id = Model.QuestionId })
 )
 
- .OnInitNewRow("getQuestionId")
+.OnInitNewRow("getQuestionId")
 )
 
 <script>
 
-    function getQuestionId(e) {       
+    function getQuestionId(e) {
             e.data.QuestionId = '@Model.QuestionId.ToString()' ;
     }
 
 </script>
+<br />

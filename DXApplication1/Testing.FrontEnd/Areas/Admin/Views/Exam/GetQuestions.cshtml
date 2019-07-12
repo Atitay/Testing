@@ -76,13 +76,13 @@
 
                       columns.AddFor(m => m.TopicId).Caption("Topic Name")
          .Lookup(lookup => lookup
-         .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+         .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
          .DisplayExpr("TopicName")
          .ValueExpr("TopicId"))
 
          .FormItem(i => i
          .Editor(e => e.Lookup()
-         .DataSource(d => d.Mvc().Controller("Question").LoadAction("GetTopic").Key("TopicId"))
+         .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
          .DisplayExpr("TopicName")
          .ValueExpr("TopicId"))
          );

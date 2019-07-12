@@ -26,16 +26,34 @@ namespace Testing.FrontEnd.Controllers
             _db = db;
         }
 
-
+        [HttpGet]
         public IActionResult Index(Guid id)
         {
-            var question = _db.Questions.First(a => a.QuestionId == id);
-            return View(question);
+            var _question = _db.Questions.First(a => a.QuestionId == id);
+
+            return View(_question);
+        }
+
+        [HttpPost,ActionName("Index")]
+        [ValidateAntiForgeryToken]
+        public ActionResult IndexPost(Guid id,Question question)
+        {
+            var _question = _db.Questions.First(a => a.QuestionId == id);
+            _question.QuestionString = question.QuestionString;
+            _question.QuestionType = question.QuestionType;
+            _question.QuestionLevel = question.QuestionLevel;
+            _question.Point = question.Point;
+            _question.Hint = question.Hint;
+            _question.TopicId = question.TopicId;
+
+            _db.SaveChanges();
+            return RedirectToAction("Index","Questions");         
         }
 
         public IActionResult Choices(Guid id)
         {
             var _choice = _db.Questions.First(a => a.QuestionId == id);
+
             return View(_choice);
         }
 
@@ -43,7 +61,8 @@ namespace Testing.FrontEnd.Controllers
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions,Guid id)
         {
-            return DataSourceLoader.Load(_db.Choices.Where(m=>m.QuestionId==id), loadOptions);
+            return DataSourceLoader.Load(_db.Choices.Where(m => m.QuestionId == id), loadOptions);
+            //return DataSourceLoader.Load(_db.Choices, loadOptions);
         }
 
         [HttpPost]
@@ -53,7 +72,7 @@ namespace Testing.FrontEnd.Controllers
             newChoice.ChoiceId = new Guid();
 
             JsonConvert.PopulateObject(values, newChoice);
-            
+
             _db.Choices.Add(newChoice);
             _db.SaveChanges();
 
@@ -80,137 +99,123 @@ namespace Testing.FrontEnd.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
 
-        //POST Edit Action  Method
-        public IActionResult Edit(Guid id, string values)
-        {
-            var _question = _db.Questions.First(a => a.QuestionId == id);
-            JsonConvert.PopulateObject(values, _question);
+        //public QuestionController(TestingDbContext db)
+        //{
+        //    _db = db;
 
-            _db.SaveChanges();
-            return Ok();
+        //    QuestionVM = new QuestionViewModel()
+        //    {
+        //        Topics = _db.Topics.ToList(),
+        //        //Choices = new List<Testing.Models.Choice>(),
+        //        Questions = new Testing.Models.Question()
+        //    };
+        //}
 
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    var lstQuestion = await _db.Questions.Include(t => t.Topic).ToListAsync();
 
+        //    return View(lstQuestion);
+        //}
 
-        //       public QuestionController(TestingDbContext db)
-        //       {
-        //           _db = db;
+        //public IActionResult Create()
+        //{
 
-        //           QuestionVM = new QuestionViewModel()
-        //           {
-        //               Topics = _db.Topics.ToList(),
-        //               //Choices = new List<Testing.Models.Choice>(),
-        //               Questions = new Testing.Models.Question()
-        //           };
-        //       }
+        //    return View(QuestionVM);
+        //}
 
-        //       public async Task<IActionResult> Index()
-        //       {
-        //           var lstQuestion = await _db.Questions.Include(t => t.Topic).ToListAsync();
+        //[HttpPost, ActionName("Create")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> CreatePost()
+        //{
 
-        //           return View(lstQuestion);
-        //       }
-
-        //       public IActionResult Create()
-        //       {
-
-        //           return View(QuestionVM);
-        //       }
-
-        //       [HttpPost, ActionName("Create")]
-        //       [ValidateAntiForgeryToken]
-        //       public async Task<IActionResult> CreatePost()
-        //       {
-
-        //           _db.Questions.Add(QuestionVM.Questions);
-        //           await _db.SaveChangesAsync();
-        //           return RedirectToAction(nameof(Index));
-        ////QuestionVM.Choices.QuestionId = QuestionVM.Questions.QuestionId;
-        //           //_db.Choices.Add(QuestionVM.Choices);
-        //       }
+        //    _db.Questions.Add(QuestionVM.Questions);
+        //    await _db.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //    //QuestionVM.Choices.QuestionId = QuestionVM.Questions.QuestionId;
+        //    //_db.Choices.Add(QuestionVM.Choices);
+        //}
 
 
 
-        //       [HttpGet]
-        //       public async Task<IActionResult> Edit(Guid? id)
-        //       {
-        //           if (id == null)
-        //           {
-        //               return NotFound();
-        //           }
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        //           QuestionVM.Questions = await _db.Questions.Include(m => m.Topic).SingleOrDefaultAsync(m => m.QuestionId == id);
-        //           QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
+        //    QuestionVM.Questions = await _db.Questions.Include(m => m.Topic).SingleOrDefaultAsync(m => m.QuestionId == id);
+        //    //QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
 
 
-        //           if (QuestionVM.Questions == null)
-        //           {
-        //               return NotFound();
-        //           }
-        //           return View(QuestionVM);
-        //       }
+        //    if (QuestionVM.Questions == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(QuestionVM);
+        //}
 
-        //       [HttpPost]
-        //       [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
 
-        //       //POST Edit Action  Method
-        //       public async Task<IActionResult> Edit(Guid id)
-        //       {
-        //           if (ModelState.IsValid)
-        //           {
+        ////POST Edit Action  Method
+        //public async Task<IActionResult> Edit(Guid id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-        //               var questionFromDb = _db.Questions.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
-        //               var choiceFromDb = _db.Choices.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
+        //        var questionFromDb = _db.Questions.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
+        //        //var choiceFromDb = _db.Choices.Where(m => m.QuestionId == QuestionVM.Questions.QuestionId).FirstOrDefault();
 
-        //               questionFromDb.QuestionString = QuestionVM.Questions.QuestionString;
-        //               questionFromDb.Hint = QuestionVM.Questions.Hint;
-        //               questionFromDb.Point = QuestionVM.Questions.Point;
-        //               questionFromDb.QuestionType = QuestionVM.Questions.QuestionType;
-        //               questionFromDb.QuestionLevel = QuestionVM.Questions.QuestionLevel;
-        //               questionFromDb.TopicId = QuestionVM.Questions.TopicId;
-        //               choiceFromDb.ChoiceString = QuestionVM.Choices.ChoiceString;
+        //        questionFromDb.QuestionString = QuestionVM.Questions.QuestionString;
+        //        questionFromDb.Hint = QuestionVM.Questions.Hint;
+        //        questionFromDb.Point = QuestionVM.Questions.Point;
+        //        questionFromDb.QuestionType = QuestionVM.Questions.QuestionType;
+        //        questionFromDb.QuestionLevel = QuestionVM.Questions.QuestionLevel;
+        //        questionFromDb.TopicId = QuestionVM.Questions.TopicId;
+        //        //choiceFromDb.ChoiceString = QuestionVM.Choices.ChoiceString;
 
-        //               await _db.SaveChangesAsync();
-        //               return RedirectToAction(nameof(Index));
-        //           }
-        //           return View(QuestionVM);
-        //       }
+        //        await _db.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(QuestionVM);
+        //}
 
-        //       [HttpGet]
-        //       public async Task<IActionResult> Delete(Guid? id)
-        //       {
-        //           if (id == null)
-        //           {
-        //               return NotFound();
-        //           }
+        //[HttpGet]
+        //public async Task<IActionResult> Delete(Guid? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        //           QuestionVM.Questions = await _db.Questions.FindAsync(id);
-        //           QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
+        //    QuestionVM.Questions = await _db.Questions.FindAsync(id);
+        //    //QuestionVM.Choices = await _db.Choices.FirstOrDefaultAsync(m => m.QuestionId == id);
 
-        //           if (QuestionVM.Questions == null)
-        //           {
-        //               return NotFound();
-        //           }
-        //           return View(QuestionVM);
-        //       }
+        //    if (QuestionVM.Questions == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(QuestionVM);
+        //}
 
-        //       [HttpPost]
-        //       [ValidateAntiForgeryToken]
+        ////[HttpPost]
+        ////[ValidateAntiForgeryToken]
 
-        //       //POST Delete Action  Method
-        //       public async Task<IActionResult> Delete(Guid id)
-        //       {
-        //           var lstQuestion = await _db.Questions.FindAsync(id);
+        //////POST Delete Action  Method
+        ////public async Task<IActionResult> Delete(Guid id)
+        ////{
+        ////    var lstQuestion = await _db.Questions.FindAsync(id);
 
-        //           _db.Questions.Remove(lstQuestion);
+        ////    _db.Questions.Remove(lstQuestion);
 
-        //           await _db.SaveChangesAsync();
-        //           return RedirectToAction(nameof(Index));
+        ////    await _db.SaveChangesAsync();
+        ////    return RedirectToAction(nameof(Index));
 
-        //       }
+        ////}
 
 
     }

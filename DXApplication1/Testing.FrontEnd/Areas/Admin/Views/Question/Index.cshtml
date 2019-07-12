@@ -2,85 +2,100 @@
 @model Testing.Models.Question
 <br />
 <br />
-<form method="post">
-    @(Html.DevExtreme().Form<Testing.Models.Question>()
-    .ID("form")
-    .ShowColonAfterLabel(true)
-    .ColCount(2)
-    .LabelLocation(FormLabelLocation.Left)
+<div>
+    <form method="post">
+        @(Html.DevExtreme().Form<Testing.Models.Question>()
+        .ShowValidationSummary(true)
+        .ID("form")
+        .ShowColonAfterLabel(true)
+        .ColCount(2)
+        .LabelLocation(FormLabelLocation.Left)
 
-    .FormData(Model)
+        .FormData(Model)
+        .Items(items =>
+        {
+        items.AddGroup()
+                   .Caption("Question Information").CssClass("text-info")
+                   .Items(groupItems =>
+                   {
+                       groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
+                       groupItems.AddSimpleFor(m => m.QuestionType)
+                                    .Editor(e => e.SelectBox()
+                                    .ID("QuestionType")
+                       .DataSource(Html.GetEnumSelectList<QuestionType>()
+                       .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                            .ValueExpr("Value")
+                            .DisplayExpr("Text")
+                            
+                            )
+                   ;
+                       groupItems.AddSimpleFor(m => m.QuestionLevel)
+                                   .Editor(e => e.SelectBox()
+                                   .ID("QuestionLevel")
+                        .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+                        .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                            .ValueExpr("Value")
+                            .DisplayExpr("Text")
+                           
+                            )
+                   ;
+                       groupItems.AddSimpleFor(m => m.TopicId)
+                        .Editor(e => e.Lookup()
+                        .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+                            .ValueExpr("TopicId")
+                            .DisplayExpr("TopicName")
+                           
+                            )
+                   ;
 
-    .Items(items =>
-    {
-    items.AddGroup()
-               .Caption("Question Information").CssClass("text-info")
-               .Items(groupItems =>
-               {
-                   groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
-                   groupItems.AddSimpleFor(m => m.QuestionType)
-                                .Editor(e => e.SelectBox()
-                                .ID("QuestionType")
-                   .DataSource(Html.GetEnumSelectList<QuestionType>()
-                   .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        )
-               ;
-                   groupItems.AddSimpleFor(m => m.QuestionLevel)
-                               .Editor(e => e.SelectBox()
-                               .ID("QuestionLevel")
-                    .DataSource(Html.GetEnumSelectList<QuestionLevel>()
-                    .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        )
-               ;
-                   groupItems.AddSimpleFor(m => m.TopicId)
-                    .Editor(e => e.Lookup()
-                    .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-                        .ValueExpr("TopicId")
-                        .DisplayExpr("TopicName")
-                        )
-               ;
+                   });
+        items.AddGroup()
+                    .Caption("More Detail").CssClass("text-info")
+                           .Items(GroupItems =>
+                           {
+                               GroupItems.AddSimpleFor(m => m.Point)
+                                                .Editor(e => e.Slider().Max(100)
+                                                .Step(1)
+                                                .Tooltip(t => t.Enabled(true)));
+                               GroupItems.AddSimpleFor(m => m.Hint)
+                                                    .Editor(e => e
+                                                    .TextBox()
+                                                    .Disabled(false));
 
-
-
-               });
-    items.AddGroup()
-                .Caption("More Detail").CssClass("text-info")
-                       .Items(GroupItems =>
-                       {
-                           GroupItems.AddSimpleFor(m => m.Point)
-                                            .Editor(e => e.Slider().Max(100)
-                                            .Step(1)
-                                            .Tooltip(t => t.Enabled(true)));
-                           GroupItems.AddSimpleFor(m => m.Hint)
-                                                .Editor(e => e
-                                                .TextBox()
-                                                .Disabled(false));
-
-                           GroupItems.AddSimpleFor(m => m.Choices)
-                           .Template(@<text>@(Html.Partial("Choices"))</text>);
+                               GroupItems.AddSimpleFor(m => m.Choices)
+                               .Template(@<text> <partial name="Choices" /></text>);
 
 
 });
-})
-    )
-    <partial name="Choices" />
+      
+items.AddButton()
+.HorizontalAlignment(HorizontalAlignment.Left)
+.ButtonOptions(b => b.Text("Back")
+.Type(ButtonType.Normal)
+.StylingMode(ButtonStylingMode.Outlined)
+.OnClick("BacktoIndex")
+);
+items.AddButton()
+.HorizontalAlignment(HorizontalAlignment.Right)
+.ButtonOptions(b => b.Text("Update")
+.Type(ButtonType.Success)
+.StylingMode(ButtonStylingMode.Outlined)
+//.OnClick("UpdateData")
+.UseSubmitBehavior(true)
+);
 
-    <script>
-        function getFormInstance() {
-            return $("#form").dxForm("instance");
-        }
-    </script>
-    <br />
-    <div class=" form row col" style="margin-left:0px; margin-right:0px">
-        <div class="text-left col">
-            <a asp-controller="Questions" asp-action="Index" class="btn btn-outline-success">Back</a>
-        </div>
-        <div class="text-right col">
-            <input type="submit" class="btn btn-outline-info" asp-route-id="@Model.QuestionId" value="Update" />
-        </div>
-    </div>
-</form>
+})
+        )
+        <partial name="Choices" />
+       
+        <script>
+            function BacktoIndex() {
+                window.location.href = "/Admin/Questions/Index";
+            }
+
+            function UpdateData() {
+                alert("OK!");
+            }
+        </script>
+    </form>
+</div>
