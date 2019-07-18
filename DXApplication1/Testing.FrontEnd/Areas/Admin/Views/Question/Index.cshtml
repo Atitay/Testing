@@ -79,8 +79,7 @@ items.AddButton()
 .HorizontalAlignment(HorizontalAlignment.Right)
 .ButtonOptions(b => b.Text("Update")
 .Type(ButtonType.Success)
-.StylingMode(ButtonStylingMode.Outlined)
-//.OnClick("UpdateData")
+.StylingMode(ButtonStylingMode.Contained)
 .UseSubmitBehavior(true)
 );
 
@@ -91,10 +90,6 @@ items.AddButton()
         <script>
             function BacktoIndex() {
                 window.location.href = "/Admin/Questions/Index";
-            }
-
-            function UpdateData() {
-                alert("OK!");
             }
         </script>
     </form>

@@ -1,0 +1,62 @@
+﻿@using Testing.Models
+@model Testing.Models.Exam
+<br />
+<br />
+<div>
+    <form method="post">
+        @(Html.DevExtreme().Form<Testing.Models.Exam>()
+        .ShowValidationSummary(true)
+        .ID("form")
+        .ShowColonAfterLabel(true)
+        .ColCount(2)
+        .LabelLocation(FormLabelLocation.Left)
+
+        .FormData(Model)
+        .Items(items =>
+        {
+        items.AddGroup()
+                   .Caption("Exam Information").CssClass("text-info")
+                   .Items(groupItems =>
+                   {
+                       groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100));
+
+                       groupItems.AddSimpleFor(m => m.Version).Editor(e => e
+                                                    .TextBox()
+                                                    .Disabled(false));
+
+                       groupItems.AddSimpleFor(m => m.SubjectId)
+                        .Editor(e => e.Lookup()
+                        .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+                            .ValueExpr("SubjectId")
+                            .DisplayExpr("SubjectName")
+
+                            )
+                   ;
+
+                   });
+        items.AddGroup()
+                    .Caption("Date Detail").CssClass("text-info")
+                           .Items(GroupItems =>
+                           {
+                               GroupItems.AddSimpleFor(m => m.StartDate)
+                                                .Editor(e => e.DateBox());
+
+                               GroupItems.AddSimpleFor(m => m.EndDate)
+                                                    .Editor(e => e.DateBox());
+
+                              
+
+});
+
+
+})
+        )
+        <partial name="GetQuestions" />
+
+        <script>
+            function BacktoIndex() {
+                window.location.href = "/Admin/Exams/Index";
+            }
+        </script>
+    </form>
+</div>

@@ -19,8 +19,8 @@ namespace Testing.FrontEnd.Controllers
     {
         private readonly TestingDbContext _db;
 
-        [BindProperty]
-        public QuestionViewModel QuestionVM { get; set; }
+        //[BindProperty]
+        //public QuestionViewModel QuestionVM { get; set; }
         public QuestionsController(TestingDbContext db)
         {
             _db = db;
@@ -43,10 +43,8 @@ namespace Testing.FrontEnd.Controllers
         {
             var newQuestion = new Question
             {
-                //QuestionId = new Guid(),
-                //Choices = new List<Choice>()
+                QuestionId = new Guid()
             };
-            //newQuestion.Choices.Add(new Choice());
 
             JsonConvert.PopulateObject(values, newQuestion);
          
@@ -60,8 +58,6 @@ namespace Testing.FrontEnd.Controllers
         public IActionResult Put(Guid key, string values)
         {
             var question = _db.Questions.Include(m=>m.Choices).First(a => a.QuestionId == key);
-            //question.Choices = new List<Choice>();
-            //question.Choices.Add(new Choice());
             JsonConvert.PopulateObject(values, question);
 
             _db.SaveChanges();

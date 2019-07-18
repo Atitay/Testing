@@ -19,8 +19,6 @@ namespace Testing.FrontEnd.Controllers
     {
         private readonly TestingDbContext _db;
 
-        [BindProperty]
-        public QuestionViewModel QuestionVM { get; set; }
         public QuestionController(TestingDbContext db)
         {
             _db = db;
@@ -66,10 +64,12 @@ namespace Testing.FrontEnd.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Guid key, string values)
+        public IActionResult Post(string values)
         {
-            var newChoice = new Choice();
-            newChoice.ChoiceId = new Guid();
+            var newChoice = new Choice
+            {
+                ChoiceId = new Guid()
+            };
 
             JsonConvert.PopulateObject(values, newChoice);
 

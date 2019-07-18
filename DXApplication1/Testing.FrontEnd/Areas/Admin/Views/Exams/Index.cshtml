@@ -4,9 +4,9 @@
         <br />
         <h2 class="text-info">Exam List</h2>
         <br />
-        @model  Testing.Models.Exam
+        @model Testing.Models.Exam
         @(Html.DevExtreme().DataGrid<Testing.Models.Exam>().DataSource(d => d.Mvc()
-                .Controller("Exam")
+                .Controller("Exams")
                 .LoadAction("Get")
                 .UpdateAction("Put")
                 .InsertAction("Post")
@@ -44,13 +44,13 @@
 
 columns.AddFor(m => m.SubjectId).Caption("Subject Name")
 .Lookup(lookup => lookup
-.DataSource(d => d.Mvc().Controller("Exam").LoadAction("GetSubject").Key("SubjectId"))
+.DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
 .DisplayExpr("SubjectName")
 .ValueExpr("SubjectId")
 )
 .FormItem(i => i
 .Editor(e => e.SelectBox()
-.DataSource(d => d.Mvc().Controller("Exam").LoadAction("GetSubject").Key("SubjectId"))
+.DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
 .DisplayExpr("SubjectName")
 .ValueExpr("SubjectId"))
 );
@@ -69,7 +69,10 @@ columns.AddFor(m => m.Version).Caption("Version");
 
 <script>
     function selection_changed(e) {
-        window.location.href = "/Admin/Exam/GetQuestions/" + e.data.ExamId;
+        if (e.data.ExamId != null) {
+            window.location.href = "/Admin/Exam/Index/" + e.data.ExamId;
+        }
+
     }
 </script>
 

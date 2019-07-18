@@ -5,7 +5,7 @@
         <h2 class="text-info">Topic List</h2>
         <br />
         @(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
-                .Controller("Topic")
+                .Controller("Topics")
                 .LoadAction("Get")
                 .UpdateAction("Put")
                 .InsertAction("Post")
@@ -48,13 +48,13 @@
                 columns.AddFor(m => m.ParentId).Caption("Parent Name").Visible(false)
 
                     .Lookup(lookup => lookup
-                    .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
+                    .DataSource(d => d.Mvc().Controller("Topics").LoadAction("Get").Key("TopicId"))
                     .DisplayExpr("TopicName")
                     .ValueExpr("TopicId"))
 
                     .FormItem(i => i
                     .Editor(e => e.SelectBox()
-                    .DataSource(d => d.Mvc().Controller("Topic").LoadAction("Get").Key("TopicId"))
+                    .DataSource(d => d.Mvc().Controller("Topics").LoadAction("Get").Key("TopicId"))
                     .DisplayExpr("TopicName")
                     .ValueExpr("TopicId"))
                     );
@@ -62,7 +62,7 @@
             })
             .ShowBorders(true)
             .OnInitNewRow("treeList_onInitNewRow")
-           //.OnCellDblClick("selection_changed")
+           .OnCellDblClick("selection_changed")
         )
 
     </div>
@@ -77,6 +77,6 @@
     }
 //Click single row ==> New Page with QuestionId
      function selection_changed(e) {
-        window.location.href = "/Admin/Topic/Action/" + e.data.QuestionId;
+        window.location.href = "/Admin/Topic/Index/" + e.data.TopicId;
     }
 </script>

@@ -61,11 +61,13 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         }
 
 
-        public IActionResult GetTopics()
+        public IActionResult Index(Guid id)
         {
-            return View();
+            var _topic = _db.Topics.First(t=>t.TopicId==id);
+            return View(_topic);
         }
-        //public IActionResult Index()
+
+        //public IActionResult yaIndex()
         //{
         //    var lstTopic = _db.Topics.ToList();
         //    return View(lstTopic);

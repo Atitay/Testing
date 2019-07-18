@@ -1,40 +1,66 @@
-﻿@model IEnumerable<Testing.Models.Topic>
+﻿@using Testing.Models
+@model Testing.Models.Topic
+<br />
+<br />
+<div>
+    <form method="post">
+        @(Html.DevExtreme().Form<Testing.Models.Topic>()
+        .ShowValidationSummary(true)
+        .ID("form")
+        .ShowColonAfterLabel(true)
+        .ColCount(2)
+        .LabelLocation(FormLabelLocation.Left)
 
-@{
-    ViewData["Title"] = "Index";
-}
+        .FormData(Model)
+        .Items(items =>
+        {
+            items.AddGroup()
+                       .Caption("Topic Information").CssClass("text-info")
+                       .Items(groupItems =>
+                       {
+                           groupItems.AddSimpleFor(m => m.TopicName).Editor(e => e.TextBox());
 
-<div class="form-group row">
-    <div class="col-3"></div>
+                       });
+            items.AddGroup()
+                        .Caption("More Detail").CssClass("text-info")
+                               .Items(GroupItems =>
+                               {
+                                   GroupItems.AddSimpleFor(m => m.ParentId)
+                                                    .Editor(e => e.Lookup()
+                            .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+                                .ValueExpr("TopicId")
+                                .DisplayExpr("TopicName").Disabled(true));
 
-    <div class="col">
-        <br />
-        <h2 class="text-info">Topic List</h2>
+                                   GroupItems.AddSimpleFor(m => m.Childs)
+                                                        .Editor(e => e
+                                                        .TextBox()
+                                                        .Disabled(false));                                  
 
-        <div class="text-right">
-            <a asp-action="Create" class="btn btn-outline-info"> <i class="fas fa-plus"></i> &nbsp; New Topic</a>
-        </div>
-        <br /> <br />
+                               });
 
-        <div>
-            <table class="table table-bordered">
-                <tr class="table-info table-striped text-center">
-                    <th>
-                        @Html.DisplayNameFor(m => m.TopicName)
-                    </th>                  
-                </tr>
+            items.AddButton()
+            .HorizontalAlignment(HorizontalAlignment.Left)
+            .ButtonOptions(b => b.Text("Back")
+            .Type(ButtonType.Normal)
+            .StylingMode(ButtonStylingMode.Outlined)
+            .OnClick("BacktoIndex")
+            );
 
-                @foreach (var topic in Model)
-                {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => topic.TopicName)
-                </td>
-                <partial name="_ButtonPartial" model="topic.TopicId" />
-            </tr>
-                }
-            </table>
-        </div>
-    </div>
-    <div class="col-3"></div>
+            //items.AddButton()
+            //.HorizontalAlignment(HorizontalAlignment.Right)
+            //.ButtonOptions(b => b.Text("Update")
+            //.Type(ButtonType.Success)
+            //.StylingMode(ButtonStylingMode.Contained)
+            //.UseSubmitBehavior(true)
+            //);
+
+        })
+        )
+       
+        <script>
+            function BacktoIndex() {
+                window.location.href = "/Admin/Topics/Index";
+            }
+        </script>
+    </form>
 </div>

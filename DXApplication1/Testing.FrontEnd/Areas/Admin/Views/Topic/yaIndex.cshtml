@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Testing.Models.Topic>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="form-group row">
+    <div class="col-3"></div>
+
+    <div class="col">
+        <br />
+        <h2 class="text-info">Topic List</h2>
+
+        <div class="text-right">
+            <a asp-action="Create" class="btn btn-outline-info"> <i class="fas fa-plus"></i> &nbsp; New Topic</a>
+        </div>
+        <br /> <br />
+
+        <div>
+            <table class="table table-bordered">
+                <tr class="table-info table-striped text-center">
+                    <th>
+                        @Html.DisplayNameFor(m => m.TopicName)
+                    </th>                  
+                </tr>
+
+                @foreach (var topic in Model)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => topic.TopicName)
+                </td>
+                <partial name="_ButtonPartial" model="topic.TopicId" />
+            </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="col-3"></div>
+</div>
