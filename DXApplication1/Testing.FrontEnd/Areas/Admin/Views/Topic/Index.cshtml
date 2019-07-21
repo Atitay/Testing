@@ -12,6 +12,7 @@
         .LabelLocation(FormLabelLocation.Left)
 
         .FormData(Model)
+
         .Items(items =>
         {
             items.AddGroup()
@@ -34,8 +35,11 @@
                                    GroupItems.AddSimpleFor(m => m.Childs)
                                                         .Editor(e => e
                                                         .TextBox()
-                                                        .Disabled(false));                                  
+                                                        .Disabled(false));
 
+                                   GroupItems.AddSimpleFor(m => m.Questions) .Editor(e => e
+                                                        .TextBox()
+                                                        .Disabled(false));
                                });
 
             items.AddButton()

@@ -1,8 +1,11 @@
 ﻿@using Testing.Models
 @model Testing.Models.Question
 <br />
-<br />
-<div>
+<div >
+    <div class="text-secondary p-1" style="background-color:#efdfdf">
+        <h5>Question :&nbsp;&nbsp;@Model.QuestionString</h5>
+    </div>
+    <br />
     <form method="post">
         @(Html.DevExtreme().Form<Testing.Models.Question>()
         .ShowValidationSummary(true)
@@ -15,7 +18,7 @@
         .Items(items =>
         {
         items.AddGroup()
-                   .Caption("Question Information").CssClass("text-info")
+                   .Caption("Question Information").CssClass("text-secondary")
                    .Items(groupItems =>
                    {
                        groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
@@ -26,7 +29,7 @@
                        .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
                             .ValueExpr("Value")
                             .DisplayExpr("Text")
-                            
+
                             )
                    ;
                        groupItems.AddSimpleFor(m => m.QuestionLevel)
@@ -36,7 +39,7 @@
                         .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
                             .ValueExpr("Value")
                             .DisplayExpr("Text")
-                           
+
                             )
                    ;
                        groupItems.AddSimpleFor(m => m.TopicId)
@@ -44,35 +47,35 @@
                         .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
                             .ValueExpr("TopicId")
                             .DisplayExpr("TopicName")
-                           
+
                             )
                    ;
 
                    });
         items.AddGroup()
-                    .Caption("More Detail").CssClass("text-info")
+                    .Caption("Choice Information").CssClass("text-secondary ")
                            .Items(GroupItems =>
                            {
                                GroupItems.AddSimpleFor(m => m.Point)
-                                                .Editor(e => e.Slider().Max(100)
-                                                .Step(1)
-                                                .Tooltip(t => t.Enabled(true)));
+                                                .Editor(e => e.NumberBox().Max(100)
+                                                .Min(1).ShowSpinButtons(true));
+
                                GroupItems.AddSimpleFor(m => m.Hint)
                                                     .Editor(e => e
                                                     .TextBox()
                                                     .Disabled(false));
 
                                GroupItems.AddSimpleFor(m => m.Choices)
-                               .Template(@<text> <partial name="Choices" /></text>);
+                               .Template(@<text><br /><partial name="_Choices" /></text>);
 
 
 });
-      
+
 items.AddButton()
 .HorizontalAlignment(HorizontalAlignment.Left)
 .ButtonOptions(b => b.Text("Back")
-.Type(ButtonType.Normal)
-.StylingMode(ButtonStylingMode.Outlined)
+.Type(ButtonType.Default)
+.StylingMode(ButtonStylingMode.Contained)
 .OnClick("BacktoIndex")
 );
 items.AddButton()
@@ -85,12 +88,15 @@ items.AddButton()
 
 })
         )
-        <partial name="Choices" />
-       
+        <partial name="_Choices" />
+
         <script>
             function BacktoIndex() {
                 window.location.href = "/Admin/Questions/Index";
             }
-        </script>
+        </script>         
+       
     </form>
+  
+
 </div>

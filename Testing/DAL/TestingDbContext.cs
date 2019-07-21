@@ -17,7 +17,7 @@ namespace Testing.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(@"Server=(LocalDb)\MSSQLLocalDB;Database=Testing;Trusted_Connection=True;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer(@"Server=(LocalDb)\MSSQLLocalDB;Database=Testing;Trusted_Connection=True;MultipleActiveResultSets=True").UseLazyLoadingProxies();
         }
 
     }

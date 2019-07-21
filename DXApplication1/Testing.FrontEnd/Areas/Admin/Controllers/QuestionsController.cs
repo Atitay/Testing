@@ -33,6 +33,12 @@ namespace Testing.FrontEnd.Controllers
         }
 
         [HttpGet]
+        public object GetExam(DataSourceLoadOptions loadOptions,Guid id)
+        {
+            return DataSourceLoader.Load(_db.QuestionExams.Where(m => m.ExamId == id), loadOptions);
+        }
+
+        [HttpGet]
         public object GetTopic(DataSourceLoadOptions loadOptions)
         {
             return DataSourceLoader.Load(_db.Topics, loadOptions);

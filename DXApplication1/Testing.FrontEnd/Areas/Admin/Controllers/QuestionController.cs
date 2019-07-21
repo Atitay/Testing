@@ -15,6 +15,7 @@ using Testing.Models;
 namespace Testing.FrontEnd.Controllers
 {
     [Area("Admin")]
+
     public class QuestionController : Controller
     {
         private readonly TestingDbContext _db;
@@ -47,6 +48,7 @@ namespace Testing.FrontEnd.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index","Questions");         
         }
+
 
         public IActionResult Choices(Guid id)
         {

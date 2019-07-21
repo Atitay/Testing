@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,8 +24,32 @@ namespace Testing.Models
 
         public DateTime EndDate { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<QuestionExam> QuestionExams { get; set; }
 
+        public void AddQuestionns(List<Question> questionsList)
+        {
+            //if null => add new
+            if (this.QuestionExams == null)
+                this.QuestionExams = new List<QuestionExam>();
+
+            questionsList.ForEach(question =>
+            {
+            //Need checking list question
+           
+                    QuestionExam newQuestionExam = new QuestionExam()
+                    {
+                        QuestionExamId = Guid.NewGuid(),
+                        ExamId = this.ExamId,
+                        QuestionId = question.QuestionId
+                    };
+                    QuestionExams.Add(newQuestionExam);
+               
+
+
+            });
+
+        }
 
     }
 }

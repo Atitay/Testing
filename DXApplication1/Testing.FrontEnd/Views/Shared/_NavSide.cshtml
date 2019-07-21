@@ -1,0 +1,76 @@
+﻿<div id="mySidenav" class="sidenav">
+
+    <div class="pt-2">
+
+        <a href="@Url.Action("Index","Questions")" class="navlink active">
+            <i class="fas fa-home"></i>&nbsp;Home
+        </a>
+        <a href="@Url.Action("Index","Topics")" class="navlink">
+            Topics
+        </a>
+        <a href="@Url.Action("Index","Questions")" class="navlink">
+            Questions
+        </a>
+        <a href="@Url.Action("GetSubjects","Subject")" class="navlink">
+            Subjects
+        </a>
+        <a href="@Url.Action("Index","Exams")" class="navlink">
+            Exams
+        </a>
+
+    </div>
+
+</div>
+
+<style>
+    body {
+        font-family: 'Oswald', sans-serif;
+    }
+
+    .sidenav {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-color: none;
+        padding-top: 16px;
+        cursor: pointer;
+    }
+
+        .sidenav a {
+            display: block;
+            color: slategray;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+
+            .sidenav a.active {
+                background-color: #eeb6b6;
+                color: white;
+            }
+
+            .sidenav a:hover {
+                background-color: #efc2c2;
+                color: white;
+            }
+</style>
+
+
+<script>
+    var header = document.getElementById("mySidenav");
+    var btns = header.getElementsByClassName("navlink");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+
+</script>
+
+
+          
+
+

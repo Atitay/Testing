@@ -1,8 +1,7 @@
 ﻿<div class="row">
-
-    <div class="col-sm-12">
+    <div class="col-sm">
         <br />
-        <h2 class="text-info">Exam List</h2>
+        <h2 class="text-secondary">Exam List</h2>
         <br />
         @model Testing.Models.Exam
         @(Html.DevExtreme().DataGrid<Testing.Models.Exam>().DataSource(d => d.Mvc()
@@ -16,9 +15,11 @@
                 )
 
              .ID("gridContainer")
+
+             .Paging(paging => paging.Enabled(true).PageSize(1))
              .Editing(editing =>
              {
-                 editing.Mode(GridEditMode.Form);
+                 editing.Mode(GridEditMode.Form).UseIcons(true);
                  editing.AllowAdding(true);
                  editing.AllowDeleting(true);
                  editing.AllowUpdating(true);
@@ -40,7 +41,7 @@
             .Columns(columns =>
             {
 
-            columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(400);
+            columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(200);
 
 columns.AddFor(m => m.SubjectId).Caption("Subject Name")
 .Lookup(lookup => lookup
@@ -67,10 +68,11 @@ columns.AddFor(m => m.Version).Caption("Version");
     </div>
 </div>
 
+<br /><br />
 <script>
     function selection_changed(e) {
         if (e.data.ExamId != null) {
-            window.location.href = "/Admin/Exam/Index/" + e.data.ExamId;
+            window.location.href = "/Admin/Exam/" + e.data.ExamId + "/Detail";
         }
 
     }

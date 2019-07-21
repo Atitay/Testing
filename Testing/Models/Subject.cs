@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -15,5 +16,8 @@ namespace Testing.Models
 
         [Display(Name = "Subject Level")]
         public SubjectLevel SubjectLevel { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Exam> Exams { get; set; }
     }
 }

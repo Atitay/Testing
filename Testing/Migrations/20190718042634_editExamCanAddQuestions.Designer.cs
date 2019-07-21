@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Testing.DAL;
 
 namespace Testing.Migrations
 {
     [DbContext(typeof(TestingDbContext))]
-    partial class TestingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190718042634_editExamCanAddQuestions")]
+    partial class editExamCanAddQuestions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +135,7 @@ namespace Testing.Migrations
 
             modelBuilder.Entity("Testing.Models.Choice", b =>
                 {
-                    b.HasOne("Testing.Models.Question", "Questions")
+                    b.HasOne("Testing.Models.Question", "Question")
                         .WithMany("Choices")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -142,7 +144,7 @@ namespace Testing.Migrations
             modelBuilder.Entity("Testing.Models.Exam", b =>
                 {
                     b.HasOne("Testing.Models.Subject", "Subject")
-                        .WithMany("Exams")
+                        .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -150,7 +152,7 @@ namespace Testing.Migrations
             modelBuilder.Entity("Testing.Models.Question", b =>
                 {
                     b.HasOne("Testing.Models.Topic", "Topic")
-                        .WithMany("Questions")
+                        .WithMany()
                         .HasForeignKey("TopicId");
                 });
 
@@ -162,7 +164,7 @@ namespace Testing.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Testing.Models.Question", "Question")
-                        .WithMany("QuestionExams")
+                        .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

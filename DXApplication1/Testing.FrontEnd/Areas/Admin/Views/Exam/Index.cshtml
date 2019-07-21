@@ -1,9 +1,16 @@
 ﻿@using Testing.Models
 @model Testing.Models.Exam
-<br />
-<br />
-<div>
-    <form method="post">
+
+
+<div id="form-container" class="row">
+
+    <div class="col">
+        <br />
+        <div class="text-secondary p-1" style="background-color:#efdfdf">
+            <h5>Question :&nbsp;&nbsp;@Model.ExamName</h5>
+        </div>
+        <br />
+
         @(Html.DevExtreme().Form<Testing.Models.Exam>()
         .ShowValidationSummary(true)
         .ID("form")
@@ -15,48 +22,91 @@
         .Items(items =>
         {
         items.AddGroup()
-                   .Caption("Exam Information").CssClass("text-info")
+                   .Caption("Exam Information").CssClass("text-secondary")
                    .Items(groupItems =>
                    {
-                       groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100));
+                       groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100).ReadOnly(true));
 
                        groupItems.AddSimpleFor(m => m.Version).Editor(e => e
                                                     .TextBox()
-                                                    .Disabled(false));
+                                                    .Disabled(false).ReadOnly(true));
 
                        groupItems.AddSimpleFor(m => m.SubjectId)
-                        .Editor(e => e.Lookup()
+                        .Editor(e => e.SelectBox()
                         .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
                             .ValueExpr("SubjectId")
                             .DisplayExpr("SubjectName")
-
+                            .ReadOnly(true)
                             )
                    ;
 
                    });
         items.AddGroup()
-                    .Caption("Date Detail").CssClass("text-info")
+                    .Caption("Date Detail").CssClass("text-secondary")
                            .Items(GroupItems =>
                            {
                                GroupItems.AddSimpleFor(m => m.StartDate)
-                                                .Editor(e => e.DateBox());
+                                                .Editor(e => e.DateBox().ReadOnly(true));
 
                                GroupItems.AddSimpleFor(m => m.EndDate)
-                                                    .Editor(e => e.DateBox());
-
-                              
+                                                    .Editor(e => e.DateBox().ReadOnly(true));
 
 });
 
-
 })
         )
-        <partial name="GetQuestions" />
+        <br />
+        @(Html.DevExtreme().Button()
+        .Text("Back")
+        .Type(ButtonType.Default)
+        .StylingMode(ButtonStylingMode.Contained)
+        .OnClick("BacktoIndex")
+        )
+        <br /><br />
+    </div>
 
-        <script>
-            function BacktoIndex() {
-                window.location.href = "/Admin/Exams/Index";
-            }
-        </script>
-    </form>
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+        <br />
+        <div class="bg-white p-1 text-center"><h6>List Question </h6></div>
+        <br />
+
+        @foreach (var eq in Model.QuestionExams)
+        {
+            <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
+                <span>@eq.Question.QuestionString </span><br />
+            </a>
+        }
+
+      <br /><br /><br /><br />
+        <div class="text-center">
+            <div class="row" style="background-color:#efdfdf">
+
+                <div class="text-center col">
+                    <h6>@Model.QuestionExams.Count</h6>
+                    <a asp-action="Questions" asp-route-id="@Model.ExamId">
+                        See More Questions!<br />
+                    </a>
+                </div>
+                <div class="text-center col">
+                    <h6>0</h6>
+                    <a asp-action="TestedBy" asp-route-id="@Model.ExamId">
+                        See Tested!<br />
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
 </div>
+
+
+
+<script>
+    function BacktoIndex() {
+        window.location.href = "/Admin/Exams/Index";
+    }
+
+</script>

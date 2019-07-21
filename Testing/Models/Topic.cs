@@ -23,5 +23,8 @@ namespace Testing.Models
 
         [Display(Name =("Topic Name"))]
         public string TopicName { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Question> Questions { get; set; }
     }
 }

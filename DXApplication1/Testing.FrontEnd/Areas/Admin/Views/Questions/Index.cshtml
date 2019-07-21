@@ -1,8 +1,7 @@
 ﻿<div class="row">
-    <div class="col"></div>
-    <div class="col-sm-9">
+    <div class="col-sm">
         <br />
-        <h2 class="text-info">Question List</h2>
+        <h3 class="text-secondary ">Question List</h3>
         <br />
         @using Testing.Models
         @model Testing.Models.Question
@@ -19,6 +18,7 @@
                 )
 
            .ID("gridContainer")
+
            .Editing(editing =>
            {
                editing.Mode(GridEditMode.Form);
@@ -28,6 +28,8 @@
            })
            .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+
+            .Paging(paging => paging.Enabled(true).PageSize(2))
 
            .ShowBorders(true)
            .HeaderFilter(headerFilter => headerFilter.Visible(true))
@@ -107,25 +109,26 @@
 
 )
 .OnCellDblClick("selection_changed")
+
         )
 
-
+        <br /><br />
         <script>
             function selection_changed(e) {
-            if (e.data.QuestionId != null) {
-                window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
+                if (e.data.QuestionId != null) {
+                    window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
+                }
             }
-        }
-        function slider_valueChanged(data) {
+            function slider_valueChanged(data) {
                 $("#slider-value").dxNumberBox("instance").option("value", data.value);
-        }
+            }
 
-        function numberBox_valueChanged(data) {
+            function numberBox_valueChanged(data) {
                 $("#handler-slider").dxSlider("instance").option("value", data.value);
-        }
+            }
         </script>
 
-        @*tree view*@ 
+        @*tree view*@
         @using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
         {
             @(Html.DevExtreme().TreeView()
@@ -138,21 +141,21 @@
             .SelectByClick(true)
             .Height(235)
             .OnItemSelectionChanged(
-                                @<text>
-                                    function(args) {
-                                    var nodes = args.component.getNodes(),
-                                    value = getSelectedItemsKeys(nodes);
+                                                                                                        @<text>
+                                                                                                            function(args) {
+                                                                                                            var nodes = args.component.getNodes(),
+                                                                                                            value = getSelectedItemsKeys(nodes);
 
-                                    component.option("value", value);
-                                    }
-                                </text>)
+                                                                                                            component.option("value", value);
+                                                                                                            }
+                                                                                                        </text>)
 
-              .OnContentReady(
-                                                            @<text>
-                                                                function(args) {
-                                                                syncTreeViewSelection(args.component, component.option("value"));
-                                                                }
-                                                            </text>)
+                       .OnContentReady(
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @<text>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                function(args) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                syncTreeViewSelection(args.component, component.option("value"));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </text>)
             )
         }
 
@@ -189,5 +192,8 @@
         </script>
 
     </div>
-    <div class="col"></div>
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+    </div>
 </div>
+

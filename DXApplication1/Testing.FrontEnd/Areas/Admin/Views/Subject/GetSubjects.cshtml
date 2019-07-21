@@ -1,8 +1,7 @@
 ﻿<div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
+    <div class="col-sm">
         <br />
-        <h2 class="text-info">Subject List</h2>
+        <h2 class="text-secondary">Subject List</h2>
         <br />
         @using Testing.Models
         @(Html.DevExtreme().DataGrid<Testing.Models.Subject>
@@ -18,9 +17,10 @@
 
 
             .ID("gridContainer")
+             .Paging(paging => paging.Enabled(true).PageSize(2))
             .Editing(editing =>
             {
-            editing.Mode(GridEditMode.Form);
+            editing.Mode(GridEditMode.Form).UseIcons(true);
             editing.AllowAdding(true);
             editing.AllowDeleting(true);
             editing.AllowUpdating(true);
@@ -68,9 +68,8 @@
             //.OnCellDblClick("selection_changed")
             )
     </div>
-    <div class="col-sm-2"></div>
 </div>
-
+<br /><br />
 <script>
     function selection_changed(e) {
         window.location.href = "/Admin/Subject/Action/" + e.data.QuestionId;

@@ -1,8 +1,7 @@
 ﻿<div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
+    <div class="col-sm">
         <br />
-        <h2 class="text-info">Topic List</h2>
+        <h2 class="text-secondary">Topic List</h2>
         <br />
         @(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
                 .Controller("Topics")
@@ -19,12 +18,14 @@
              .ParentIdExpr("ParentId")
 
              .HoverStateEnabled(true)
+
+              .Paging(paging => paging.Enabled(true).PageSize(2))
              .Selection(s => s.Mode(SelectionMode.Single))
              //.ShowRowLines(true)
              .WordWrapEnabled(true)
              .Editing(editing =>
              {
-                 editing.Mode(GridEditMode.Row);
+                 editing.Mode(GridEditMode.Row).UseIcons(true);
                  editing.AllowAdding(true);
                  editing.AllowDeleting(true);
                  editing.AllowUpdating(true);
@@ -62,21 +63,21 @@
             })
             .ShowBorders(true)
             .OnInitNewRow("treeList_onInitNewRow")
-           .OnCellDblClick("selection_changed")
+            .OnCellDblClick("selection_changed")
         )
 
     </div>
-    <div class="col-sm-2"></div>
 </div>
+<br /><br />
 <script>
-//new row with Null but Othet with Parent
+    //new row with Null but Othet with Parent
     function treeList_onInitNewRow(e) {
         if (e.data.ParentId == "") {
             e.data.ParentId = null;
         }
     }
-//Click single row ==> New Page with QuestionId
-     function selection_changed(e) {
+    //Click single row ==> New Page with QuestionId
+    function selection_changed(e) {
         window.location.href = "/Admin/Topic/Index/" + e.data.TopicId;
     }
 </script>

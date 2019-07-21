@@ -1,79 +1,26 @@
-﻿<nav class="navbar navbar-dark fixed-top navbar-expand-md" style="background-color:#80c7c7">
-    @*<a class="navbar-brand" href="/">TESTING</a>*@
-    <span style="font-size:22px;cursor:pointer" class="text-light" onclick="openNav()">&#9776; TESTING</span>
+﻿<nav class="navbar navbar-light bg-white fixed-top navbar-expand-md row">
 
-    @*<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div id="navbar" class="collapse navbar-collapse col-2">
+        @*<span class="ml-4" style="font-size:22px; cursor:pointer" onclick="openNav()">&#9776;</span>*@
+        <a class="navbar-brand mr-auto ml-auto" href="@Url.Action("Index","Questions")">TESTING</a>
+    </div>
 
-        <div id="navbar" class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="sidenav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Topic" asp-action="GetTopics" class="nav-link">Topics</a></li>
-                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link">Questions &nbsp;|</a></li>
-                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></li>
-                    <li class="active nav-item"><a asp-area="Admin" asp-controller="Exam" asp-action="GetExams" class="nav-link">Exams </a></li>
+    <div id="navbar" class="collapse navbar-collapse col">
+        <ul class="navbar-nav mr-auto ml-auto bg-transparent" style="width:900px;"></ul>
+    </div>
 
-                </ul>
-            </div>*@
+    <div id="navbar" class="collapse navbar-collapse text-center col-2">
+        <ul class="navbar-nav mr-auto ml-auto bg-transparent">
+            <li class="nav-item pr-2 pl-2">
+                <a class="nav-link" asp-controller="#" asp-action="#">Login</a>
+            </li>
+            <li class="nav-item pr-2 pl-2">
+                <a class="nav-link" asp-controller="#" asp-action="#">Logout</a>
+            </li>
+        </ul>
+    </div>
 </nav>
-
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link"><i class="fas fa-home"></i></a></a>
-    <a class="active nav-item"><a asp-area="Admin" asp-controller="Topics" asp-action="Index" class="nav-link">Topics</a></a>
-    <a class="active nav-item"><a asp-area="Admin" asp-controller="Questions" asp-action="Index" class="nav-link">Questions</a></a>
-    <a class="active nav-item"><a asp-area="Admin" asp-controller="Subject" asp-action="GetSubjects" class="nav-link">Subjects</a></a>
-    <a class="active nav-item"><a asp-area="Admin" asp-controller="Exams" asp-action="Index" class="nav-link">Exams </a></a>
-</div>
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "210px";       
-    }
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-</script>
-
-
-<style>
-    body {
-        font-family: "Lato", sans-serif;
-    }
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color:#80c7c7;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 6px 6px 6px 32px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #808080;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  padding: 0px 0px 0px 140px;
-  top: 0;
-  right: 25px;
-  font-size: 25px;
-  margin-left: 30px;
-}
-
-</style>

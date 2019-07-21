@@ -1,0 +1,132 @@
+﻿@using Testing.Models
+@model Testing.Models.Exam
+
+
+@(Html.DevExtreme().DataGrid<Testing.Models.Question>()
+                    .DataSource(d => d.Mvc()
+                    .Controller("Questions")
+                    .LoadAction("Get")
+                    .Key("QuestionId")
+
+                    )
+
+                 .ID("grid-container")
+
+                 .Paging(paging => paging.Enabled(true).PageSize(2))
+
+                .FilterRow(filterRow => filterRow
+                    .Visible(true)
+                    .ApplyFilter(GridApplyFilterMode.Auto)
+                    )
+
+                .SearchPanel(searchPanel => searchPanel
+                        .Visible(true)
+                        .Width(240)
+                        .Placeholder("Search...")
+                    )
+
+                .ShowBorders(true)
+                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+
+
+.Columns(columns =>
+    {
+
+columns.AddFor(m => m.QuestionString).Caption("Question");
+
+
+columns.AddFor(m => m.QuestionType).Caption("Question Type")
+.Lookup(lookup => lookup
+.DataSource(Html.GetEnumSelectList<QuestionType>()
+.Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+.ValueExpr("Value")
+.DisplayExpr("Text"))
+;
+
+columns.AddFor(m => m.QuestionLevel).Caption("Question Level")
+.Lookup(lookup => lookup
+.DataSource(Html.GetEnumSelectList<QuestionLevel>()
+.Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+.ValueExpr("Value")
+.DisplayExpr("Text"))
+;
+
+columns.AddFor(m => m.TopicId).Caption("Topic Name")
+.Lookup(lookup => lookup
+.DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+.DisplayExpr("TopicName")
+.ValueExpr("TopicId"))
+
+;
+
+})
+
+   .Selection(s => s.Mode(SelectionMode.Multiple))
+   .OnSelectionChanged("selection_changed")
+
+)
+
+
+@(Html.DevExtreme().Button()
+.Text("Back")
+.Type(ButtonType.Normal)
+.StylingMode(ButtonStylingMode.Outlined)
+.OnClick("BacktoIndex")
+)
+<br /><br />
+<script>
+    function BacktoIndex() {
+        window.location.href = "/Admin/Exams/Index";
+    }
+
+</script>
+
+<form asp-action="AddQuestions" asp-route-id="@Model.ExamId">
+    <input type="hidden" name="questionsString" id="questionsString">
+    <input type="submit" value="SUBMIT" />
+
+    <script>
+        function selection_changed(selectedItems) {
+            var data = selectedItems.selectedRowsData;
+            document.getElementById("questionsString").value = JSON.stringify(data);
+        }
+    </script>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

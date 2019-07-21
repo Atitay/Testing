@@ -8,14 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+
     <title>TESTING</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <script src="https://kit.fontawesome.com/5309500501.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
 
     <link href="~/css/devextreme/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
     <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+
 
     <script src="~/js/devextreme/jquery.js"></script>
     <script src="~/js/devextreme/bootstrap.js"></script>
@@ -32,7 +35,8 @@
     <script src="~/js/devextreme/globalize/date.js"></script>
 
     @* JSZip for client side export *@
-    @*<script src="~/js/devextreme/jszip.js"></script>*@
+    @*
+        <script src="~/js/devextreme/jszip.js"></script>*@
 
     <script src="~/js/devextreme/dx.all.js"></script>
     <script src="~/js/devextreme/vectormap-data/world.js"></script>
@@ -42,11 +46,26 @@
 </head>
 
 <body>
-    <partial name="_Navbar" />
+    <main role="main" class="container mb-5">
 
-    <main role="main" class="container">
-        @RenderBody()
+        <partial name="_HeadNav" />
+
+        <div class="row ">
+
+            <div class="col-2" style="background-color:#efdfdf">
+                <partial name="_NavSide" />
+            </div>
+            <div class="m-2"></div>
+
+            <div class="col bg-light">
+                @RenderBody()
+            </div>
+
+        </div>
+
     </main>
+    
+
 </body>
 
 </html>

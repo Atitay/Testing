@@ -1,0 +1,66 @@
+﻿@using Testing.Models
+@model Testing.Models.Exam
+@{
+    ViewData["Title"] = "Questions";
+}
+
+    <div class="row">
+        <div class="col-sm">
+            <br />
+            <div class="text-secondary p-1" style="background-color:#efdfdf">
+                <h5>List Question of Exam :&nbsp;&nbsp;@Model.ExamName</h5>
+            </div>
+            <br />
+
+            @foreach (var eq in Model.QuestionExams)
+            {            
+                <partial name="_lstQuestion" />
+            }
+
+            <br /><br />
+            @(Html.DevExtreme().Button()
+                    .Text("Back")
+                    .Type(ButtonType.Default)
+                    .StylingMode(ButtonStylingMode.Contained)
+                    .OnClick("BacktoIndex")
+            )
+        </div>
+
+        <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+        <div class="col-sm-3" style="background-color:#efdfdf">
+            <br />
+            <div class="bg-white p-1 text-center"><h6>Recommended Question! </h6></div>
+            <br />
+
+            @foreach (var eq in Model.QuestionExams)
+            {
+                <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
+                    <span>@eq.Question.QuestionString (@eq.Question.QuestionExams.Count)</span><br />
+                </a>
+            }
+
+            <br /><br /><br />
+            <div class="text-center">
+                <div class="row" style="background-color:#efdfdf">
+
+                    <div class="text-center col">
+                        <h6>@Model.QuestionExams.Count</h6>
+                        <a asp-action="AssignQuestions" asp-route-id="@Model.ExamId">
+                            Assign More Questions
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+            <br /><br />
+        </div>
+
+    </div>
+
+<script>
+    function BacktoIndex() {
+       window.location.href = "/Admin/Exams/Index";
+    }
+
+</script>
