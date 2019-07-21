@@ -12,10 +12,10 @@ using Testing.Models;
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class SubjectController : Controller
+    public class SubjectsController : Controller
     {
         private readonly TestingDbContext _db;
-        public SubjectController(TestingDbContext db)
+        public SubjectsController(TestingDbContext db)
         {
             _db = db;
         }
@@ -61,13 +61,10 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             _db.SaveChanges();
         }
 
-        public IActionResult ListExams(Guid id) => View(_db.Subjects.First(a => a.SubjectId == id));
 
-
-        public IActionResult Index(Guid id)
+        public IActionResult Index()
         {
-            var _subject = _db.Subjects.First(t => t.SubjectId == id);
-            return View(_subject);
+            return View();
         }
 
         //public IActionResult Index()

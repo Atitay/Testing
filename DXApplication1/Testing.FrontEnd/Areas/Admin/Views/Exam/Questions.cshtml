@@ -5,25 +5,28 @@
 }
 
     <div class="row">
-        <div class="col-sm">
+        <div class="col-sm pb-4">
             <br />
             <div class="text-secondary p-1" style="background-color:#efdfdf">
                 <h5>List Question of Exam :&nbsp;&nbsp;@Model.ExamName</h5>
             </div>
             <br />
+            <partial name="_NavExam" />
+            <br />
 
             @foreach (var eq in Model.QuestionExams)
-            {            
-                <partial name="_lstQuestion" />
-            }
+        {
+            <partial name="_lstQuestion" />
+        }
 
-            <br /><br />
-            @(Html.DevExtreme().Button()
-                    .Text("Back")
-                    .Type(ButtonType.Default)
-                    .StylingMode(ButtonStylingMode.Contained)
-                    .OnClick("BacktoIndex")
-            )
+         
+        <br />
+        @(Html.DevExtreme().Button()
+                .Text("Back")
+                .Type(ButtonType.Back)
+                .StylingMode(ButtonStylingMode.Contained)
+                .OnClick("BacktoIndex")
+        )
         </div>
 
         <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
@@ -35,8 +38,9 @@
             @foreach (var eq in Model.QuestionExams)
             {
                 <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
-                    <span>@eq.Question.QuestionString (@eq.Question.QuestionExams.Count)</span><br />
+                    <span>&#x26AC;  @eq.Question.QuestionString (@eq.Question.QuestionExams.Count)</span><br />
                 </a>
+
             }
 
             <br /><br /><br />

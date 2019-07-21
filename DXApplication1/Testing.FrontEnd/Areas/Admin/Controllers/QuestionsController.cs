@@ -29,7 +29,7 @@ namespace Testing.FrontEnd.Controllers
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Questions, loadOptions);
+            return DataSourceLoader.Load(_db.Questions.Include(t=>t.Topic), loadOptions);
         }
 
         [HttpGet]
@@ -41,7 +41,7 @@ namespace Testing.FrontEnd.Controllers
         [HttpGet]
         public object GetTopic(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Topics, loadOptions);
+            return DataSourceLoader.Load(_db.Topics.Include(t => t.Questions), loadOptions);
         }
 
         [HttpPost]
@@ -80,6 +80,15 @@ namespace Testing.FrontEnd.Controllers
             _db.SaveChanges();
         }
 
+
+        [HttpDelete]
+        public void DeleteExam(Guid key)
+        {
+            var question = _db.QuestionExams.First(a => a.QuestionId == key);
+
+            _db.QuestionExams.Remove(question);
+            _db.SaveChanges();
+        }
 
         public IActionResult Index()
         {

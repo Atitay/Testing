@@ -1,20 +1,20 @@
 ﻿<div id="mySidenav" class="sidenav">
 
-    <div class="pt-2">
+    <div class="pt-2" id="myNav">
 
-        <a href="@Url.Action("Index","Questions")" class="navlink active">
+        <a href="@Url.Action("Index","Questions")" class="nav-link active">
             <i class="fas fa-home"></i>&nbsp;Home
         </a>
-        <a href="@Url.Action("Index","Topics")" class="navlink">
+        <a href="@Url.Action("Index","Topics")" class="nav-link">
             Topics
         </a>
-        <a href="@Url.Action("Index","Questions")" class="navlink">
+        <a href="@Url.Action("Index","Questions")" class="nav-link">
             Questions
         </a>
-        <a href="@Url.Action("GetSubjects","Subject")" class="navlink">
+        <a href="@Url.Action("Index","Subjects")" class="nav-link">
             Subjects
         </a>
-        <a href="@Url.Action("Index","Exams")" class="navlink">
+        <a href="@Url.Action("Index","Exams")" class="nav-link">
             Exams
         </a>
 
@@ -58,8 +58,10 @@
 
 
 <script>
-    var header = document.getElementById("mySidenav");
-    var btns = header.getElementsByClassName("navlink");
+   
+
+        var header = document.getElementById("mySidenav");
+    var btns = header.getElementsByClassName("nav-link");
     for (var i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function () {
             var current = document.getElementsByClassName("active");
@@ -67,6 +69,11 @@
             this.className += " active";
         });
     }
+
+    // $('#myNav a').on('click', function (e) {
+    //    e.preventDefault()
+    //    $(this).tab('show')
+    //})
 
 </script>
 

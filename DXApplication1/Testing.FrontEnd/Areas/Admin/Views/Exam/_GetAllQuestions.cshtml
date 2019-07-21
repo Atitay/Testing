@@ -10,10 +10,8 @@
 
                     )
 
-                 .ID("grid-container")
-
-                 .Paging(paging => paging.Enabled(true).PageSize(2))
-
+                .ID("grid-container")
+                .Paging(paging => paging.Enabled(true).PageSize(10))
                 .FilterRow(filterRow => filterRow
                     .Visible(true)
                     .ApplyFilter(GridApplyFilterMode.Auto)
@@ -26,8 +24,7 @@
                     )
 
                 .ShowBorders(true)
-                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
-
+                .HeaderFilter(headerFilter => headerFilter.Visible(true))
 
 .Columns(columns =>
     {
@@ -66,32 +63,32 @@ columns.AddFor(m => m.TopicId).Caption("Topic Name")
 
 )
 
-
-@(Html.DevExtreme().Button()
-.Text("Back")
-.Type(ButtonType.Normal)
-.StylingMode(ButtonStylingMode.Outlined)
-.OnClick("BacktoIndex")
-)
 <br /><br />
-<script>
-    function BacktoIndex() {
-        window.location.href = "/Admin/Exams/Index";
-    }
+      <form asp-action="AddQuestions" asp-route-id="@Model.ExamId">
+          <input type="hidden" name="questionsString" id="questionsString">
 
-</script>
+          @(Html.DevExtreme().Button()
+                         .Text("Back")
+                         .Type(ButtonType.Back)
+                         .StylingMode(ButtonStylingMode.Contained)
+                         .OnClick("BacktoIndex")
+          )
+          &nbsp;&nbsp;
+          <input type="submit" value="SUBMIT" />
 
-<form asp-action="AddQuestions" asp-route-id="@Model.ExamId">
-    <input type="hidden" name="questionsString" id="questionsString">
-    <input type="submit" value="SUBMIT" />
+          <script>
+              function selection_changed(selectedItems) {
+                  var data = selectedItems.selectedRowsData;
+                  document.getElementById("questionsString").value = JSON.stringify(data);
+              }
 
-    <script>
-        function selection_changed(selectedItems) {
-            var data = selectedItems.selectedRowsData;
-            document.getElementById("questionsString").value = JSON.stringify(data);
-        }
-    </script>
-</form>
+              function BacktoIndex() {
+                  window.location.href = "/Admin/Exams/Index";
+              }
+          </script>
+
+
+      </form>
 
 
 

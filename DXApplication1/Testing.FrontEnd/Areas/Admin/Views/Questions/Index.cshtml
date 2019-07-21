@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-sm">
+    <div class="col-sm pb-4">
         <br />
         <h3 class="text-secondary ">Question List</h3>
         <br />
@@ -29,7 +29,7 @@
            .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
 
-            .Paging(paging => paging.Enabled(true).PageSize(2))
+            .Paging(paging => paging.Enabled(true).PageSize(10))
 
            .ShowBorders(true)
            .HeaderFilter(headerFilter => headerFilter.Visible(true))
@@ -112,7 +112,7 @@
 
         )
 
-        <br /><br />
+        
         <script>
             function selection_changed(e) {
                 if (e.data.QuestionId != null) {

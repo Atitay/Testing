@@ -60,6 +60,8 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             _db.SaveChanges();
         }
 
+       
+        public IActionResult ListQuestions(Guid id) => View(_db.Topics.First(a => a.TopicId == id));
 
         public IActionResult Index(Guid id)
         {

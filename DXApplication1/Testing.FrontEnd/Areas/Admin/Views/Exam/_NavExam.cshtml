@@ -1,0 +1,37 @@
+﻿@model Testing.Models.Exam
+@*<div class="col row text-center ">
+        <div class="col bg-light   p-2">
+            <a asp-action="Index" asp-route-id="@Model.ExamId"> Detail </a>
+        </div>
+        <div class="col bg-light  p-2 ">
+            <a asp-action="Questions" asp-route-id="@Model.ExamId">(&nbsp;@Model.QuestionExams.Count&nbsp;) Questions</a>
+        </div>
+        <div class="col bg-light  p-2 ">
+            <a asp-action="TestedBy" asp-route-id="@Model.ExamId">( 0 ) Tested By</a>
+        </div>
+
+    </div>*@
+
+
+<ul class="nav nav-tabs" id="myNav">
+    <li class="nav-item" >
+        <a class="nav-link active" asp-action="Index" asp-route-id="@Model.ExamId"> Detail </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Questions" asp-route-id="@Model.ExamId">( @Model.QuestionExams.Count ) Questions</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-action="TestedBy" asp-route-id="@Model.ExamId">( 0 ) Tested By</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+    </li>
+</ul>
+
+
+<script>
+    //$('#myNav a').on('click', function (e) {
+    //    e.preventDefault()
+    //    $(this).tab('show')
+    //})
+</script>

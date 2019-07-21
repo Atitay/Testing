@@ -47,12 +47,15 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddQuestions(Guid id, string questionsString)
         {
-            var _exam = _db.Exams.First(a => a.ExamId == id);
+            if(questionsString != null)
+            {
+              var _exam = _db.Exams.First(a => a.ExamId == id);
             List<Question> questionsList = JsonConvert.DeserializeObject<List<Question>>(questionsString);
             _exam.AddQuestionns(questionsList);
-
-            _db.SaveChanges();
-
+            
+            _db.SaveChanges(); 
+            }
+            
             return RedirectToAction("Index","Exam" , new {id = id} );
         }
 

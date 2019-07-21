@@ -3,5 +3,34 @@
     ViewData["Title"] = "TestedBy";
 }
 
-<h1>TestedBy</h1>
+<div class="row">
+    <div class="col pb-4 mb-5">
+        <br />
+        <div class="text-secondary p-1" style="background-color:#efdfdf">
+            <h5>Tested By</h5>
+        </div> 
+        <br />
+        <partial name="_NavExam" />
+        <br />
 
+        @(Html.DevExtreme().Button()
+                .Text("Back")
+                .Type(ButtonType.Back)
+                .StylingMode(ButtonStylingMode.Contained)
+                .OnClick("BacktoIndex")
+        )
+
+    </div>
+
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+    </div>
+</div>
+
+
+<script>
+    function BacktoIndex() {
+        window.location.href = "/Admin/Exams/Index";
+    }
+
+</script>

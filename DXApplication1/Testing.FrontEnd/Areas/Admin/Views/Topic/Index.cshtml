@@ -1,70 +1,79 @@
 ﻿@using Testing.Models
 @model Testing.Models.Topic
-<br />
-<br />
-<div>
-    <form method="post">
-        @(Html.DevExtreme().Form<Testing.Models.Topic>()
-        .ShowValidationSummary(true)
-        .ID("form")
-        .ShowColonAfterLabel(true)
-        .ColCount(2)
-        .LabelLocation(FormLabelLocation.Left)
 
-        .FormData(Model)
-
-        .Items(items =>
-        {
-            items.AddGroup()
-                       .Caption("Topic Information").CssClass("text-info")
-                       .Items(groupItems =>
-                       {
-                           groupItems.AddSimpleFor(m => m.TopicName).Editor(e => e.TextBox());
-
-                       });
-            items.AddGroup()
-                        .Caption("More Detail").CssClass("text-info")
-                               .Items(GroupItems =>
-                               {
-                                   GroupItems.AddSimpleFor(m => m.ParentId)
-                                                    .Editor(e => e.Lookup()
-                            .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-                                .ValueExpr("TopicId")
-                                .DisplayExpr("TopicName").Disabled(true));
-
-                                   GroupItems.AddSimpleFor(m => m.Childs)
-                                                        .Editor(e => e
-                                                        .TextBox()
-                                                        .Disabled(false));
-
-                                   GroupItems.AddSimpleFor(m => m.Questions) .Editor(e => e
-                                                        .TextBox()
-                                                        .Disabled(false));
-                               });
-
-            items.AddButton()
-            .HorizontalAlignment(HorizontalAlignment.Left)
-            .ButtonOptions(b => b.Text("Back")
-            .Type(ButtonType.Normal)
-            .StylingMode(ButtonStylingMode.Outlined)
-            .OnClick("BacktoIndex")
-            );
-
-            //items.AddButton()
-            //.HorizontalAlignment(HorizontalAlignment.Right)
-            //.ButtonOptions(b => b.Text("Update")
-            //.Type(ButtonType.Success)
-            //.StylingMode(ButtonStylingMode.Contained)
-            //.UseSubmitBehavior(true)
-            //);
-
-        })
-        )
+<div class="row ">
+    <div class="col-sm pb-4 mb-5 bg-light">
+        <br />
        
-        <script>
-            function BacktoIndex() {
-                window.location.href = "/Admin/Topics/Index";
+            @(Html.DevExtreme().Form<Testing.Models.Topic>()
+            .ShowValidationSummary(true)
+            .ID("form")
+            .ShowColonAfterLabel(true)
+            .ColCount(1)
+            .LabelLocation(FormLabelLocation.Left)
+
+            .FormData(Model)
+
+
+                           .Items(groupItems =>
+                           {
+                               groupItems.AddSimpleFor(m => m.TopicName).Editor(e => e.TextBox().ReadOnly(true));
+
+                                       groupItems.AddSimpleFor(m => m.ParentId)
+                                                                .Editor(e => e.Lookup()
+                                        .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+                                            .ValueExpr("TopicId")
+                                            .DisplayExpr("TopicName").Disabled(true));
+
+ groupItems.AddButton()
+                .HorizontalAlignment(HorizontalAlignment.Left)
+                .ButtonOptions(b => b.Text("Back")
+                .Type(ButtonType.Back)
+                .StylingMode(ButtonStylingMode.Contained)
+                .OnClick("BacktoIndex")
+                );
+
+                           })
+            )
+
+        
+    </div>
+
+   
+        <div class="col-sm-3 mr-2" style="background-color:#efdfdf">
+            <br />
+            <div class="bg-white p-1 text-center"><h6>( @Model.Childs.Count )  List Childs!  </h6></div>
+            <br />
+
+            @foreach (var eq in Model.Childs)
+            {
+                <span>@eq.TopicName </span><br />
             }
-        </script>
-    </form>
+        </div>
+
+        <div class="col-sm-3" style="background-color:#dfa9a9">
+            <br />
+            <div class="bg-white p-1 text-center"><h6>( @Model.Questions.Count )  List Question!  </h6></div>
+            <br />
+
+            @foreach (var eq in Model.Questions)
+            {
+                <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
+                    <span>&#x2654; @eq.QuestionString </span><br />
+                </a>
+
+            }
+
+            <br /><br />
+
+            <a asp-action="ListQuestions" asp-route-id="@Model.TopicId">
+                See More Questions!<br />
+            </a>
+        </div>
 </div>
+
+<script>
+    function BacktoIndex() {
+        window.location.href = "/Admin/Topics/Index";
+    }
+</script>

@@ -7,9 +7,12 @@
     <div class="col">
         <br />
         <div class="text-secondary p-1" style="background-color:#efdfdf">
-            <h5>Question :&nbsp;&nbsp;@Model.ExamName</h5>
+            <h5>Exam Name :&nbsp;&nbsp;@Model.ExamName</h5>
         </div>
         <br />
+        <partial name="_NavExam" />
+        <br />
+
 
         @(Html.DevExtreme().Form<Testing.Models.Exam>()
         .ShowValidationSummary(true)
@@ -58,7 +61,7 @@
         <br />
         @(Html.DevExtreme().Button()
         .Text("Back")
-        .Type(ButtonType.Default)
+        .Type(ButtonType.Back)
         .StylingMode(ButtonStylingMode.Contained)
         .OnClick("BacktoIndex")
         )
@@ -73,12 +76,16 @@
 
         @foreach (var eq in Model.QuestionExams)
         {
-            <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
-                <span>@eq.Question.QuestionString </span><br />
-            </a>
+            
+                <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
+                    <span>&#x2601;  @eq.Question.QuestionString </span><br />
+                </a>
+        
+
+
         }
 
-      <br /><br /><br /><br />
+        <br /><br /><br /><br />
         <div class="text-center">
             <div class="row" style="background-color:#efdfdf">
 

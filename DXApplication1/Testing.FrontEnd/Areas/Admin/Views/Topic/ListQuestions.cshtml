@@ -1,0 +1,69 @@
+﻿@using Testing.Models
+@model Testing.Models.Topic
+@{
+    ViewData["Title"] = "ListQuestions";
+}
+
+<div class="row">
+    <div class="col-sm pb-4">
+        <br />
+        <div class="text-secondary p-1" style="background-color:#efdfdf">
+            <h5>List Questions of Topic :&nbsp;&nbsp;@Model.TopicName</h5>
+        </div>
+
+        <br />
+        <div>
+            <table class="table table-bordered">
+                <tr class="text-secondary" style="background-color:floralwhite">
+                    <th>
+                        Questions
+                    </th>
+                    <th>
+                        Question Type
+                    </th>
+                    <th>
+                        Question Level
+                    </th>
+                    
+                    <th>
+                        Point
+                    </th>
+
+                </tr>
+
+                @foreach (var eq in Model.Questions)
+                {
+                    <tr class="text-secondary">
+                        <td>
+                            @Html.DisplayFor(m => eq.QuestionString)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => eq.QuestionType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => eq.QuestionLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => eq.Point)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        @(Html.DevExtreme().Button()
+                .Text("Back")
+                .Type(ButtonType.Back)
+                .StylingMode(ButtonStylingMode.Contained)
+                .OnClick("BacktoIndex")
+        )
+    </div>
+
+</div>
+
+<script>
+    function BacktoIndex() {
+       window.location.href = "/Admin/Topics/Index";
+    }
+
+</script>

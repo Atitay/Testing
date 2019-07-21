@@ -1,13 +1,20 @@
 ﻿@using Testing.Models
+@model Testing.Models.Exam
+
 @{
     ViewData["Title"] = "AssignQuestions";
 }
 
 <div id="form-container" class="row">
-    <div class="col">
-        <h2 class="pb-4 text-center font-weight-light">Exam</h2>
+    <div class="col-sm pb-4">
+        <br />
+        <div class="text-secondary p-1" style="background-color:#efdfdf">
+            <h5>Add Question to Exam :&nbsp;&nbsp;@Model.ExamName</h5>
+        </div>
+        <br />
+        <partial name="_NavExam" />
+        <br />
+
         <partial name="_GetAllQuestions" />
     </div>
-
-    <div class="col-2"></div>
 </div>

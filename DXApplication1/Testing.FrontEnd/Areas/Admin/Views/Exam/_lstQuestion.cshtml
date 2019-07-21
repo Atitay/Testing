@@ -4,11 +4,11 @@
         @using Testing.Models
 
         @(Html.DevExtreme()
-            .DataGrid<Testing.Models.Question>()
+            .DataGrid<Testing.Models.QuestionExam>()
                 .DataSource(d => d.Mvc()
                 .Controller("Questions")
                 .LoadAction("GetExam")
-
+                .DeleteAction("DeleteExam")
                 .Area("Admin")
                 .Key("QuestionId")
 
@@ -18,10 +18,16 @@
 
            .ID("gridContainer")
 
+           .Editing(editing =>
+           {
+               editing.Mode(GridEditMode.Cell);
+               editing.AllowDeleting(true).UseIcons(true);
+           })
+
            .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
 
-           .Paging(paging => paging.Enabled(true).PageSize(2))
+           .Paging(paging => paging.Enabled(true).PageSize(10))
 
            .ShowBorders(true)
            .HeaderFilter(headerFilter => headerFilter.Visible(true))
@@ -45,29 +51,21 @@
                .ValueExpr("QuestionId"))
                ;
 
-               columns.AddFor(m => m.QuestionId).Caption("Topic Name")
+               columns.AddFor(m => m.QuestionId).Visible(true).Caption("Topic Name")
                .Lookup(lookup => lookup
-               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-               .DisplayExpr("TopicName")
-               .ValueExpr("TopicId"))
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
+               .DisplayExpr("TopicId")
+               .ValueExpr("QuestionId"))
                ;
 
-
-               columns.AddFor(m => m.QuestionId).Caption("Question Type").Visible(true)
+               columns.AddFor(m => m.QuestionId).Visible(true).Caption("Question Type")
                .Lookup(lookup => lookup
-               .DataSource(Html.GetEnumSelectList<QuestionType>()
-               .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-               .ValueExpr("Value")
-               .DisplayExpr("Text"))
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
+               .DisplayExpr("QuestionType")
+               .ValueExpr("QuestionId"))
                ;
-               
-               
 
-
-
-
-
-               columns.AddFor(m => m.QuestionId).Caption("Question Level").Visible(true)
+               columns.AddFor(m => m.QuestionId).Visible(true).Caption("Question Level")
                .Lookup(lookup => lookup
                .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
                .DisplayExpr("QuestionLevel")

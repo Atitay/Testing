@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-sm">
+    <div class="col-sm pb-4">
         <br />
         <h2 class="text-secondary">Subject List</h2>
         <br />
@@ -7,7 +7,7 @@
         @(Html.DevExtreme().DataGrid<Testing.Models.Subject>
             ()
             .DataSource(d => d.Mvc()
-            .Controller("Subject")
+            .Controller("Subjects")
             .LoadAction("Get")
             .UpdateAction("Put")
             .InsertAction("Post")
@@ -17,7 +17,7 @@
 
 
             .ID("gridContainer")
-             .Paging(paging => paging.Enabled(true).PageSize(2))
+             .Paging(paging => paging.Enabled(true).PageSize(10))
             .Editing(editing =>
             {
             editing.Mode(GridEditMode.Form).UseIcons(true);
@@ -65,13 +65,19 @@
                     })
 
             .ShowBorders(true)
-            //.OnCellDblClick("selection_changed")
+            .OnCellDblClick("selection_changed")
             )
+
     </div>
+
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+    </div>
+   
 </div>
-<br /><br />
+
 <script>
     function selection_changed(e) {
-        window.location.href = "/Admin/Subject/Action/" + e.data.QuestionId;
+        window.location.href = "/Admin/Subject/Index/" + e.data.SubjectId;
     }
 </script>

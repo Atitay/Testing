@@ -1,0 +1,62 @@
+﻿@using Testing.Models
+@model Testing.Models.Subject
+@{
+    ViewData["Title"] = "ListExams";
+}
+
+<div class="row">
+    <div class="col-sm pb-4">
+        <br />
+        <div class="text-secondary p-1" style="background-color:#efdfdf">
+            <h5>List Exam of Subject :&nbsp;&nbsp;@Model.SubjectName</h5>
+        </div>
+
+        <br />
+        <div>
+            <table class="table table-bordered">
+                <tr class="text-secondary" style="background-color:floralwhite">
+                    <th>
+                        Exam Name
+                    </th>
+                    <th>
+                        version
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                </tr>
+
+                @foreach (var eq in Model.Exams)
+                {
+                    <tr class="text-secondary">
+                        <td>
+                            @Html.DisplayFor(m => eq.ExamName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => eq.Version)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => eq.StartDate)
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+
+        @(Html.DevExtreme().Button()
+                .Text("Back")
+                .Type(ButtonType.Back)
+                .StylingMode(ButtonStylingMode.Contained)
+                .OnClick("BacktoIndex")
+        )
+    </div>
+    
+</div>
+
+<script>
+    function BacktoIndex() {
+       window.location.href = "/Admin/Subjects/Index";
+    }
+
+</script>

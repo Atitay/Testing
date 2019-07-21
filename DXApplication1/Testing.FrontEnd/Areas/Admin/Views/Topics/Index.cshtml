@@ -1,5 +1,5 @@
 ﻿<div class="row">
-    <div class="col-sm">
+    <div class="col-sm pb-4">
         <br />
         <h2 class="text-secondary">Topic List</h2>
         <br />
@@ -19,7 +19,7 @@
 
              .HoverStateEnabled(true)
 
-              .Paging(paging => paging.Enabled(true).PageSize(2))
+             .Paging(paging => paging.Enabled(true).PageSize(10))
              .Selection(s => s.Mode(SelectionMode.Single))
              //.ShowRowLines(true)
              .WordWrapEnabled(true)
@@ -67,8 +67,11 @@
         )
 
     </div>
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+    </div>
 </div>
-<br /><br />
+
 <script>
     //new row with Null but Othet with Parent
     function treeList_onInitNewRow(e) {
