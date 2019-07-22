@@ -4,68 +4,70 @@
         <h2 class="text-secondary">Exam List</h2>
         <br />
         @model Testing.Models.Exam
-        @(Html.DevExtreme().DataGrid<Testing.Models.Exam>().DataSource(d => d.Mvc()
-                .Controller("Exams")
-                .LoadAction("Get")
-                .UpdateAction("Put")
-                .InsertAction("Post")
-                .DeleteAction("Delete")
-                .Area("Admin")
-                .Key("ExamId")
-                )
+        @(Html.DevExtreme().DataGrid<Testing.Models.Exam>
+    ().DataSource(d => d.Mvc()
+    .Controller("Exams")
+    .LoadAction("Get")
+    .UpdateAction("Put")
+    .InsertAction("Post")
+    .DeleteAction("Delete")
+    .Area("Admin")
+    .Key("ExamId")
+    )
 
-             .ID("gridContainer")
+    .ID("gridContainer")
 
-             .Paging(paging => paging.Enabled(true).PageSize(10))
-             .Editing(editing =>
-             {
-                 editing.Mode(GridEditMode.Form).UseIcons(true);
-                 editing.AllowAdding(true);
-                 editing.AllowDeleting(true);
-                 editing.AllowUpdating(true);
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+    .Editing(editing =>
+    {
+    editing.Mode(GridEditMode.Form).UseIcons(true);
+    editing.AllowAdding(true);
+    editing.AllowDeleting(true);
+    editing.AllowUpdating(true);
 
-             })
-             .FilterRow(filterRow => filterRow
-                .Visible(true)
-                .ApplyFilter(GridApplyFilterMode.Auto)
-            )
-            .SearchPanel(searchPanel => searchPanel
-                .Visible(true)
-                .Width(240)
-                .Placeholder("Search...")
-            )
-            .HeaderFilter(headerFilter => headerFilter.Visible(true))
-            .HoverStateEnabled(true)
-            .Selection(s => s.Mode(SelectionMode.Single))
+    })
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+    .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .HoverStateEnabled(true)
+    .Selection(s => s.Mode(SelectionMode.Single))
 
-            .Columns(columns =>
-            {
+    .Columns(columns =>
+    {
 
-            columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(200);
+    columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(200);
 
-columns.AddFor(m => m.SubjectId).Caption("Subject Name")
-.Lookup(lookup => lookup
-.DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-.DisplayExpr("SubjectName")
-.ValueExpr("SubjectId")
-)
-.FormItem(i => i
-.Editor(e => e.SelectBox()
-.DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-.DisplayExpr("SubjectName")
-.ValueExpr("SubjectId"))
-);
+    columns.AddFor(m => m.SubjectId).Caption("Subject Name")
+    .Lookup(lookup => lookup
+    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+    .DisplayExpr("SubjectName")
+    .ValueExpr("SubjectId")
+    )
+    .FormItem(i => i
+    .Editor(e => e.SelectBox()
+    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+    .DisplayExpr("SubjectName")
+    .ValueExpr("SubjectId"))
+    );
 
-columns.AddFor(m => m.StartDate).Caption("Start Date");
-columns.AddFor(m => m.EndDate).Caption("End Date");
-columns.AddFor(m => m.Version).Caption("Version");
-})
+    columns.AddFor(m => m.StartDate).Caption("Start Date").FormItem(i => i
+        .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+    columns.AddFor(m => m.ExamDuration).Caption("Duration");
+    columns.AddFor(m => m.Version).Caption("Version");
+    })
 
-.ShowBorders(true)
-.OnCellDblClick("selection_changed")
-        )
+    .ShowBorders(true)
+    .OnCellDblClick("selection_changed")
+    )
 
-    </div>
+</div>
 </div>
 
 <br /><br />

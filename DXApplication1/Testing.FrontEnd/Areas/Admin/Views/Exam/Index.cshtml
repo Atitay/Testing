@@ -10,7 +10,9 @@
             <h5>Exam Name :&nbsp;&nbsp;@Model.ExamName</h5>
         </div>
         <br />
-        <partial name="_NavExam" />
+        
+            <partial name="_NavExam" />
+        
         <br />
 
 
@@ -24,39 +26,43 @@
         .FormData(Model)
         .Items(items =>
         {
-        items.AddGroup()
-                   .Caption("Exam Information").CssClass("text-secondary")
-                   .Items(groupItems =>
-                   {
-                       groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100).ReadOnly(true));
+            items.AddGroup()
+                       .Caption("Exam Information").CssClass("text-secondary")
+                       .Items(groupItems =>
+                       {
+                           groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100).ReadOnly(true));
 
-                       groupItems.AddSimpleFor(m => m.Version).Editor(e => e
-                                                    .TextBox()
-                                                    .Disabled(false).ReadOnly(true));
+                           groupItems.AddSimpleFor(m => m.Version).Editor(e => e
+                                                        .TextBox()
+                                                        .Disabled(false).ReadOnly(true));
 
-                       groupItems.AddSimpleFor(m => m.SubjectId)
-                        .Editor(e => e.SelectBox()
-                        .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-                            .ValueExpr("SubjectId")
-                            .DisplayExpr("SubjectName")
-                            .ReadOnly(true)
-                            )
-                   ;
+                           groupItems.AddSimpleFor(m => m.SubjectId)
+                            .Editor(e => e.SelectBox()
+                            .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+                                .ValueExpr("SubjectId")
+                                .DisplayExpr("SubjectName")
+                                .ReadOnly(true)
+                                )
+                       ;
 
-                   });
-        items.AddGroup()
-                    .Caption("Date Detail").CssClass("text-secondary")
-                           .Items(GroupItems =>
-                           {
-                               GroupItems.AddSimpleFor(m => m.StartDate)
-                                                .Editor(e => e.DateBox().ReadOnly(true));
+                       });
+            items.AddGroup()
+                        .Caption("Date Detail").CssClass("text-secondary")
+                               .Items(GroupItems =>
+                               {
+                                   GroupItems.AddSimpleFor(m => m.StartDate)
+                                                .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy").ReadOnly(true));
 
-                               GroupItems.AddSimpleFor(m => m.EndDate)
-                                                    .Editor(e => e.DateBox().ReadOnly(true));
+                                   GroupItems.AddSimpleFor(m => m.ExamDuration)
+                                                    .Editor(e => e.NumberBox().ShowSpinButtons(true).Min(1).ReadOnly(true));
 
-});
+                                   GroupItems.AddSimpleFor(m => m.EndDate).Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy").ReadOnly(true));
 
-})
+                                   GroupItems.AddSimpleFor(m => m.RemainingDay).Editor(e => e.TextBox().ReadOnly(true));
+
+                               });
+
+        })
         )
         <br />
         @(Html.DevExtreme().Button()

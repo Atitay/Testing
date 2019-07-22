@@ -3,6 +3,7 @@
         <br />
         <h2 class="text-secondary">Topic List</h2>
         <br />
+        @model  Testing.Models.Topic
         @(Html.DevExtreme().TreeList<Testing.Models.Topic>().DataSource(d => d.Mvc()
                 .Controller("Topics")
                 .LoadAction("Get")
@@ -81,6 +82,9 @@
     }
     //Click single row ==> New Page with QuestionId
     function selection_changed(e) {
-        window.location.href = "/Admin/Topic/Index/" + e.data.TopicId;
+
+        if (e.data.TopicId != null) {
+            window.location.href = "/Admin/Topic/" + e.data.TopicId + "/Detail";
+        }
     }
 </script>

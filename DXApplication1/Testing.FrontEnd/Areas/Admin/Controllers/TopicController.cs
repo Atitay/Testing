@@ -12,6 +12,8 @@ using Testing.Models;
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
    [Area("Admin")]
+
+    [Route("Admin/Topic/{id}")]
     public class TopicController : Controller
     {
         private readonly TestingDbContext _db;
@@ -60,9 +62,10 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             _db.SaveChanges();
         }
 
-       
+        [Route("ListQuestions")]
         public IActionResult ListQuestions(Guid id) => View(_db.Topics.First(a => a.TopicId == id));
 
+        [Route("Detail")]
         public IActionResult Index(Guid id)
         {
             var _topic = _db.Topics.First(t=>t.TopicId==id);

@@ -51,6 +51,7 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             {
               var _exam = _db.Exams.First(a => a.ExamId == id);
             List<Question> questionsList = JsonConvert.DeserializeObject<List<Question>>(questionsString);
+                
             _exam.AddQuestionns(questionsList);
             
             _db.SaveChanges(); 

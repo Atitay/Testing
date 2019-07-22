@@ -15,6 +15,7 @@ using Testing.Models;
 namespace Testing.FrontEnd.Controllers
 {
     [Area("Admin")]
+   
     public class QuestionsController : Controller
     {
         private readonly TestingDbContext _db;
@@ -29,7 +30,7 @@ namespace Testing.FrontEnd.Controllers
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Questions.Include(t=>t.Topic), loadOptions);
+            return DataSourceLoader.Load(_db.Questions, loadOptions);
         }
 
         [HttpGet]
@@ -41,7 +42,7 @@ namespace Testing.FrontEnd.Controllers
         [HttpGet]
         public object GetTopic(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Topics.Include(t => t.Questions), loadOptions);
+            return DataSourceLoader.Load(_db.Topics, loadOptions);
         }
 
         [HttpPost]
@@ -90,6 +91,7 @@ namespace Testing.FrontEnd.Controllers
             _db.SaveChanges();
         }
 
+      
         public IActionResult Index()
         {
             return View();

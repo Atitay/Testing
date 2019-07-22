@@ -2,19 +2,19 @@
 
     <div class="pt-2" id="myNav">
 
-        <a href="@Url.Action("Index","Questions")" class="nav-link active">
+        <a href="@Url.Action("Index","Questions")" class="nav-link disabled" id="Home">
             <i class="fas fa-home"></i>&nbsp;Home
         </a>
-        <a href="@Url.Action("Index","Topics")" class="nav-link">
+        <a href="@Url.Action("Index","Topics")" class="nav-link @checkCurrentController("Topics")" id="Topics">
             Topics
         </a>
-        <a href="@Url.Action("Index","Questions")" class="nav-link">
+        <a href="@Url.Action("Index","Questions")" class="nav-link @checkCurrentController("Questions")" id="Questions">
             Questions
         </a>
-        <a href="@Url.Action("Index","Subjects")" class="nav-link">
+        <a href="@Url.Action("Index","Subjects")" class="nav-link @checkCurrentController("Subjects")" id="Subjects">
             Subjects
         </a>
-        <a href="@Url.Action("Index","Exams")" class="nav-link">
+        <a href="@Url.Action("Index","Exams")" class="nav-link @checkCurrentController("Exams")" id="Exams">
             Exams
         </a>
 
@@ -58,17 +58,18 @@
 
 
 <script>
-   
 
-        var header = document.getElementById("mySidenav");
-    var btns = header.getElementsByClassName("nav-link");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function () {
-            var current = document.getElementsByClassName("active");
-            current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
-        });
-    }
+
+    //var header = document.getElementById("mySidenav");
+    //var btns = header.getElementsByClassName("nav-link");
+    //for (var i = 0; i < btns.length; i++) {
+    //    btns[i].addEventListener("click", function () {
+    //        var current = document.getElementsByClassName("active");
+    //        current[0].className = current[0].className.replace(" active", "");
+    //        this.className += " active";
+    //    });
+    //}
+
 
     // $('#myNav a').on('click', function (e) {
     //    e.preventDefault()
@@ -77,7 +78,17 @@
 
 </script>
 
+@functions {
 
-          
+    public string checkCurrentController(string nameController)
+    {
+        var currentCont = this.ViewContext.RouteData.Values["controller"].ToString();
+        if (currentCont == nameController)
+            return "active";
+        return "";
+    }
+}
+
+
 
 

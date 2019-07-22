@@ -15,7 +15,7 @@ using Testing.Models;
 namespace Testing.FrontEnd.Controllers
 {
     [Area("Admin")]
-
+    
     public class QuestionController : Controller
     {
         private readonly TestingDbContext _db;
@@ -25,6 +25,7 @@ namespace Testing.FrontEnd.Controllers
             _db = db;
         }
 
+        
         [HttpGet]
         public IActionResult Index(Guid id)
         {
@@ -32,7 +33,7 @@ namespace Testing.FrontEnd.Controllers
 
             return View(_question);
         }
-
+        
         [HttpPost,ActionName("Index")]
         [ValidateAntiForgeryToken]
         public ActionResult IndexPost(Guid id,Question question)
@@ -49,7 +50,7 @@ namespace Testing.FrontEnd.Controllers
             return RedirectToAction("Index","Questions");         
         }
 
-
+      
         public IActionResult Choices(Guid id)
         {
             var _choice = _db.Questions.First(a => a.QuestionId == id);

@@ -22,7 +22,13 @@ namespace Testing.Models
 
         public DateTime StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public int ExamDuration { get; set; }
+
+        [NotMapped]
+        public DateTime EndDate => StartDate.AddDays(ExamDuration);
+
+        [NotMapped]
+        public int RemainingDay => (EndDate - DateTime.Today).Days;
 
         [JsonIgnore]
         public virtual ICollection<QuestionExam> QuestionExams { get; set; }
@@ -36,6 +42,7 @@ namespace Testing.Models
             questionsList.ForEach(question =>
             {
             //Need checking list question
+            
            
                     QuestionExam newQuestionExam = new QuestionExam()
                     {
@@ -43,6 +50,7 @@ namespace Testing.Models
                         ExamId = this.ExamId,
                         QuestionId = question.QuestionId
                     };
+                
                     QuestionExams.Add(newQuestionExam);
                
 

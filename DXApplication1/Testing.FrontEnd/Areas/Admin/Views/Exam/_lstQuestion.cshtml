@@ -1,14 +1,16 @@
-﻿<div class="row">
+﻿
+<div class="row">
     <div class="col-sm">
 
         @using Testing.Models
-
+        @model  Testing.Models.Exam
         @(Html.DevExtreme()
             .DataGrid<Testing.Models.QuestionExam>()
                 .DataSource(d => d.Mvc()
                 .Controller("Questions")
                 .LoadAction("GetExam")
                 .DeleteAction("DeleteExam")
+
                 .Area("Admin")
                 .Key("QuestionId")
 
@@ -22,6 +24,7 @@
            {
                editing.Mode(GridEditMode.Cell);
                editing.AllowDeleting(true).UseIcons(true);
+
            })
 
            .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
@@ -34,51 +37,60 @@
            .Selection(s => s.Mode(SelectionMode.Single))
            .HoverStateEnabled(true)
 
-
+           
            .Columns(columns =>
            {
+
                columns.AddFor(m => m.QuestionId).Caption("Questions")
+
                .Lookup(lookup => lookup
                .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
                .DisplayExpr("QuestionString")
                .ValueExpr("QuestionId"))
+               
                ;
 
                columns.AddFor(m => m.QuestionId).Visible(true).Caption("Points")
+
                .Lookup(lookup => lookup
                .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
                .DisplayExpr("Point")
                .ValueExpr("QuestionId"))
                ;
 
-               columns.AddFor(m => m.QuestionId).Visible(true).Caption("Topic Name")
+               columns.AddFor(m => m.Question.Topic.TopicId).Visible(true).Caption("Topic Name")
+
                .Lookup(lookup => lookup
-               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
-               .DisplayExpr("TopicId")
-               .ValueExpr("QuestionId"))
+               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+               .DisplayExpr("TopicName")
+               .ValueExpr("TopicId"))
                ;
 
-               columns.AddFor(m => m.QuestionId).Visible(true).Caption("Question Type")
-               .Lookup(lookup => lookup
-               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
-               .DisplayExpr("QuestionType")
-               .ValueExpr("QuestionId"))
-               ;
+               columns.AddFor(m => m.Question.QuestionType).Visible(true).Caption("Question Type")
 
-               columns.AddFor(m => m.QuestionId).Visible(true).Caption("Question Level")
                .Lookup(lookup => lookup
-               .DataSource(d => d.Mvc().Controller("Questions").LoadAction("Get").Key("QuestionId"))
-               .DisplayExpr("QuestionLevel")
-               .ValueExpr("QuestionId"))
+               .DataSource(Html.GetEnumSelectList<QuestionType>()
+               .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"));
+
+               columns.AddFor(m => m.Question.QuestionLevel).Visible(true).Caption("Question Level")
+
+               .Lookup(lookup => lookup
+               .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+               .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"))
                ;
 
 
            }
 
 )
-.OnCellDblClick("selection_changed")
+//.OnCellDblClick("selection_changed")
 
         )
+
 
         <script>
             function selection_changed(e) {

@@ -116,8 +116,8 @@
         <script>
             function selection_changed(e) {
                 if (e.data.QuestionId != null) {
-                    window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
-                }
+            window.location.href = "/Admin/Question/Index/" + e.data.QuestionId ;
+            }
             }
             function slider_valueChanged(data) {
                 $("#slider-value").dxNumberBox("instance").option("value", data.value);
