@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Testing.DAL;
 
 namespace Testing.Migrations
 {
     [DbContext(typeof(TestingDbContext))]
-    partial class TestingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190723043410_editIgnoreOtherModel")]
+    partial class editIgnoreOtherModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,42 +137,6 @@ namespace Testing.Migrations
                     b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("Testing.Models.User", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Password");
-
-                    b.Property<string>("Role");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Testing.Models.UserExam", b =>
-                {
-                    b.Property<Guid>("UserExamId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("ExamId");
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("UserExamId");
-
-                    b.HasIndex("ExamId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserExams");
-                });
-
             modelBuilder.Entity("Testing.Models.Choice", b =>
                 {
                     b.HasOne("Testing.Models.Question", "Questions")
@@ -212,19 +178,6 @@ namespace Testing.Migrations
                     b.HasOne("Testing.Models.Topic", "Parent")
                         .WithMany("Childs")
                         .HasForeignKey("ParentId");
-                });
-
-            modelBuilder.Entity("Testing.Models.UserExam", b =>
-                {
-                    b.HasOne("Testing.Models.Exam", "Exam")
-                        .WithMany("UserExams")
-                        .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Testing.Models.User", "User")
-                        .WithMany("UserExams")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

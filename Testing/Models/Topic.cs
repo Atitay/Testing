@@ -15,7 +15,7 @@ namespace Testing.Models
        
         public Guid? ParentId { get; set; }
         [ForeignKey("ParentId")]
-        [JsonIgnore]
+
         public virtual Topic Parent { get; set; }
 
         [JsonIgnore]

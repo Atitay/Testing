@@ -19,10 +19,10 @@ namespace Testing.Models
         public Guid QuestionId { get; set; }
         [ForeignKey("QuestionId")]
 
-        [JsonIgnore]
         public virtual Question Questions { get; set; }
 
-      
+        
+
     }
 
     

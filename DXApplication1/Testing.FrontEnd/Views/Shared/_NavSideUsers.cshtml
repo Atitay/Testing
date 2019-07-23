@@ -5,16 +5,8 @@
         <a href="@Url.Action("Index","Home")" class="nav-link disabled" id="Home">
             <i class="fas fa-home"></i>&nbsp;Home
         </a>
-        <a href="@Url.Action("Index","Topics")" class="nav-link @checkCurrentController("Topics") @checkCurrentController("Topic")" id="Topics">
-            Topics
-        </a>
-        <a href="@Url.Action("Index","Questions")" class="nav-link @checkCurrentController("Questions") @checkCurrentController("Question")" id="Questions">
-            Questions
-        </a>
-        <a href="@Url.Action("Index","Subjects")" class="nav-link @checkCurrentController("Subjects") @checkCurrentController("Subject")" id="Subjects">
-            Subjects
-        </a>
-        <a href="@Url.Action("Index","Exams")" class="nav-link @checkCurrentController("Exams") @checkCurrentController("Exam")" id="Exams">
+        
+        <a href="@Url.Action("Index","Exams")" class="nav-link @checkCurrentController("Exams") " id="Exams">
             Exams
         </a>
 
@@ -55,7 +47,6 @@
                 color: white;
             }
 </style>
-
 
 <script>
 

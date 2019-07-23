@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{125A9A41-1A93-4610-91CB-53A48955007A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.FrontEnd", "DXApplication1\Testing.FrontEnd\Testing.FrontEnd.csproj", "{024A22F2-FACE-4A54-B077-F034FBCDCA9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.FrontEnd", "DXApplication1\Testing.FrontEnd\Testing.FrontEnd.csproj", "{024A22F2-FACE-4A54-B077-F034FBCDCA9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

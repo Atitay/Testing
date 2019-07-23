@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,16 +26,17 @@ namespace Testing_FrontEnd
         public void ConfigureServices(IServiceCollection services)
         {
             //sql server
-
             services.AddDbContext<TestingDbContext>();
-
 
             // Add framework services.
             services
                 .AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            //add cookie
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
 
-
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +53,9 @@ namespace Testing_FrontEnd
             }
 
             app.UseStaticFiles();
+
+            
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

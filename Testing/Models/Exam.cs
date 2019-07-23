@@ -12,6 +12,7 @@ namespace Testing.Models
         [Key]
         public Guid ExamId { get; set; }
 
+        public string ExamCode { get; set; }
         public string ExamName { get; set; }
         public string Version { get; set; }
 
@@ -23,6 +24,8 @@ namespace Testing.Models
         public DateTime StartDate { get; set; }
 
         public int ExamDuration { get; set; }
+        public int TotalPoint { get; set; }
+
 
         [NotMapped]
         public DateTime EndDate => StartDate.AddDays(ExamDuration);
@@ -58,6 +61,9 @@ namespace Testing.Models
             });
 
         }
+
+        [JsonIgnore]
+        public virtual ICollection<UserExam> UserExams { get; set; }
 
     }
 }

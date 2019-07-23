@@ -22,7 +22,13 @@
     <ProjectReference Include="..\..\Testing\Testing.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Users\Controllers\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\Question\ListExams.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties TemplateFeatures="NETCORE CS BASELINE" /></VisualStudio></ProjectExtensions>
 </Project>

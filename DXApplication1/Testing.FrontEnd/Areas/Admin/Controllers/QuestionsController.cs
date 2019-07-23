@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Testing.DAL;
-using Testing.FrontEnd.Models.ViewModel;
 using Testing.Models;
 
 namespace Testing.FrontEnd.Controllers
@@ -19,9 +18,6 @@ namespace Testing.FrontEnd.Controllers
     public class QuestionsController : Controller
     {
         private readonly TestingDbContext _db;
-
-        //[BindProperty]
-        //public QuestionViewModel QuestionVM { get; set; }
         public QuestionsController(TestingDbContext db)
         {
             _db = db;
@@ -37,6 +33,12 @@ namespace Testing.FrontEnd.Controllers
         public object GetExam(DataSourceLoadOptions loadOptions,Guid id)
         {
             return DataSourceLoader.Load(_db.QuestionExams.Where(m => m.ExamId == id), loadOptions);
+        }
+
+        [HttpGet]
+        public object GetTopicQuest(DataSourceLoadOptions loadOptions, Guid id)
+        {
+            return DataSourceLoader.Load(_db.Questions.Where(m => m.TopicId == id), loadOptions);
         }
 
         [HttpGet]

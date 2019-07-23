@@ -1,0 +1,37 @@
+﻿@using Testing.Models
+
+@(Html.DevExtreme().DataGrid<Testing.Models.QuestionExam>()
+    .ID("gridContainer")
+        .DataSource(d => d.Mvc()
+        .Controller("Exams")
+        .LoadAction("GetQuestionExam")
+        .Area("Admin")
+
+        .Key("ExamId")
+
+        .LoadParams(new { id = Model.QuestionId })
+
+        )
+
+    //.FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+    .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+
+    .ShowBorders(true)
+    //.HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .HoverStateEnabled(true)
+
+
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.Exam.ExamName).Caption("Exam Name");
+
+        columns.AddFor(m => m.Exam.Version).Caption("Vesion");
+
+        columns.AddFor(m => m.Exam.StartDate).Caption("Start Date");
+
+
+    })
+)

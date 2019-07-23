@@ -1,0 +1,50 @@
+﻿@using Testing.Models
+
+@(Html.DevExtreme().DataGrid<Testing.Models.Question>()
+    .ID("gridContainer")
+        .DataSource(d => d.Mvc()
+        .Controller("Questions")
+        .LoadAction("GetTopicQuest")
+        .Area("Admin")
+
+        .Key("QuestionId")
+
+        .LoadParams(new { id = Model.TopicId })
+
+        )
+
+    //.FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+    .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+
+    .ShowBorders(true)
+    //.HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .HoverStateEnabled(true)
+
+
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.QuestionString).Caption("Questions");
+
+        columns.AddFor(m => m.Point).Caption("Point");
+
+         columns.AddFor(m => m.QuestionType).Visible(true).Caption("Question Type")
+            .Lookup(lookup => lookup
+                .DataSource(Html.GetEnumSelectList<QuestionType>()
+                        .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                    );
+
+
+            columns.AddFor(m => m.QuestionLevel).Visible(true).Caption("Question Level")
+   .Lookup(lookup => lookup
+       .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+               .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+               .ValueExpr("Value")
+               .DisplayExpr("Text"));
+
+    })
+)

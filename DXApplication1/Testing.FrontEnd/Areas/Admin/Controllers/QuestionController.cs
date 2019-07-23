@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Testing.DAL;
-using Testing.FrontEnd.Models.ViewModel;
 using Testing.Models;
 
 namespace Testing.FrontEnd.Controllers
@@ -50,7 +49,8 @@ namespace Testing.FrontEnd.Controllers
             return RedirectToAction("Index","Questions");         
         }
 
-      
+        public IActionResult ListExams(Guid id) => View(_db.Questions.First(a => a.QuestionId == id));
+
         public IActionResult Choices(Guid id)
         {
             var _choice = _db.Questions.First(a => a.QuestionId == id);

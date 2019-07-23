@@ -1,72 +1,73 @@
 ﻿@using Testing.Models
 @model Testing.Models.Question
 <br />
-<div >
-    <div class="text-secondary p-1" style="background-color:#efdfdf">
-        <h5>Question :&nbsp;&nbsp;@Model.QuestionString</h5>
-    </div>
-    <br />
-    <form method="post">
-        @(Html.DevExtreme().Form<Testing.Models.Question>()
-        .ShowValidationSummary(true)
-        .ID("form")
-        .ShowColonAfterLabel(true)
-        .ColCount(2)
-        .LabelLocation(FormLabelLocation.Left)
+<div class="row">
+    <div class="col-sm pb-4">
+        <div class="text-secondary p-1" style="background-color:#efdfdf">
+            <h5>Question :&nbsp;&nbsp;@Model.QuestionString</h5>
+        </div>
+        <br />
+        <form method="post">
+            @(Html.DevExtreme().Form<Testing.Models.Question>()
+            .ShowValidationSummary(true)
+            .ID("form")
+            .ShowColonAfterLabel(true)
+            .ColCount(2)
+            .LabelLocation(FormLabelLocation.Left)
 
-        .FormData(Model)
-        .Items(items =>
-        {
-        items.AddGroup()
-                   .Caption("Question Information").CssClass("text-secondary")
-                   .Items(groupItems =>
-                   {
-                       groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
-                       groupItems.AddSimpleFor(m => m.QuestionType)
-                                    .Editor(e => e.SelectBox()
-                                    .ID("QuestionType")
-                       .DataSource(Html.GetEnumSelectList<QuestionType>()
-                       .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                            .ValueExpr("Value")
-                            .DisplayExpr("Text")
+            .FormData(Model)
+            .Items(items =>
+            {
+            items.AddGroup()
+                       .Caption("Question Information").CssClass("text-secondary")
+                       .Items(groupItems =>
+                       {
+                           groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
+                           groupItems.AddSimpleFor(m => m.QuestionType)
+                                        .Editor(e => e.SelectBox()
+                                        .ID("QuestionType")
+                           .DataSource(Html.GetEnumSelectList<QuestionType>()
+                           .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                                .ValueExpr("Value")
+                                .DisplayExpr("Text")
 
-                            )
-                   ;
-                       groupItems.AddSimpleFor(m => m.QuestionLevel)
-                                   .Editor(e => e.SelectBox()
-                                   .ID("QuestionLevel")
-                        .DataSource(Html.GetEnumSelectList<QuestionLevel>()
-                        .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                            .ValueExpr("Value")
-                            .DisplayExpr("Text")
+                                )
+                       ;
+                           groupItems.AddSimpleFor(m => m.QuestionLevel)
+                                       .Editor(e => e.SelectBox()
+                                       .ID("QuestionLevel")
+                            .DataSource(Html.GetEnumSelectList<QuestionLevel>()
+                            .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
+                                .ValueExpr("Value")
+                                .DisplayExpr("Text")
 
-                            )
-                   ;
-                       groupItems.AddSimpleFor(m => m.TopicId)
-                        .Editor(e => e.Lookup()
-                        .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-                            .ValueExpr("TopicId")
-                            .DisplayExpr("TopicName")
+                                )
+                       ;
+                           groupItems.AddSimpleFor(m => m.TopicId)
+                            .Editor(e => e.Lookup()
+                            .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
+                                .ValueExpr("TopicId")
+                                .DisplayExpr("TopicName")
 
-                            )
-                   ;
+                                )
+                       ;
 
-                   });
-        items.AddGroup()
-                    .Caption("Choice Information").CssClass("text-secondary ")
-                           .Items(GroupItems =>
-                           {
-                               GroupItems.AddSimpleFor(m => m.Point)
-                                                .Editor(e => e.NumberBox().Max(100)
-                                                .Min(1).ShowSpinButtons(true));
+                       });
+            items.AddGroup()
+                        .Caption("Choice Information").CssClass("text-secondary ")
+                               .Items(GroupItems =>
+                               {
+                                   GroupItems.AddSimpleFor(m => m.Point)
+                                                    .Editor(e => e.NumberBox().Max(100)
+                                                    .Min(1).ShowSpinButtons(true));
 
-                               GroupItems.AddSimpleFor(m => m.Hint)
-                                                    .Editor(e => e
-                                                    .TextBox()
-                                                    .Disabled(false));
+                                   GroupItems.AddSimpleFor(m => m.Hint)
+                                                        .Editor(e => e
+                                                        .TextBox()
+                                                        .Disabled(false));
 
-                               GroupItems.AddSimpleFor(m => m.Choices)
-                               .Template(@<text><br /><partial name="_Choices" /></text>);
+                                   GroupItems.AddSimpleFor(m => m.Choices)
+                                   .Template(@<text><br /><partial name="_Choices" /></text>);
 
 
 });
@@ -74,7 +75,7 @@
 items.AddButton()
 .HorizontalAlignment(HorizontalAlignment.Left)
 .ButtonOptions(b => b.Text("Back")
-.Type(ButtonType.Default)
+.Type(ButtonType.Back)
 .StylingMode(ButtonStylingMode.Contained)
 .OnClick("BacktoIndex")
 );
@@ -87,16 +88,36 @@ items.AddButton()
 );
 
 })
-        )
-        <partial name="_Choices" />
+            )
+            <partial name="_Choices" />
 
-        <script>
-            function BacktoIndex() {
-                window.location.href = "/Admin/Questions/Index";
-            }
-        </script>         
-       
-    </form>
-  
+            <script>
+                function BacktoIndex() {
+                    window.location.href = "/Admin/Questions/Index";
+                }
+            </script>
 
+        </form>
+    </div>
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+        <br />
+        <div class="bg-white p-1 text-center"><h6>( @Model.QuestionExams.Count ) List Exam </h6></div>
+        <br />
+
+        @foreach (var eq in Model.QuestionExams)
+        {
+
+            <a asp-action="Index" asp-controller="Exam" asp-route-id="@eq.ExamId">
+                <span>&#x2601;  @eq.Exam.ExamName </span><br />
+            </a>
+
+        }
+
+        <br /><br />
+
+        <a asp-action="ListExams" asp-route-id="@Model.QuestionId">
+            See More Exams!<br />
+        </a>
+    </div>
 </div>

@@ -21,7 +21,7 @@ namespace Testing.Models
         public Guid? TopicId { get; set; }
 
         [ForeignKey("TopicId")]
-        [JsonIgnore]
+
         public virtual Topic Topic { get; set; }
 
         [Display(Name = ("Question Type"))]
@@ -35,7 +35,7 @@ namespace Testing.Models
 
         [JsonIgnore]
         public virtual ICollection<QuestionExam> QuestionExams { get; set; }
+        
 
-       
     }
 }

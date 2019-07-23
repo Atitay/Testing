@@ -32,6 +32,18 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             return DataSourceLoader.Load(_db.Subjects, loadOptions);
         }
 
+        [HttpGet]
+        public object GetSubjectExam(DataSourceLoadOptions loadOptions,Guid id)
+        {
+            return DataSourceLoader.Load(_db.Exams.Where(m => m.SubjectId == id), loadOptions);
+        }
+
+        [HttpGet]
+        public object GetQuestionExam(DataSourceLoadOptions loadOptions, Guid id)
+        {
+            return DataSourceLoader.Load(_db.QuestionExams.Where(m => m.QuestionId == id), loadOptions);
+        }
+
         [HttpPost]
         public IActionResult Post(string values)
         {
