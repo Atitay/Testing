@@ -1,0 +1,60 @@
+﻿@using Testing.Models
+
+@{
+    Layout = "~/Views/Shared/_LayoutAuthen.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<br />
+<h2>@ViewData["Title"]</h2>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+
+            @using (Html.BeginForm())
+            {
+                using (Html.DevExtreme().ValidationGroup())
+                {
+
+                    @(Html.DevExtreme().Form<Testing.FrontEnd.Areas.Authen.Models.LoginViewModel>()
+                                     .ShowValidationSummary(true)
+                                     .ID("form")
+                                     .ShowColonAfterLabel(true)
+                                     .ColCount(1)
+                                     .LabelLocation(FormLabelLocation.Left)
+
+
+                                     .Items(items =>
+                                     {
+                                         items.AddGroup()
+
+                                                    .Items(groupItems =>
+                                                    {
+                                                        groupItems.AddSimpleFor(m => m.UserName).Editor(e => e.TextBox());
+                                                        groupItems.AddSimpleFor(m => m.Email).Editor(e => e.TextBox());
+                                                        groupItems.AddSimpleFor(m => m.Password).Editor(e => e.TextBox().Mode(TextBoxMode.Password));
+                                                        groupItems.AddSimpleFor(m => m.ConfirmPassword).Editor(e => e.TextBox().Mode(TextBoxMode.Password));
+
+                                                    });
+                                        items.AddButton()
+                                        .ButtonOptions(b => b.Text("Register")
+                                        .Type(ButtonType.Success)
+                                        .StylingMode(ButtonStylingMode.Outlined)
+                                        .UseSubmitBehavior(true)
+                                    );
+
+                                     })
+                    
+                    )
+                }
+            }
+
+
+
+        </form>
+    </div>
+</div>

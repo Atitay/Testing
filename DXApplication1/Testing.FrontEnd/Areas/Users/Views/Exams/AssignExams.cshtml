@@ -3,29 +3,22 @@
         <br />
         <h2 class="text-secondary">Exam List</h2>
         <br />
-        @model Testing.Models.Exam
+        @model Testing.Models.UserExam
         @(Html.DevExtreme().DataGrid<Testing.Models.Exam>
     ().DataSource(d => d.Mvc()
     .Controller("Exams")
     .LoadAction("Get")
-    .UpdateAction("Put")
-    .InsertAction("Post")
-    .DeleteAction("Delete")
-    .Area("Admin")
+
+    .Area("Users")
     .Key("ExamId")
+
+
     )
 
     .ID("gridContainer")
 
     .Paging(paging => paging.Enabled(true).PageSize(10))
-    .Editing(editing =>
-    {
-    editing.Mode(GridEditMode.Form).UseIcons(true);
-    editing.AllowAdding(true);
-    editing.AllowDeleting(true);
-    editing.AllowUpdating(true);
 
-    })
     .FilterRow(filterRow => filterRow
     .Visible(true)
     .ApplyFilter(GridApplyFilterMode.Auto)
@@ -58,16 +51,20 @@
     );
 
     columns.AddFor(m => m.StartDate).Caption("Start Date").FormItem(i => i
-        .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+    .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
     columns.AddFor(m => m.ExamDuration).Caption("Duration (Days)");
     columns.AddFor(m => m.Version).Caption("Version");
     })
 
     .ShowBorders(true)
-    .OnCellDblClick("selection_changed")
-    )
-
-</div>
+    .Selection(s => s.Mode(SelectionMode.Multiple))
+    //.OnSelectionChanged("selection_changed")
+    //.OnCellDblClick("selection_changed")
+        )
+        <a asp-action="Index">
+            Back
+        </a>
+    </div>
 </div>
 
 <br /><br />
@@ -79,6 +76,7 @@
 
     }
 </script>
+
 
 
 

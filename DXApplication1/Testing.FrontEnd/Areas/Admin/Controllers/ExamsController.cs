@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Testing.DAL;
@@ -12,6 +13,8 @@ using Testing.Models;
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+
     public class ExamsController : Controller
     {
         private readonly TestingDbContext _db;

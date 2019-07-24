@@ -2,7 +2,7 @@
 <div class="mb-3">
     <div class="row p-2" style="background-color:#efdfdf">
         <div class="col-2">
-            <a asp-controller="Questions" asp-action="Index">TESTING</a>
+            <a asp-controller="Home" asp-action="Index" >TESTING</a>
         </div>
 
         <div id="" class=" col">
@@ -11,10 +11,20 @@
 
         <div id="" class="text-right col-2">
 
-            <a asp-controller="User" asp-action="Login">Login</a> |
 
-            <a asp-controller="User" asp-action="Register">Register</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @User.Identity.Name
+
+                <a href="/Authen/Authen/SignOut">Logout</a>
+            }
+
+            else
+            {
+                <a href="/Authen/Authen/Register">Register</a>
+            }
 
         </div>
     </div>
 </div>
+

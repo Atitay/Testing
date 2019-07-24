@@ -1,0 +1,76 @@
+﻿<div class="row">
+    <div class="col-sm pb-4">
+        <br />
+        <h2 class="text-secondary">User List</h2>
+        <br />
+        @using Testing.Models
+        @model Testing.Models.User
+        @(Html.DevExtreme().DataGrid<Testing.Models.User>
+    ()
+    .DataSource(d => d.Mvc()
+    .Controller("Users")
+    .LoadAction("Get")
+    .UpdateAction("Put")
+    .InsertAction("Post")
+    .DeleteAction("Delete")
+    .Area("Admin")
+
+    .Key("UserId"))
+
+
+    .ID("gridContainer")
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+    .Editing(editing =>
+    {
+        editing.Mode(GridEditMode.Form).UseIcons(true);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+        editing.AllowUpdating(true);
+    })
+
+
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+    .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .HoverStateEnabled(true)
+
+
+
+    .Columns(columns =>
+    {
+
+        columns.AddFor(m => m.UserName);
+        columns.AddFor(m => m.Email);
+        columns.AddFor(m => m.isAdmin);
+        columns.AddFor(m => m.Password).Visible(false);
+
+    })
+    
+    
+    )
+
+</div>
+
+    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
+    <div class="col-sm-3" style="background-color:#efdfdf">
+    </div>
+
+</div>
+
+<script>
+
+    function selection_changed(e) {
+
+        if (e.data.SubjectId != null) {
+            window.location.href = "/Admin/Subject/" + e.data.SubjectId + "/Detail";
+        }
+    }
+
+</script>

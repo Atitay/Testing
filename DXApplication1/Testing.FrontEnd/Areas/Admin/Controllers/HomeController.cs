@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Testing.DAL;
 
-namespace Testing.FrontEnd.Areas.Users.Controllers
+namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
-    [Area("Users")]
-    [Authorize(Roles = ("Users"))]
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
 
     public class HomeController : Controller
     {

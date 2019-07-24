@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Testing.DAL;
@@ -11,7 +12,8 @@ using Testing.Models;
 
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
-   [Area("Admin")]
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
 
     [Route("Admin/Topic/{id}")]
     public class TopicController : Controller
@@ -24,7 +26,7 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
 
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
-        { 
+        {
             return DataSourceLoader.Load(_db.Topics, loadOptions);
         }
 
@@ -68,7 +70,7 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [Route("Detail")]
         public IActionResult Index(Guid id)
         {
-            var _topic = _db.Topics.First(t=>t.TopicId==id);
+            var _topic = _db.Topics.First(t => t.TopicId == id);
             return View(_topic);
         }
 

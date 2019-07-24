@@ -12,14 +12,13 @@ using Testing.Models;
 
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
-
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
 
-    public class TopicsController : Controller
+    public class UsersController : Controller
     {
         private readonly TestingDbContext _db;
-        public TopicsController(TestingDbContext db)
+        public UsersController(TestingDbContext db)
         {
             _db = db;
         }
@@ -27,19 +26,44 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            return DataSourceLoader.Load(_db.Topics, loadOptions);
+            return DataSourceLoader.Load(_db.Users, loadOptions);
+        }
+
+        [HttpPost]
+        public IActionResult Post(string values)
+        {
+            var newUser = new User
+            {
+                UserId = new Guid()
+            };
+
+            JsonConvert.PopulateObject(values, newUser);
+
+            _db.Users.Add(newUser);
+            _db.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
-            var _topic = _db.Topics.First(a => a.TopicId == key);
+            var _user = _db.Users.First(a => a.UserId == key);
 
-            JsonConvert.PopulateObject(values, _topic);
+            JsonConvert.PopulateObject(values, _user);
 
             _db.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpDelete]
+        public void Delete(Guid key)
+        {
+            var _user = _db.Users.First(a => a.UserId == key);
+
+            _db.Users.Remove(_user);
+            _db.SaveChanges();
         }
 
 
@@ -48,6 +72,6 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             return View();
         }
 
-
+        
     }
 }

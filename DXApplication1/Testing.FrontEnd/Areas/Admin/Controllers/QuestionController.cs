@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,8 @@ using Testing.Models;
 namespace Testing.FrontEnd.Controllers
 {
     [Area("Admin")]
-    
+    [Authorize(Roles = "Admin")]
+
     public class QuestionController : Controller
     {
         private readonly TestingDbContext _db;

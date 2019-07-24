@@ -2,21 +2,51 @@
 
     <div class="pt-2" id="myNav">
 
-        <a href="@Url.Action("Index","Home")" class="nav-link disabled" id="Home">
-            <i class="fas fa-home"></i>&nbsp;Home
-        </a>
-        <a href="@Url.Action("Index","Topics")" class="nav-link @checkCurrentController("Topics") @checkCurrentController("Topic")" id="Topics">
-            Topics
-        </a>
-        <a href="@Url.Action("Index","Questions")" class="nav-link @checkCurrentController("Questions") @checkCurrentController("Question")" id="Questions">
-            Questions
-        </a>
-        <a href="@Url.Action("Index","Subjects")" class="nav-link @checkCurrentController("Subjects") @checkCurrentController("Subject")" id="Subjects">
-            Subjects
-        </a>
-        <a href="@Url.Action("Index","Exams")" class="nav-link @checkCurrentController("Exams") @checkCurrentController("Exam")" id="Exams">
-            Exams
-        </a>
+        @{
+            if (User.IsInRole("Admin"))
+            {
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index" 
+                   lass="nav-link @checkCurrentController("Home") " id="Home">
+                    <i class="fas fa-home"></i>&nbsp;Home
+                </a>
+                <a asp-area="Admin" asp-controller="Topics" asp-action="Index"
+                   class="nav-link @checkCurrentController("Topics") @checkCurrentController("Topic")" id="Topics">
+                    Topics
+                </a>
+                <a asp-area="Admin" asp-controller="Questions" asp-action="Index"
+                   class="nav-link @checkCurrentController("Questions") @checkCurrentController("Question")" id="Questions">
+                    Questions
+                </a>
+                <a asp-area="Admin" asp-controller="Subjects" asp-action="Index"
+                   class="nav-link @checkCurrentController("Subjects") @checkCurrentController("Subject")" id="Subjects">
+                    Subjects
+                </a>
+                <a asp-area="Admin" asp-controller="Exams" asp-action="Index"
+                   class="nav-link @checkCurrentController("Exams") @checkCurrentController("Exam")" id="Exams">
+                    Exams
+                </a>
+                <a asp-area="Admin" asp-controller="Users" asp-action="Index"
+                   class="nav-link @checkCurrentController("Users") @checkCurrentController("User")" id="Users">
+                    Users
+                </a>
+
+            }
+        }
+
+        @{
+            if (User.IsInRole("Users"))
+            {
+                <a asp-area="Users" asp-controller="Home" asp-action="Index"
+                   class="nav-link @checkCurrentController("Home") " id="Dashboard">
+                    Dashboard
+                </a>
+                <a asp-area="Users" asp-controller="Exams" asp-action="Index"
+                   class="nav-link @checkCurrentController("Exams")" id="ExamsUser">
+                    Exams
+                </a>
+            }
+        }
+
 
     </div>
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -13,8 +14,9 @@ using Testing.Models;
 namespace Testing.FrontEnd.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
 
-   [Route("Admin/Exam/{id}")]
+    [Route("Admin/Exam/{id}")]
     public class ExamController : Controller
     {
         private readonly TestingDbContext _db;

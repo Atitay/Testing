@@ -1,7 +1,110 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-}
+﻿<div class="row">
+    <div class="col-sm">
+        <br />
+        <h2 class="text-secondary">Exam List</h2>
+        <br />
+        @model Testing.Models.UserExam
+        @(Html.DevExtreme().DataGrid<Testing.Models.UserExam>
+    ().DataSource(d => d.Mvc()
+    .Controller("Exams")
+    .LoadAction("GetUserExam")
 
-<h1>Index</h1>
+    .Area("Users")
+    .Key("ExamId")
+
+        
+    )
+
+    .ID("gridContainer")
+
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+    .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .HoverStateEnabled(true)
+    .Selection(s => s.Mode(SelectionMode.Single))
+
+    .Columns(columns =>
+    {
+
+    columns.AddFor(m => m.Exam.ExamName).Caption("Exam Name").Width(200);
+
+    columns.AddFor(m => m.Exam.SubjectId).Caption("Subject Name")
+    .Lookup(lookup => lookup
+    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+    .DisplayExpr("SubjectName")
+    .ValueExpr("SubjectId")
+    )
+    .FormItem(i => i
+    .Editor(e => e.SelectBox()
+    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+    .DisplayExpr("SubjectName")
+    .ValueExpr("SubjectId"))
+    );
+
+    columns.AddFor(m => m.Exam.StartDate).Caption("Start Date").FormItem(i => i
+    .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+    columns.AddFor(m => m.Exam.ExamDuration).Caption("Duration (Days)");
+    columns.AddFor(m => m.Exam.Version).Caption("Version");
+    })
+
+    .ShowBorders(true)
+
+    )
+    <br>
+    <a asp-action="AssignExams">
+        Enroll More Exams
+    </a>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

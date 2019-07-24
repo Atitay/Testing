@@ -34,7 +34,12 @@ namespace Testing_FrontEnd
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             //add cookie
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/Authen/Authen/SignIn";
+                    option.LogoutPath = "/Authen/Authen/SignOut";
+                   
+                });
 
             
         }
@@ -61,9 +66,17 @@ namespace Testing_FrontEnd
             {
                 routes.MapRoute(
                   name: "areas",
-                  template: "{area=Admin}/{controller=Questions}/{action=Index}/{id?}"
+                  template: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"
                 );
             });
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //      name: "Default",
+            //      template: "{controller=Home}/{action=Index}/{id?}"
+            //    );
+            //});
 
         }
     }
