@@ -20,10 +20,10 @@
     .Paging(paging => paging.Enabled(true).PageSize(10))
     .Editing(editing =>
     {
-    editing.Mode(GridEditMode.Form).UseIcons(true);
-    editing.AllowAdding(true);
-    editing.AllowDeleting(true);
-    editing.AllowUpdating(true);
+        editing.Mode(GridEditMode.Form).UseIcons(true);
+        editing.AllowAdding(true);
+        editing.AllowDeleting(true);
+        editing.AllowUpdating(true);
 
     })
     .FilterRow(filterRow => filterRow
@@ -42,32 +42,34 @@
     .Columns(columns =>
     {
 
-    columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(200);
+        columns.AddFor(m => m.ExamCode).Caption("Exam Code");
 
-    columns.AddFor(m => m.SubjectId).Caption("Subject Name")
-    .Lookup(lookup => lookup
-    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-    .DisplayExpr("SubjectName")
-    .ValueExpr("SubjectId")
-    )
-    .FormItem(i => i
-    .Editor(e => e.SelectBox()
-    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-    .DisplayExpr("SubjectName")
-    .ValueExpr("SubjectId"))
-    );
+        columns.AddFor(m => m.ExamName).Caption("Exam Name").Width(200);
 
-    columns.AddFor(m => m.StartDate).Caption("Start Date").FormItem(i => i
-        .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
-    columns.AddFor(m => m.ExamDuration).Caption("Duration (Days)");
-    columns.AddFor(m => m.Version).Caption("Version");
+        columns.AddFor(m => m.SubjectId).Caption("Subject Name")
+        .Lookup(lookup => lookup
+        .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+        .DisplayExpr("SubjectName")
+        .ValueExpr("SubjectId")
+        )
+        .FormItem(i => i
+        .Editor(e => e.SelectBox()
+        .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
+        .DisplayExpr("SubjectName")
+        .ValueExpr("SubjectId"))
+        );
+
+        columns.AddFor(m => m.StartDate).Caption("Start Date").FormItem(i => i
+            .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+        columns.AddFor(m => m.ExamDuration).Caption("Duration (Days)");
+        columns.AddFor(m => m.Version).Caption("Version");
     })
 
     .ShowBorders(true)
     .OnCellDblClick("selection_changed")
-    )
+        )
 
-</div>
+    </div>
 </div>
 
 <br /><br />

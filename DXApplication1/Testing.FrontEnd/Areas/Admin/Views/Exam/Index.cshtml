@@ -30,6 +30,7 @@
                        .Caption("Exam Information").CssClass("text-secondary")
                        .Items(groupItems =>
                        {
+                           groupItems.AddSimpleFor(m => m.ExamCode).Editor(e => e.TextBox().ReadOnly(true));
                            groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100).ReadOnly(true));
 
                            groupItems.AddSimpleFor(m => m.Version).Editor(e => e

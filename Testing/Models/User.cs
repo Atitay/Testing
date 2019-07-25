@@ -28,13 +28,13 @@ namespace Testing.Models
             examsList.ForEach(exam =>
             {
                 //Need checking list question
-
-
                 UserExam newUserExam = new UserExam()
+
                 {
                     UserExamId = Guid.NewGuid(),
                     UserId = this.UserId,
-                    ExamId = exam.ExamId
+                    ExamId = exam.ExamId,
+                                        
                 };
 
                 UserExams.Add(newUserExam);
@@ -42,6 +42,7 @@ namespace Testing.Models
             });
 
         }
+
 
     }
 }

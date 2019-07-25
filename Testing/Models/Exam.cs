@@ -51,12 +51,10 @@ namespace Testing.Models
                     {
                         QuestionExamId = Guid.NewGuid(),
                         ExamId = this.ExamId,
-                        QuestionId = question.QuestionId
+                        QuestionId = question.QuestionId                         
                     };
                 
-                    QuestionExams.Add(newQuestionExam);
-               
-
+                    QuestionExams.Add(newQuestionExam);             
 
             });
 

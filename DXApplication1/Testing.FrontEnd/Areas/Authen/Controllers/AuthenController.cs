@@ -66,13 +66,10 @@ namespace Testing.FrontEnd.Areas.Authen.Controllers
                 };
 
             if (user.isAdmin)
-            {
+            
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-            }
-            else
-            {
-                claims.Add(new Claim(ClaimTypes.Role, "Users"));
-            }
+            
+          
 
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -83,7 +80,7 @@ namespace Testing.FrontEnd.Areas.Authen.Controllers
                 //ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(1),
 
                 //true, alway login although close/open it
-                IsPersistent = true
+                //IsPersistent = true
             };
 
             await HttpContext.SignInAsync(

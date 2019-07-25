@@ -1,0 +1,26 @@
+﻿@model Testing.Models.Choice
+
+@(Html.DevExtreme().DataGrid<Testing.Models.Choice>
+    ()
+    .ID("gridContainer")
+    .ShowBorders(true)
+
+    .Paging(paging => paging.Enabled(true))
+
+
+.Columns(columns =>
+{
+    columns.AddFor(m => m.isCorrect).Width(100).Caption("Correct!").FormItem(i => i.Editor(e => e.CheckBox()));
+    columns.AddFor(m => m.ChoiceString).Caption("Choices");
+})
+
+.DataSource(d => d.Mvc()
+.LoadAction("Get")
+
+.Key("ChoiceId")
+//.LoadParams(new { id = Model.QuestionId })
+)
+
+
+)
+

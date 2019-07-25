@@ -1,9 +1,10 @@
 ﻿<div class="row">
     <div class="col-sm">
+        @model Testing.Models.User
         <br />
         <h2 class="text-secondary">Exam List</h2>
         <br />
-        @model Testing.Models.UserExam
+
         @(Html.DevExtreme().DataGrid<Testing.Models.UserExam>
     ().DataSource(d => d.Mvc()
     .Controller("Exams")
@@ -12,7 +13,6 @@
     .Area("Users")
     .Key("ExamId")
 
-        
     )
 
     .ID("gridContainer")
@@ -42,29 +42,33 @@
     .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
     .DisplayExpr("SubjectName")
     .ValueExpr("SubjectId")
-    )
-    .FormItem(i => i
-    .Editor(e => e.SelectBox()
-    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-    .DisplayExpr("SubjectName")
-    .ValueExpr("SubjectId"))
     );
 
     columns.AddFor(m => m.Exam.StartDate).Caption("Start Date").FormItem(i => i
     .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+
     columns.AddFor(m => m.Exam.ExamDuration).Caption("Duration (Days)");
     columns.AddFor(m => m.Exam.Version).Caption("Version");
     })
 
     .ShowBorders(true)
+    .OnCellDblClick("selection_changed")
+        )
+        <br>
+        <a asp-action="AssignExams">
+            Enroll More Exams
+        </a>
+    </div>
+</div>
 
-    )
-    <br>
-    <a asp-action="AssignExams">
-        Enroll More Exams
-    </a>
-</div>
-</div>
+<script>
+    function selection_changed(e) {
+        if (e.data.ExamId != null) {
+            window.location.href = "/Users/Exam/Detail/" + e.data.ExamId ;
+        }
+
+    }
+</script>
 
 
 

@@ -21,7 +21,6 @@ namespace Testing.Models
 
         public virtual Question Questions { get; set; }
 
-        
 
     }
 

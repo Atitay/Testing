@@ -18,6 +18,8 @@ namespace Testing.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<UserExam> UserExams { get; set; }
 
+        public DbSet<UserExamQuestion> UserExamQuestions { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

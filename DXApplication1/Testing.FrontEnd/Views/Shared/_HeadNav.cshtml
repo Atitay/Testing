@@ -14,8 +14,7 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                @User.Identity.Name
-
+                @User.Identity.Name            
                 <a href="/Authen/Authen/SignOut">Logout</a>
             }
 

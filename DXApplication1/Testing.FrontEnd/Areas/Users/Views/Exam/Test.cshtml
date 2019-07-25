@@ -1,0 +1,72 @@
+﻿@using Testing.Models
+@model Testing.Models.Exam
+@{
+    ViewData["Title"] = "Test";
+}
+
+<h1>Test</h1>
+
+<form method="post">
+
+    @foreach (var eq in Model.QuestionExams)
+    {
+    <div>
+        Question :
+        <span>@eq.Question.QuestionString</span>
+        <br>
+        @foreach (var choice in eq.Question.Choices.ToList())
+        {
+            <div>
+                <input onclick="selection_changed" type="checkbox" @choice.isCorrect />
+                <span class="pl-3">@choice.ChoiceString</span>
+            </div>
+            <br />
+
+            @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
+                ()
+                .ID("gridContainer")
+                .ShowBorders(true)
+
+                .Paging(paging => paging.Enabled(true))
+
+
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.isCorrect).Width(100).Caption("Correct!");
+                columns.AddFor(m => m.ChoiceString).Caption("Choices");
+            })
+
+            .DataSource(d => d.Mvc()
+            .LoadAction("GetChoice")
+
+            .Key("ChoiceId")
+            //.LoadParams(new { id = Model.QuestionId })
+            )
+
+
+            )
+
+        }
+    </div>
+        <br />
+
+        <input type="text" id="SubmitAnswer">
+    }
+
+    @(Html.DevExtreme()
+            .Button()
+            .Type(ButtonType.Success)
+            .Text("Submit")
+            .UseSubmitBehavior(true)
+    )
+
+
+</form>
+
+<script>
+        function selection_changed(selectedItems) {
+            var data = selectedItems.selectedRowsData;
+            document.getElementById("ExamName").value = JSON.stringify(data);
+        }
+
+</script>

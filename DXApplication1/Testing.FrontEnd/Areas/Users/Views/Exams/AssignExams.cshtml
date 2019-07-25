@@ -42,42 +42,41 @@
     .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
     .DisplayExpr("SubjectName")
     .ValueExpr("SubjectId")
-    )
-    .FormItem(i => i
-    .Editor(e => e.SelectBox()
-    .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-    .DisplayExpr("SubjectName")
-    .ValueExpr("SubjectId"))
     );
 
     columns.AddFor(m => m.StartDate).Caption("Start Date").FormItem(i => i
     .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+
     columns.AddFor(m => m.ExamDuration).Caption("Duration (Days)");
     columns.AddFor(m => m.Version).Caption("Version");
     })
 
     .ShowBorders(true)
     .Selection(s => s.Mode(SelectionMode.Multiple))
-    //.OnSelectionChanged("selection_changed")
-    //.OnCellDblClick("selection_changed")
+    .OnSelectionChanged("selection_changed")
+
         )
         <a asp-action="Index">
             Back
         </a>
     </div>
 </div>
+<br />
 
-<br /><br />
-<script>
-    function selection_changed(e) {
-        if (e.data.ExamId != null) {
-            window.location.href = "/Admin/Exam/" + e.data.ExamId + "/Detail";
+<form asp-action="AddExams" >
+    <input type="hidden" name="ExamName" id="ExamName">
+
+    <input type="submit" class="btn btn-outline-success" value="SUBMIT" />
+
+    <script>
+        function selection_changed(selectedItems) {
+            var data = selectedItems.selectedRowsData;
+            document.getElementById("ExamName").value = JSON.stringify(data);
         }
 
-    }
-</script>
+    </script>
 
-
+</form>
 
 
 

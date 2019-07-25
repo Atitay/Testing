@@ -5,7 +5,7 @@
         @{
             if (User.IsInRole("Admin"))
             {
-                <a asp-area="Admin" asp-controller="Home" asp-action="Index" 
+                <a asp-area="Admin" asp-controller="Home" asp-action="Index"
                    lass="nav-link @checkCurrentController("Home") " id="Home">
                     <i class="fas fa-home"></i>&nbsp;Home
                 </a>
@@ -31,22 +31,19 @@
                 </a>
 
             }
-        }
-
-        @{
-            if (User.IsInRole("Users"))
+            else
             {
                 <a asp-area="Users" asp-controller="Home" asp-action="Index"
                    class="nav-link @checkCurrentController("Home") " id="Dashboard">
                     Dashboard
                 </a>
                 <a asp-area="Users" asp-controller="Exams" asp-action="Index"
-                   class="nav-link @checkCurrentController("Exams")" id="ExamsUser">
+                   class="nav-link @checkCurrentController("Exams")  @checkCurrentController("Exam")" id="ExamsUser">
                     Exams
                 </a>
             }
-        }
 
+        }
 
     </div>
 
