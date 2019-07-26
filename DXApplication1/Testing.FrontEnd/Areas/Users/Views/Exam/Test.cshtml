@@ -1,72 +1,98 @@
 ﻿@using Testing.Models
-@model Testing.Models.Exam
+@model Testing.Models.UserExam
 @{
     ViewData["Title"] = "Test";
 }
 
-<h1>Test</h1>
+<div class="h3">
+    Test : @Model.Exam.ExamName
+</div>
+<br />
 
-<form method="post">
+@(Html.DevExtreme().DataGrid<Testing.Models.UserExamQuestion>()
+    .ID("gridContainer")
+        .DataSource(d => d.Mvc()
+        .Controller("Exam")
+        .LoadAction("GetExamQuestion")
 
-    @foreach (var eq in Model.QuestionExams)
+        .Area("Users")
+
+        .Key("QuestionId")
+
+        .LoadParams(new { id = Model.ExamId })
+
+        )
+
+
+    .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+    .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+
+    .ShowBorders(true)
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .HoverStateEnabled(true)
+
+    .Editing(editing =>
+           {
+               editing.Mode(GridEditMode.Form).UseIcons(true);
+               editing.AllowUpdating(true);
+           })
+
+    .Columns(columns =>
     {
-    <div>
-        Question :
-        <span>@eq.Question.QuestionString</span>
-        <br>
-        @foreach (var choice in eq.Question.Choices.ToList())
-        {
-            <div>
-                <input onclick="selection_changed" type="checkbox" @choice.isCorrect />
-                <span class="pl-3">@choice.ChoiceString</span>
-            </div>
-            <br />
+        columns.AddFor(m => m.Question.QuestionString).Caption("Questions")
+        .CellTemplate(@<text>
+                <a href="/Users/Exam/QuestionAnswer/<%= data.Question.QuestionId %>"><%= data.Question.QuestionString %></a>
+        </text>
+);
+;
 
-            @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
-                ()
-                .ID("gridContainer")
-                .ShowBorders(true)
+columns.AddFor(m => m.Question.Point).Visible(true).Caption("Point");
 
-                .Paging(paging => paging.Enabled(true))
+columns.AddFor(m => m.Question.QuestionLevel).Visible(true).Caption("Question Level")
+.Lookup(lookup => lookup
+.DataSource(Html.GetEnumSelectList<QuestionLevel>()
+.Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
+.ValueExpr("Value")
+.DisplayExpr("Text"));
 
-
-            .Columns(columns =>
-            {
-                columns.AddFor(m => m.isCorrect).Width(100).Caption("Correct!");
-                columns.AddFor(m => m.ChoiceString).Caption("Choices");
-            })
-
-            .DataSource(d => d.Mvc()
-            .LoadAction("GetChoice")
-
-            .Key("ChoiceId")
-            //.LoadParams(new { id = Model.QuestionId })
-            )
+})
 
 
-            )
 
+
+.Selection(s => s.Mode(SelectionMode.Multiple))
+.OnSelectionChanged("selection_changed")
+.OnCellDblClick("selection_changed")
+)
+
+
+<script>
+    function selection_changed(e) {
+        if (e.data.QuestionId != null) {
+            window.location.href = "/Users/Exam/QuestionAnswer/" + e.data.QuestionId;
         }
-    </div>
-        <br />
-
-        <input type="text" id="SubmitAnswer">
     }
+</script>
 
-    @(Html.DevExtreme()
-            .Button()
-            .Type(ButtonType.Success)
-            .Text("Submit")
-            .UseSubmitBehavior(true)
-    )
+<form asp-action="">
 
+    <input type="text" name="examQuestion" id="examQuestion">
+    <br />
+
+    <input type="submit" class="btn btn-outline-success" value="SUBMIT" />
+
+    <script>
+
+        function selection_changed(selectedItems) {
+            var data = selectedItems.selectedRowsData;
+            document.getElementById("examQuestion").value = JSON.stringify(data);
+        }
+
+    </script>
 
 </form>
 
-<script>
-        function selection_changed(selectedItems) {
-            var data = selectedItems.selectedRowsData;
-            document.getElementById("ExamName").value = JSON.stringify(data);
-        }
 
-</script>

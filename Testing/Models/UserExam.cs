@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,13 +26,37 @@ namespace Testing.Models
         public int TotalEarnScore { get; set; }
         public int TotalQuestionScore { get; set; }
 
+
+        [JsonIgnore]
         public virtual ICollection<UserExamQuestion> UserExamQuestions { get; set; }
 
-        public void UpdateScore ()
+        public void UpdateScore()
         {
-            TotalEarnScore = UserExamQuestions?.Sum(m=>m.EarnScore) ?? 0;
+            TotalEarnScore = UserExamQuestions?.Sum(m => m.EarnScore) ?? 0;
             TotalQuestionScore = UserExamQuestions?.Sum(m => m.QuestionScore) ?? 0;
         }
+
+
+        public void StartExam()
+        {
+            if (UserExamQuestions.Count > 0)
+                return;
+
+            Exam.QuestionExams.ToList().ForEach(e =>
+            {
+                var userquestionexam = new UserExamQuestion()
+                {
+                    UserExamQuestionId = Guid.NewGuid(),
+                    QuestionId = e.QuestionId,
+                    UserExamId = this.UserExamId,
+                };
+
+                UserExamQuestions.Add(userquestionexam);
+
+
+            });
+        }
+
 
     }
 }

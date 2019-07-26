@@ -34,8 +34,9 @@ namespace Testing.Models
                     UserExamId = Guid.NewGuid(),
                     UserId = this.UserId,
                     ExamId = exam.ExamId,
-                                        
                 };
+
+
 
                 UserExams.Add(newUserExam);
 

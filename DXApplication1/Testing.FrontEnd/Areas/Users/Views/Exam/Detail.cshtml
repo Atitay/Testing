@@ -1,4 +1,4 @@
-﻿@model Testing.Models.Exam
+﻿@model Testing.Models.UserExam
 @{
     ViewData["Title"] = "Detail";
 }
@@ -6,34 +6,34 @@
 <h1>Detail</h1>
 <br />
 <div class="h6 font-weight-normal">
-    Exam Code : @Model.ExamCode
+    Exam Code : @Model.Exam.ExamCode
 </div>
 
 <div class="h6 font-weight-normal">
-    Exam Name : @Model.ExamName
+    Exam Name : @Model.Exam.ExamName
 </div>
 
 
 <br />
 
 <div class="h6 font-weight-normal">
-    Start Date : @Model.StartDate
+    Start Date : @Model.Exam.StartDate
 </div>
 
 <div class="h6 font-weight-normal">
-    Duration (Days) : @Model.ExamDuration
+    Duration (Days) : @Model.Exam.ExamDuration
 </div>
 
 <div class="h6 font-weight-normal">
-    Remaining Day : @Model.RemainingDay
+    Remaining Day : @Model.Exam.RemainingDay
 </div>
 
 
 <div class="h5 font-weight-normal">
-    Questions : @Model.QuestionExams.Count()
+    Questions : @Model.Exam.QuestionExams.Count()
 </div>
 
-
+<br />
 <a asp-action="Test" asp-route-id="@Model.ExamId" >
     Start !
 </a>

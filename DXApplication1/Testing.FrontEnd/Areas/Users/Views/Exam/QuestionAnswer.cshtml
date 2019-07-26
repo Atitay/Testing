@@ -1,0 +1,47 @@
+﻿@model Testing.Models.QuestionExam
+@{
+    ViewData["Title"] = "QuestionAnswer";
+}
+
+<div class="h3">
+    Question : @Model.Question.QuestionString
+</div>
+<br />
+
+@(Html.DevExtreme().DataGrid<Testing.Models.Choice>
+    ()
+    .ID("gridContainer")
+    .ShowBorders(true)
+
+    .Columns(columns =>
+    {
+    columns.AddFor(m => m.ChoiceString).Caption("Choice ");
+    })
+
+    .DataSource(d => d.Mvc()
+    .LoadAction("GetChoice")
+
+    .Key("ChoiceId")
+
+    .LoadParams(new { id = Model.QuestionId })
+    )
+
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .OnSelectionChanged("selection_changed")
+    )
+
+    <form asp-action="Test" asp-route-id="@Model.ExamId">
+
+        <input type="hidden" name="questionAnswer" id="questionAnswer"/>
+        <br />
+
+        <input type="submit" class="btn btn-outline-success" value="submit" />
+
+        <script>
+            function selection_changed(e) {
+                var data = e.currentSelectedRowKeys;
+                document.getElementById("questionAnswer").value = data;
+            }
+        </script>
+
+    </form>
