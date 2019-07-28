@@ -26,6 +26,8 @@ namespace Testing.Models
         public int TotalEarnScore { get; set; }
         public int TotalQuestionScore { get; set; }
 
+        public int PercentNow { get; set; }
+
 
         [JsonIgnore]
         public virtual ICollection<UserExamQuestion> UserExamQuestions { get; set; }
@@ -34,6 +36,7 @@ namespace Testing.Models
         {
             TotalEarnScore = UserExamQuestions?.Sum(m => m.EarnScore) ?? 0;
             TotalQuestionScore = UserExamQuestions?.Sum(m => m.QuestionScore) ?? 0;
+           // PercentNow = (TotalEarnScore / TotalQuestionScore * 100);
         }
 
 
@@ -48,11 +51,11 @@ namespace Testing.Models
                 {
                     UserExamQuestionId = Guid.NewGuid(),
                     QuestionId = e.QuestionId,
+                    QuestionScore = e.Question.Point,
                     UserExamId = this.UserExamId,
                 };
 
                 UserExamQuestions.Add(userquestionexam);
-
 
             });
         }

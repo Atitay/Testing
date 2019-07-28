@@ -5,8 +5,10 @@
 @(Html.DevExtreme().DataGrid<Testing.Models.Question>()
                     .DataSource(d => d.Mvc()
                     .Controller("Questions")
-                    .LoadAction("Get")
+                    .LoadAction("GetOtherQuestion")
                     .Key("QuestionId")
+                    
+                   
 
                     )
 

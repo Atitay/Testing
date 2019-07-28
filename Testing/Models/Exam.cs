@@ -44,36 +44,6 @@ namespace Testing.Models
 
             questionsList.ForEach(question =>
             {
-            //Need checking list question
-            
-           
-                    QuestionExam newQuestionExam = new QuestionExam()
-                    {
-                        QuestionExamId = Guid.NewGuid(),
-                        ExamId = this.ExamId,
-                        QuestionId = question.QuestionId                         
-                    };
-                
-                    QuestionExams.Add(newQuestionExam);             
-
-            });
-
-        }
-
-        [JsonIgnore]
-        public virtual ICollection<UserExam> UserExams { get; set; }
-
-        public void AddQuestions(List<Question> questionsList)
-        {
-            //if null => add new
-            if (this.QuestionExams == null)
-                this.QuestionExams = new List<QuestionExam>();
-
-            questionsList.ForEach(question =>
-            {
-                //Need checking list question
-
-
                 QuestionExam newQuestionExam = new QuestionExam()
                 {
                     QuestionExamId = Guid.NewGuid(),
@@ -86,5 +56,6 @@ namespace Testing.Models
             });
 
         }
+
     }
 }

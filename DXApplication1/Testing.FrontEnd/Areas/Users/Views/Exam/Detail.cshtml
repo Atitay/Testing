@@ -7,10 +7,12 @@
 <br />
 <div class="h6 font-weight-normal">
     Exam Code : @Model.Exam.ExamCode
+
 </div>
 
 <div class="h6 font-weight-normal">
     Exam Name : @Model.Exam.ExamName
+
 </div>
 
 
@@ -18,22 +20,27 @@
 
 <div class="h6 font-weight-normal">
     Start Date : @Model.Exam.StartDate
+
 </div>
 
 <div class="h6 font-weight-normal">
     Duration (Days) : @Model.Exam.ExamDuration
+
 </div>
 
 <div class="h6 font-weight-normal">
     Remaining Day : @Model.Exam.RemainingDay
+
 </div>
 
 
 <div class="h5 font-weight-normal">
     Questions : @Model.Exam.QuestionExams.Count()
+
 </div>
 
 <br />
+
 <a asp-action="Test" asp-route-id="@Model.ExamId" >
     Start !
 </a>

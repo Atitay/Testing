@@ -4,6 +4,8 @@
 }
 
 <div class="h3">
+    Exam : @Model.Exam.ExamName
+    <br>
     Question : @Model.Question.QuestionString
 </div>
 <br />
@@ -15,7 +17,7 @@
 
     .Columns(columns =>
     {
-    columns.AddFor(m => m.ChoiceString).Caption("Choice ");
+        columns.AddFor(m => m.ChoiceString).Caption("Choice ");
     })
 
     .DataSource(d => d.Mvc()
@@ -23,25 +25,28 @@
 
     .Key("ChoiceId")
 
+
     .LoadParams(new { id = Model.QuestionId })
+
     )
 
     .Selection(s => s.Mode(SelectionMode.Single))
     .OnSelectionChanged("selection_changed")
-    )
+)
 
-    <form asp-action="Test" asp-route-id="@Model.ExamId">
+<form asp-action="Test" asp-route-id="@Model.ExamId" asp-route-QuestionId="@Model.QuestionId">
 
-        <input type="hidden" name="questionAnswer" id="questionAnswer"/>
-        <br />
+    <input type="hidden" name="questionAnswer" id="questionAnswer" />
+    <br />
 
-        <input type="submit" class="btn btn-outline-success" value="submit" />
+    <input type="submit" class="btn btn-outline-success" value="submit" />
 
-        <script>
-            function selection_changed(e) {
-                var data = e.currentSelectedRowKeys;
-                document.getElementById("questionAnswer").value = data;
-            }
-        </script>
+    <script>
+        function selection_changed(e) {
+            var data = e.selectedRowKeys;
+            document.getElementById("questionAnswer").value = data;
+        }
 
-    </form>
+    </script>
+
+</form>

@@ -32,6 +32,15 @@ namespace Testing.FrontEnd.Controllers
         }
 
         [HttpGet]
+        public object GetOtherQuestion(DataSourceLoadOptions loadOptions,Guid id)
+        {
+            var _question = _db.Questions.ToList();
+            
+            
+            return DataSourceLoader.Load(_question, loadOptions);
+        }
+
+        [HttpGet]
         public object GetExam(DataSourceLoadOptions loadOptions,Guid id)
         {
             return DataSourceLoader.Load(_db.QuestionExams.Where(m => m.ExamId == id), loadOptions);

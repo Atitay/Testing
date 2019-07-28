@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Testing.Models
 {
-    public class User 
+    public class User
     {
         [Key]
         public Guid UserId { get; set; }
@@ -25,25 +25,24 @@ namespace Testing.Models
             if (this.UserExams == null)
                 this.UserExams = new List<UserExam>();
 
+
             examsList.ForEach(exam =>
-            {
-                //Need checking list question
-                UserExam newUserExam = new UserExam()
+                       {
+                           //if UserExams exist ,dont Add
+                           UserExam newUserExam = new UserExam()
 
-                {
-                    UserExamId = Guid.NewGuid(),
-                    UserId = this.UserId,
-                    ExamId = exam.ExamId,
-                };
+                           {
+                               UserExamId = Guid.NewGuid(),
+                               UserId = this.UserId,
+                               ExamId = exam.ExamId,
+                                
+                           };
 
+                           UserExams.Add(newUserExam);
 
-
-                UserExams.Add(newUserExam);
-
-            });
+                       });
 
         }
-
-
     }
 }
+
