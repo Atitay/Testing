@@ -1,13 +1,24 @@
 ﻿@using Testing.Models
-
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dashboard";
 }
 
-<h1>Dashboard</h1>
-<br /><br />
-<br /><br />
-<br /><br />
-<br /><br />
-<br /><br />
+<div>
+    <img src="~/images/1st-page.png" class="img-fluid">
+</div>
+
+<div class="page-wrapper toggled page-content container-fluid">
+    <div class="card-deck justify-content-center" style="padding-top:20px;">
+
+        <div class="card text-white mb-3" style="max-width: 15rem; background-color:slateblue">
+            <div class="card-header"><h5 class="card-title text-right">Exam</h5></div>
+            <ul class="list-group list-group-flush" style="color:#000000">
+                <a class="list-group-item" asp-action="Index" asp-controller="Exams">+ Exams List</a>
+                @*<a class="list-group-item" asp-action="Detail" asp-controller="Exam">+ Exams Result</a>*@
+            </ul>
+        </div> 
+
+    </div>
+</div>
+
+

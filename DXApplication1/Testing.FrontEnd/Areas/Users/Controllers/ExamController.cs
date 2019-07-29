@@ -24,7 +24,7 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
 
         public IActionResult Detail(Guid id) => View(_db.UserExams.First(a => a.ExamId == id));
         public IActionResult QuestionAnswer(Guid id)
-        { 
+        {
             var _questAnswer = _db.QuestionExams.Where(a => a.QuestionExamId == id).ToList();
 
             foreach (var _questAns in _questAnswer)
@@ -106,13 +106,17 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
 
 
         [HttpPost, ActionName("Detail")]
-        public IActionResult DetailPost(Guid id, string examQuestion)
+        public IActionResult DetailPost(Guid id, int examQuestion)
         {
 
             var _questionAnswer = _db.UserExamQuestions.Where(a => a.UserExam.ExamId == id).ToList();
 
-
-            return RedirectToAction("Detail", new { id = id });
+            if (_questionAnswer.Count == examQuestion)
+            {
+                return RedirectToAction("Detail", new { id = id });
+            }
+            
+            return RedirectToAction("Test", new { id = id });
         }
 
     }

@@ -80,8 +80,8 @@ columns.AddFor(m => m.Question.QuestionLevel).Visible(true).Caption("Question Le
     <script>
 
         function selection_changed(selectedItems) {
-            var data = selectedItems.selectedRowsData;
-            document.getElementById("examQuestion").value = JSON.stringify(data);
+            var data = selectedItems.selectedRowKeys.length;
+            document.getElementById("examQuestion").value = data;
         }
 
     </script>

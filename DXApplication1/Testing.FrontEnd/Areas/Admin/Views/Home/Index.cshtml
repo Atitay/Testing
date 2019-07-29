@@ -3,5 +3,48 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>HOME ADMIN</h1>
+<div>
+    <img src="~/images/1st-page.png" class="img-fluid" >
+</div>
+
+<div class="page-wrapper toggled page-content container-fluid">
+    <div class="card-deck justify-content-center" style="padding-top:20px;">
+
+        <div class="card text-white mb-3" style="max-width: 15rem; background-color:slateblue">
+            <div class="card-header"><h5 class="card-title text-right">Topic</h5></div>
+            <ul class="list-group list-group-flush" style="color:#000000">
+                <a class="list-group-item" asp-action="Index" asp-controller="Topics">+ Topics List</a>
+            </ul>
+        </div>
+
+        <div class="card text-white mb-3" style="max-width: 15rem; background-color:tomato">
+            <div class="card-header"><h5 class="card-title text-right">Question</h5></div>
+            <ul class="list-group list-group-flush" style="color:#000000">
+                <a class="list-group-item" asp-action="Index" asp-controller="Questions">+ Questions List</a>
+            </ul>
+        </div>
+
+        <div class="card text-white mb-3" style="max-width: 15rem; background-color:mediumorchid">
+            <div class="card-header"><h5 class="card-title text-right">Subject</h5></div>
+            <ul class="list-group list-group-flush" style="color:#000000">
+                <a class="list-group-item" asp-action="Index" asp-controller="Subjects">+ Subjects List</a>
+            </ul>
+        </div>
+
+        <div class="card text-white mb-3" style="max-width: 15rem; background-color:blueviolet">
+            <div class="card-header"><h5 class="card-title text-right">Exam</h5></div>
+            <ul class="list-group list-group-flush" style="color:#000000">
+                <a class="list-group-item" asp-action="Index" asp-controller="Exams">+ Exams List</a>
+            </ul>
+        </div>
+
+        <div class="card text-white mb-3" style="max-width: 15rem; background-color:#f7d926">
+            <div class="card-header"><h5 class="card-title text-right">User</h5></div>
+            <ul class="list-group list-group-flush" style="color:#000000">
+                <a class="list-group-item" asp-action="Index" asp-controller="Users">+ Users List</a>
+            </ul>
+        </div>
+
+    </div>
+    </div>
 

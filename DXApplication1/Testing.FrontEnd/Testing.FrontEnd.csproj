@@ -25,6 +25,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Areas\Admin\Views\Question\ListExams.cshtml">
