@@ -4,63 +4,61 @@
     ViewData["Title"] = "Questions";
 }
 
-    <div class="row">
-        <div class="col-sm pb-4">
-            <br />
-            <div class="text-secondary p-1" style="background-color:#efdfdf">
-                <h5>List Question of Exam :&nbsp;&nbsp;@Model.ExamName</h5>
-            </div>
-            <br />
-            <partial name="_NavExam" />
-            <br />
-
-            <partial name="_lstQuestion"/>
-
-            <br />
-            @(Html.DevExtreme().Button()
-                    .Text("Back")
-                    .Type(ButtonType.Back)
-                    .StylingMode(ButtonStylingMode.Contained)
-                    .OnClick("BacktoIndex")
-            )
+<div class="row">
+    <div class="col-sm pb-4">
+        <br />
+        <div class="text-secondary p-1">
+            <h4>List Question of Exam :&nbsp;&nbsp;@Model.ExamName</h4>
         </div>
+        <br />
+        <partial name="_NavExam" />
+        <br />
 
-        <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
-        <div class="col-sm-3" style="background-color:#efdfdf">
-            <br />
-            <div class="bg-white p-1 text-center"><h6>Recommended Question! </h6></div>
-            <br />
+        <partial name="_lstQuestion" />
 
-            @foreach (var eq in Model.QuestionExams)
-            {
-                <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
-                    <span>&#x26AC;  @eq.Question.QuestionString (@eq.Question.QuestionExams.Count)</span><br />
-                </a>
+        <br />
+        @(Html.DevExtreme().Button()
+                .Text("Back")
+                .Type(ButtonType.Back)
+                .StylingMode(ButtonStylingMode.Contained)
+                .OnClick("BacktoIndex")
+        )
+    </div>
 
-            }
+    <div class="ml-3 col-sm-3 bg-light">
+        <br />
+        <div class="bg-white p-1 text-center"><h6>Recommended Question! </h6></div>
+        <br />
 
-            <br /><br /><br />
-            <div class="text-center">
-                <div class="row" style="background-color:#efdfdf">
+        @foreach (var eq in Model.QuestionExams)
+        {
+            <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
+                <span>&#x26AC;&nbsp;  @eq.Question.QuestionString&nbsp; <span class="badge badge-secondary">@eq.Question.QuestionExams.Count</span></span><br />
+            </a>
 
-                    <div class="text-center col">
-                        <h6>@Model.QuestionExams.Count</h6>
-                        <a asp-action="AssignQuestions" asp-route-id="@Model.ExamId">
-                            Assign More Questions
-                        </a>
-                    </div>
+        }
 
+        <br />
+        <div class="text-center">
+            <div class="row card-footer">
+
+                <div class="text-center col ">
+                    <a asp-action="AssignQuestions" asp-route-id="@Model.ExamId">
+                        Assign More Questions
+                    </a>
                 </div>
 
             </div>
-            <br /><br />
-        </div>
 
+        </div>
+        <br /><br />
     </div>
+
+</div>
 
 <script>
     function BacktoIndex() {
-       window.location.href = "/Admin/Exams/Index";
+        window.location.href = "/Admin/Exams/Index";
     }
 
 </script>

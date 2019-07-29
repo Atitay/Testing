@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Testing.FrontEnd.Areas.Authen.Models;
 
+
 namespace Testing.FrontEnd.Areas.Authen.Controllers
 {
     [Area("Authen")]
@@ -51,7 +52,8 @@ namespace Testing.FrontEnd.Areas.Authen.Controllers
             }
             else
             {
-                return Content("SignIn not Complete");
+               
+                return RedirectToAction("SignIn");
             }
 
         }
@@ -66,10 +68,10 @@ namespace Testing.FrontEnd.Areas.Authen.Controllers
                 };
 
             if (user.isAdmin)
-            
+
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-            
-          
+
+
 
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,75 +1,91 @@
 ﻿@using Testing.Models
 @model Testing.Models.Topic
 
-<div class="row ">
-    <div class="col-sm pb-4 mb-5 bg-light">
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-sm pb-4">
         <br />
-       
-            @(Html.DevExtreme().Form<Testing.Models.Topic>()
-            .ShowValidationSummary(true)
-            .ID("form")
-            .ShowColonAfterLabel(true)
-            .ColCount(1)
-            .LabelLocation(FormLabelLocation.Left)
 
-            .FormData(Model)
+        @(Html.DevExtreme().Form<Testing.Models.Topic>()
+        .ShowValidationSummary(true)
+        .ID("form")
+        .ShowColonAfterLabel(true)
+        .ColCount(1)
+        .LabelLocation(FormLabelLocation.Left)
+
+        .FormData(Model)
 
 
-                           .Items(groupItems =>
-                           {
-                               groupItems.AddSimpleFor(m => m.TopicName).Editor(e => e.TextBox().ReadOnly(true));
+                       .Items(groupItems =>
+                       {
+                           groupItems.AddGroup()
+                           .Caption("Topic Infomation").CssClass("text-secondary")
 
-                                       groupItems.AddSimpleFor(m => m.ParentId)
-                                                                .Editor(e => e.Lookup()
-                                        .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-                                            .ValueExpr("TopicId")
-                                            .DisplayExpr("TopicName").Disabled(true));
+                           .Template(@<text>
 
- groupItems.AddButton()
-                .HorizontalAlignment(HorizontalAlignment.Left)
-                .ButtonOptions(b => b.Text("Back")
-                .Type(ButtonType.Back)
-                .StylingMode(ButtonStylingMode.Contained)
-                .OnClick("BacktoIndex")
-                );
+                                    <div class="h6 font-weight-normal">
+                                        Topic Name : @Model.TopicName
+                                    </div>
 
-                           })
-            )
+                                    <div class="h6 font-weight-normal">
+                                        @if (Model.Parent != null)
+                                                {<p>Parent Name : @Model.Parent.TopicName</p>}
+                                                    else
+                                                    {
+                                                <p>Parent Name : No Parent </p>
+                                                    }
+                                    </div>
 
-        
+                                    <div class="h6 font-weight-normal">
+
+                                        List Childs : <span class="badge badge-danger badge-pill">@Model.Childs.Count</span>
+
+                                        <br />
+                                        @foreach (var eq in Model.Childs)
+                                                {
+                                    <span>&minus; @eq.TopicName </span><br />
+                                                }
+                                    </div>
+                        </text>);
+
+groupItems.AddButton()
+.HorizontalAlignment(HorizontalAlignment.Left)
+.ButtonOptions(b => b.Text("Back")
+.Type(ButtonType.Back)
+.StylingMode(ButtonStylingMode.Contained)
+.OnClick("BacktoIndex")
+);
+
+})
+        )
+
+
     </div>
 
-   
-        <div class="col-sm-3 mr-2" style="background-color:#efdfdf">
+    <div class="col-1"></div>
+        <div class="col-sm-3 bg-light">
             <br />
-            <div class="bg-white p-1 text-center"><h6>( @Model.Childs.Count )  List Childs!  </h6></div>
-            <br />
-
-            @foreach (var eq in Model.Childs)
-            {
-                <span>@eq.TopicName </span><br />
-            }
-        </div>
-
-        <div class="col-sm-3" style="background-color:#efdfdf">
-            <br />
-            <div class="bg-white p-1 text-center"><h6>( @Model.Questions.Count )  List Questions!  </h6></div>
+            <div class="bg-white p-1 text-center h6"><span class="badge badge-danger badge-pill">@Model.Questions.Count</span>  List Questions!</div>
             <br />
 
             @foreach (var eq in Model.Questions)
             {
                 <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
-                    <span>&#x2654; @eq.QuestionString </span><br />
+                    <span>&bull;&nbsp; @eq.QuestionString </span><br />
                 </a>
 
             }
-
-            <br /><br />
-
-            <a asp-action="ListQuestions" asp-route-id="@Model.TopicId">
-                See More Questions!<br />
-            </a>
+            <br />
+            @if (Model.Questions.Count != 0)
+            {
+                  <div class="card-footer text-center">
+                      <a asp-action="ListQuestions" asp-route-id="@Model.TopicId">
+                          See More Questions!<br />
+                      </a>
+                  </div>
+            }
         </div>
+
 </div>
 
 <script>

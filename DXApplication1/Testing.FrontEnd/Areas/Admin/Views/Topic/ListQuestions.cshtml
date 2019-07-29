@@ -4,25 +4,26 @@
     ViewData["Title"] = "ListQuestions";
 }
 
-<div class="row">
-    <div class="col-sm pb-4">
-        <br />
-        <div class="text-secondary p-1" style="background-color:#efdfdf">
-            <h5>List Questions of Topic :&nbsp;&nbsp;@Model.TopicName</h5>
-        </div>
-        <br />
-        <partial name="_lstQuestions" />
-        <br />
-        
-        @(Html.DevExtreme().Button()
-                .Text("Back")
-                .Type(ButtonType.Back)
-                .StylingMode(ButtonStylingMode.Contained)
-                .OnClick("BacktoIndex")
-        )
-    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-sm pb-4">
+          
+            <div class="text-secondary p-1">
+                <h5>List Questions of Topic :&nbsp;&nbsp;@Model.TopicName</h5>
+            </div>
+           <hr />
+            <partial name="_lstQuestions" />
+            <br />
 
-</div>
+            @(Html.DevExtreme().Button()
+                    .Text("Back")
+                    .Type(ButtonType.Back)
+                    .StylingMode(ButtonStylingMode.Contained)
+                    .OnClick("BacktoIndex")
+            )
+        </div>
+        <div class="col-1"></div>
+    </div>
 
 <script>
     function BacktoIndex() {

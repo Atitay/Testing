@@ -3,50 +3,56 @@
     ViewData["Title"] = "QuestionAnswer";
 }
 
-<div class="h3">
-    Exam : @Model.Exam.ExamName
-    <br>
-    Question : @Model.Question.QuestionString
-</div>
-<br />
 
-@(Html.DevExtreme().DataGrid<Testing.Models.Choice>
-    ()
-    .ID("gridContainer")
-    .ShowBorders(true)
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col">
+            <br />
+            <div class="text-secondary p-1">
+                <h4>Exam Name :&nbsp;&nbsp;@Model.Exam.ExamName</h4>
+                <h4>Question : &nbsp;&nbsp;@Model.Question.QuestionString</h4>
+            </div>
+            <br />
+            @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
+                ()
+                .ID("gridContainer")
+                .ShowBorders(true)
 
-    .Columns(columns =>
-    {
-        columns.AddFor(m => m.ChoiceString).Caption("Choice ");
-    })
+                .Columns(columns =>
+                {
+                    columns.AddFor(m => m.ChoiceString).Caption("Choice ");
+                })
 
-    .DataSource(d => d.Mvc()
-    .LoadAction("GetChoice")
+                .DataSource(d => d.Mvc()
+                .LoadAction("GetChoice")
 
-    .Key("ChoiceId")
+                .Key("ChoiceId")
 
 
-    .LoadParams(new { id = Model.QuestionId })
+                .LoadParams(new { id = Model.QuestionId })
 
-    )
+                )
 
-    .Selection(s => s.Mode(SelectionMode.Single))
-    .OnSelectionChanged("selection_changed")
-)
+                .Selection(s => s.Mode(SelectionMode.Single))
+                .OnSelectionChanged("selection_changed")
+            )
+        </div>
+        <div class="col-1"></div>
+    </div>
+        <br />
+        <form asp-action="Test" asp-route-id="@Model.ExamId" asp-route-QuestionId="@Model.QuestionId">
 
-<form asp-action="Test" asp-route-id="@Model.ExamId" asp-route-QuestionId="@Model.QuestionId">
+            <input type="hidden" name="questionAnswer" id="questionAnswer" />
+            <div class="text-center card-body">
+                <input type="submit" class="btn btn-success" value="SUBMIT" />
+            </div>
+            <script>
+                function selection_changed(e) {
+                    var data = e.selectedRowKeys;
+                    document.getElementById("questionAnswer").value = data;
+                }
 
-    <input type="hidden" name="questionAnswer" id="questionAnswer" />
-    <br />
+            </script>
 
-    <input type="submit" class="btn btn-outline-success" value="submit" />
-
-    <script>
-        function selection_changed(e) {
-            var data = e.selectedRowKeys;
-            document.getElementById("questionAnswer").value = data;
-        }
-
-    </script>
-
-</form>
+        </form>
+    

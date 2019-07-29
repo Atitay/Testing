@@ -3,44 +3,105 @@
     ViewData["Title"] = "Detail";
 }
 
-<h1>Detail</h1>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col">
+        <br />
+        <div class="text-secondary">
+            <h4>Detail</h4> <hr />
+        </div>
+
+        @(Html.DevExtreme().Form<Testing.Models.Exam>
+            ()
+            .ShowValidationSummary(true)
+            .ID("form")
+            .ShowColonAfterLabel(true)
+            .ColCount(2)
+            .LabelLocation(FormLabelLocation.Left)
+
+            .FormData(Model)
+
+            .Items(items =>
+            {
+            items.AddGroup()
+            //.Caption("Exam Information").CssClass("text-secondary")
+
+            .Template(@<text>
+
+                        <div class="h6 font-weight-normal">
+                            Code : @Model.Exam.ExamCode
+                        </div>
+
+                        <div class="h6 font-weight-normal">
+                            Name : @Model.Exam.ExamName
+                        </div>
+
+                        <div class="h6 font-weight-normal">
+                            Version : @Model.Exam.Version
+                        </div>
+
+                        <div class="h6 font-weight-normal">
+                            Topic Name : @Model.Exam.Subject.SubjectName
+                        </div>
+                        <hr />
+
+                        <div class="h5 font-weight-normal">
+                            Questions : @Model.Exam.QuestionExams.Count()
+                        </div>
+
+                        <div class="h6 font-weight-normal">
+                            Total Score : @Model.TotalQuestionScore
+                        </div>
+
+                        <div class="h6 font-weight-normal">
+                            Your Score : @Model.TotalEarnScore
+                        </div>
+
+
+            </text>); ;
+
+items.AddGroup()
+//.Caption("Date Detail").CssClass("text-secondary")
+
+.Template(@<text>
+
+                    <div class="h6 font-weight-normal">
+                        Start Date : @String.Format("{0:d MMMM yyyy}", @Model.Exam.StartDate)
+                    </div>
+
+                    <div class="h6 font-weight-normal">
+                        End Date : @String.Format("{0:d MMMM yyyy}", @Model.Exam.EndDate)
+                    </div>
+
+                    <div class="h6 font-weight-normal">
+                        Duration ( Days ) : @Model.Exam.ExamDuration
+                    </div>
+
+                    <div class="h6 font-weight-normal">
+                        Remaining Day : @Model.Exam.RemainingDay
+                    </div>
+
+
+
+</text>); ;
+
+})
+        )
+        <br />
+        @(Html.DevExtreme().Button()
+   .Text("Start!")
+   .Type(ButtonType.Default)
+   .StylingMode(ButtonStylingMode.Contained)
+   .OnClick("Start")
+        )
+    </div>
+    <div class="col-1"></div>
+</div>
+
 <br />
-<div class="h6 font-weight-normal">
-    Exam Code : @Model.Exam.ExamCode
 
-</div>
-
-<div class="h6 font-weight-normal">
-    Exam Name : @Model.Exam.ExamName
-
-</div>
-
-
-<br />
-
-<div class="h6 font-weight-normal">
-    Start Date : @Model.Exam.StartDate
-
-</div>
-
-<div class="h6 font-weight-normal">
-    Duration (Days) : @Model.Exam.ExamDuration
-
-</div>
-
-<div class="h6 font-weight-normal">
-    Remaining Day : @Model.Exam.RemainingDay
-
-</div>
-
-
-<div class="h5 font-weight-normal">
-    Questions : @Model.Exam.QuestionExams.Count()
-
-</div>
-
-<br />
-
-<a asp-action="Test" asp-route-id="@Model.ExamId" >
-    Start !
-</a>
+<script>
+    function Start() {
+        window.location.href = "/Users/Exam/Test/@Model.ExamId";
+    }
+</script>

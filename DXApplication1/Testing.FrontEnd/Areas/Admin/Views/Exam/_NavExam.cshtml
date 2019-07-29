@@ -17,10 +17,14 @@
             <a class="nav-link @checkCurrentAction("Index")" asp-action="Index" asp-route-id="@Model.ExamId"> Detail </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @checkCurrentAction("Questions")" asp-action="Questions" asp-route-id="@Model.ExamId">( @Model.QuestionExams.Count ) Questions</a>
+            <a class="nav-link @checkCurrentAction("Questions")  @checkCurrentAction("AssignQuestions")" asp-action="Questions" asp-route-id="@Model.ExamId">
+                <span class="badge badge-danger">@Model.QuestionExams.Count</span> &nbsp;Questions
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @checkCurrentAction("TestedBy")" asp-action="TestedBy" asp-route-id="@Model.ExamId">( 0 ) Tested By</a>
+            <a class="nav-link @checkCurrentAction("TestedBy")" asp-action="TestedBy" asp-route-id="@Model.ExamId">
+                <span class="badge badge-danger ">0</span>&nbsp;Tested By
+            </a>
         </li>
         
     </ul>

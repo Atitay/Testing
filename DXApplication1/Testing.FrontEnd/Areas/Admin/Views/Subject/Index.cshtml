@@ -1,7 +1,9 @@
 ﻿@using Testing.Models
 @model Testing.Models.Subject
     <div class="row ">
-        <div class="col-sm pb-4 mb-5">
+
+        <div class="col-1"></div>
+        <div class="col-sm pb-4">
             <br />
             <form method="post">
                 @(Html.DevExtreme().Form<Testing.Models.Subject>()
@@ -15,27 +17,32 @@
 
 
                 .Items(groupItems =>
-                               {
-                                   groupItems.AddSimpleFor(m => m.SubjectName).Editor(e => e.TextBox().ReadOnly(true));
+                {
+                    groupItems.AddGroup()
+                           .Caption("Subject Infomation").CssClass("text-secondary")
 
-                                   groupItems.AddSimpleFor(m => m.SubjectLevel)
-                                   .Editor(e => e.SelectBox()
-                                   .ID("SubjectLevel")
-                        .DataSource(Html.GetEnumSelectList<SubjectLevel>()
-                        .Select(t => new { Value = int.Parse(t.Value), Text = t.Text }))
-                            .ValueExpr("Value")
-                            .DisplayExpr("Text").ReadOnly(true)
-                            );
+                           .Template(@<text>
+
+                                    <div class="h6 font-weight-normal">
+                                        Subject Name : @Model.SubjectName
+                                    </div>
+
+                                    <div class="h6 font-weight-normal">
+                                        Subject Level : @Model.SubjectLevel
+                                    </div>
 
 
-     groupItems.AddButton()
-                    .HorizontalAlignment(HorizontalAlignment.Left)
-                    .ButtonOptions(b => b.Text("Back")
-                    .Type(ButtonType.Back)
-                    .StylingMode(ButtonStylingMode.Contained)
-                    .OnClick("BacktoIndex")
-                    );
-                               })
+                        </text>);
+
+
+groupItems.AddButton()
+              .HorizontalAlignment(HorizontalAlignment.Left)
+              .ButtonOptions(b => b.Text("Back")
+              .Type(ButtonType.Back)
+              .StylingMode(ButtonStylingMode.Contained)
+              .OnClick("BacktoIndex")
+              );
+})
                 )
 
                 <script>
@@ -47,23 +54,28 @@
             </form>
         </div>
 
-        <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
-        <div class="col-sm-4" style="background-color:#efdfdf">
+        <div class="col-1"></div>
+        <div class="col-sm-3 bg-light">
             <br />
-            <div class="bg-white p-1 text-center"><h6>( @Model.Exams.Count )  List Exams!  </h6></div>
+            <div class="bg-white p-1 text-center h6"><span class="badge badge-danger badge-pill">@Model.Exams.Count</span>  List Exams!</div>
             <br />
 
             @foreach (var eq in Model.Exams)
             {
                 <a asp-action="Index" asp-controller="Exam" asp-route-id="@eq.ExamId">
-                    <span>&#x2600; @eq.ExamName </span><br />
+                    <span>&bull; &nbsp; @eq.ExamName </span><br />
                 </a>
             }
 
-            <br /><br />
-
-            <a asp-action="ListExams" asp-route-id="@Model.SubjectId">
-                See More Exams!<br />
-            </a>
+            <br />
+            @if (Model.Exams.Count != 0)
+            {
+                <div class="card-footer text-center">
+                    <a asp-action="ListExams" asp-route-id="@Model.SubjectId">
+                        See More Exams!<br />
+                    </a>
+                </div>
+            }
+            
         </div>
     </div>

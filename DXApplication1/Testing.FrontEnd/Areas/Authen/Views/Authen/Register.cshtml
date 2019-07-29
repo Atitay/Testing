@@ -4,60 +4,73 @@
     Layout = "~/Views/Shared/_LayoutAuthen.cshtml";
 }
 
-@{
-    ViewData["Title"] = "Register";
-}
-
-<br />
-<h2>@ViewData["Title"]</h2>
-<br />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-
-            @using (Html.BeginForm())
-            {
-                using (Html.DevExtreme().ValidationGroup())
+    <div class="col"></div>
+    <div class="col-6 p-4">
+        <div class="card p-4">
+            <br />
+            <div class="text-center h2 p-2">Register</div>
+            <br /><br /><br />
+            <form method="post">
+                @using (Html.BeginForm())
                 {
+                    using (Html.DevExtreme().ValidationGroup())
+                    {
 
-                    @(Html.DevExtreme().Form<Testing.FrontEnd.Areas.Authen.Models.LoginViewModel>()
-                                     .ShowValidationSummary(true)
-                                     .ID("form")
-                                     .ShowColonAfterLabel(true)
-                                     .ColCount(1)
-                                     .LabelLocation(FormLabelLocation.Left)
+                        @(Html.DevExtreme().Form<Testing.FrontEnd.Areas.Authen.Models.LoginViewModel>()
+                                         .ShowValidationSummary(true)
+                                         .ID("form")
+                                         .ShowColonAfterLabel(true)
+                                         .ColCount(1)
+                                         .LabelLocation(FormLabelLocation.Left)
+                                         
 
+                                         .Items(items =>
+                                         {
+                                             items.AddGroup()
 
-                                     .Items(items =>
-                                     {
-                                         items.AddGroup()
+                                                        .Items(groupItems =>
+                                                        {
+                                                            groupItems.AddSimpleFor(m => m.UserName).Editor(e => e.TextBox());
+                                                            groupItems.AddSimpleFor(m => m.Email).Editor(e => e.TextBox());
+                                                            groupItems.AddSimpleFor(m => m.Password).Editor(e => e.TextBox()
+                                                                                                    .Mode(TextBoxMode.Password));
+                                                            groupItems.AddSimpleFor(m => m.ConfirmPassword).Editor(e => e.TextBox()
+                                                                                                    .Mode(TextBoxMode.Password));
 
-                                                    .Items(groupItems =>
-                                                    {
-                                                        groupItems.AddSimpleFor(m => m.UserName).Editor(e => e.TextBox());
-                                                        groupItems.AddSimpleFor(m => m.Email).Editor(e => e.TextBox());
-                                                        groupItems.AddSimpleFor(m => m.Password).Editor(e => e.TextBox().Mode(TextBoxMode.Password));
-                                                        groupItems.AddSimpleFor(m => m.ConfirmPassword).Editor(e => e.TextBox().Mode(TextBoxMode.Password));
+                                                        });
 
-                                                    });
-                                        items.AddButton()
-                                        .ButtonOptions(b => b.Text("Register")
-                                        .Type(ButtonType.Success)
-                                        .StylingMode(ButtonStylingMode.Contained)
-                                        .UseSubmitBehavior(true)
-                                    );
+                                            items.AddButton()
+                                            .ButtonOptions(b => b.Text("Register").Width(100)
+                                            .Type(ButtonType.Success)
+                                            .StylingMode(ButtonStylingMode.Contained)
+                                            .UseSubmitBehavior(true)
 
-                                     })
+                                        ).HorizontalAlignment(HorizontalAlignment.Center);
 
-                    )
-                    <a asp-action="SignIn">
-                        Back
-                    </a>
+                                         })
+
+                        )
+                        <div class="p-2 text-center">
+                            @(Html.DevExtreme().Button().Width(100)
+                            .Text("Sign In")
+                            .Type(ButtonType.Default)
+                            .StylingMode(ButtonStylingMode.Outlined)
+                            .OnClick("SignIn")
+                            )
+                        </div>
+                        <br />
+                    }
                 }
-            }
 
-
-
-        </form>
+            </form>
+        </div>
     </div>
+    <div class="col"></div>
 </div>
+
+<script>
+    function SignIn() {
+        window.location.href = "/Authen/Authen/SignIn";
+    }
+</script>

@@ -3,8 +3,8 @@
 <br />
 <div class="row">
     <div class="col-sm pb-4">
-        <div class="text-secondary p-1" style="background-color:#efdfdf">
-            <h5>Question :&nbsp;&nbsp;@Model.QuestionString</h5>
+        <div class="text-secondary">
+            <h4>Question :&nbsp;&nbsp;@Model.QuestionString</h4>
         </div>
         <br />
         <form method="post">
@@ -99,25 +99,31 @@ items.AddButton()
 
         </form>
     </div>
-    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
-    <div class="col-sm-3" style="background-color:#efdfdf">
+
+    <div class="ml-3 col-sm-3 bg-light">
         <br />
-        <div class="bg-white p-1 text-center"><h6>( @Model.QuestionExams.Count ) List Exam </h6></div>
+        <div class="bg-white p-1 text-center h6"><span class="badge badge-danger badge-pill">@Model.QuestionExams.Count</span>  List Exams!</div>
         <br />
 
         @foreach (var eq in Model.QuestionExams)
         {
 
             <a asp-action="Index" asp-controller="Exam" asp-route-id="@eq.ExamId">
-                <span>&#x2601;  @eq.Exam.ExamName </span><br />
+                <span>&bull;&nbsp;  @eq.Exam.ExamName </span><br />
             </a>
 
         }
 
-        <br /><br />
+        <br />
+        @if (Model.QuestionExams.Count != 0)
+        {
+            <div class="card-footer text-center">
 
-        <a asp-action="ListExams" asp-route-id="@Model.QuestionId">
-            See More Exams!<br />
-        </a>
+                <a asp-action="ListExams" asp-route-id="@Model.QuestionId">
+                    See More Exams!<br />
+                </a>
+            </div>
+        }
+
     </div>
 </div>

@@ -55,9 +55,16 @@
     .OnCellDblClick("selection_changed")
         )
         <br>
-        <a asp-action="AssignExams">
-            Enroll More Exams
-        </a>
+
+        <div class=" text-right">
+            @(Html.DevExtreme().Button()
+            .Icon("plus")
+            .Text("Enroll More Exams")
+            .Type(ButtonType.Default)
+            .StylingMode(ButtonStylingMode.Contained)
+            .OnClick("Enroll")
+            )
+        </div>
     </div>
 </div>
 
@@ -66,7 +73,10 @@
         if (e.data.ExamId != null) {
             window.location.href = "/Users/Exam/Detail/" + e.data.ExamId ;
         }
+    }
 
+    function Enroll() {       
+            window.location.href = "/Users/Exams/AssignExams";      
     }
 </script>
 

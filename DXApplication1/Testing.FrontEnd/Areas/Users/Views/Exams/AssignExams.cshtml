@@ -56,17 +56,21 @@
     .OnSelectionChanged("selection_changed")
 
         )
-        <a asp-action="Index">
-            Back
-        </a>
+
     </div>
 </div>
 <br />
 
-<form asp-action="AddExams" >
+<form asp-action="AddExams">
     <input type="hidden" name="ExamName" id="ExamName">
-
-    <input type="submit" class="btn btn-outline-success" value="SUBMIT" />
+            @(Html.DevExtreme().Button()
+            .Text("Back")
+            .Type(ButtonType.Back)
+            .StylingMode(ButtonStylingMode.Contained)
+            .OnClick("Back")
+            )
+    &nbsp;&nbsp;
+        <input type="submit" class="btn btn-success" value="SUBMIT" />
 
     <script>
         function selection_changed(selectedItems) {
@@ -74,6 +78,9 @@
             document.getElementById("ExamName").value = JSON.stringify(data);
         }
 
+        function Back() {
+            window.location.href = "/Users/Exams/Index";
+        }
     </script>
 
 </form>

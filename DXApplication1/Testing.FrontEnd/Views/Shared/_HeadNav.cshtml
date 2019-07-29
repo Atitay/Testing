@@ -1,8 +1,8 @@
 ﻿
 <div class="mb-3">
-    <div class="row p-2" style="background-color:#efdfdf">
+    <div class="row pt-2 pb-0 rounded-bottom bg-light" >
         <div class="col-2">
-            <a asp-controller="Home" asp-action="Index" >TESTING</a>
+            <a asp-controller="Home" asp-action="Index">TESTING</a>
         </div>
 
         <div id="" class=" col">
@@ -14,8 +14,15 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                @User.Identity.Name            
-                <a href="/Authen/Authen/SignOut">Logout</a>
+            <div class="row">
+                <div class="col p-1">
+                    <p> <i class="fas fa-user"></i> @User.Identity.Name </p>
+                </div>
+                <div class="col">
+                    <a href="/Authen/Authen/SignOut">Logout</a>
+                </div>
+
+            </div>
             }
 
             else

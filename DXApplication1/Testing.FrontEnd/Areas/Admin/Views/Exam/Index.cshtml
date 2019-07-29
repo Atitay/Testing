@@ -2,99 +2,106 @@
 @model Testing.Models.Exam
 
 
-<div id="form-container" class="row">
+<div class="row">
 
     <div class="col">
         <br />
-        <div class="text-secondary p-1" style="background-color:#efdfdf">
-            <h5>Exam Name :&nbsp;&nbsp;@Model.ExamName</h5>
+        <div class="text-secondary p-1">
+            <h4>Exam Name :&nbsp;&nbsp;@Model.ExamName</h4>
         </div>
         <br />
-        
-            <partial name="_NavExam" />
-        
+
+        <partial name="_NavExam" />
+
         <br />
 
 
-        @(Html.DevExtreme().Form<Testing.Models.Exam>()
-        .ShowValidationSummary(true)
-        .ID("form")
-        .ShowColonAfterLabel(true)
-        .ColCount(2)
-        .LabelLocation(FormLabelLocation.Left)
+        @(Html.DevExtreme().Form<Testing.Models.Exam>
+            ()
+            .ShowValidationSummary(true)
+            .ID("form")
+            .ShowColonAfterLabel(true)
+            .ColCount(2)
+            .LabelLocation(FormLabelLocation.Left)
 
-        .FormData(Model)
-        .Items(items =>
-        {
+            .FormData(Model)
+
+            .Items(items =>
+            {
             items.AddGroup()
-                       .Caption("Exam Information").CssClass("text-secondary")
-                       .Items(groupItems =>
-                       {
-                           groupItems.AddSimpleFor(m => m.ExamCode).Editor(e => e.TextBox().ReadOnly(true));
-                           groupItems.AddSimpleFor(m => m.ExamName).Editor(e => e.TextArea().Height(100).ReadOnly(true));
+            .Caption("Exam Information").CssClass("text-secondary")
+           
+            .Template(@<text>
 
-                           groupItems.AddSimpleFor(m => m.Version).Editor(e => e
-                                                        .TextBox()
-                                                        .Disabled(false).ReadOnly(true));
+                        <div class="h6 font-weight-normal">
+                            Code : @Model.ExamCode
+                        </div>
 
-                           groupItems.AddSimpleFor(m => m.SubjectId)
-                            .Editor(e => e.SelectBox()
-                            .DataSource(d => d.Mvc().Controller("Exams").LoadAction("GetSubject").Key("SubjectId"))
-                                .ValueExpr("SubjectId")
-                                .DisplayExpr("SubjectName")
-                                .ReadOnly(true)
-                                )
-                       ;
+                        <div class="h6 font-weight-normal">
+                            Name : @Model.ExamName
+                        </div>
 
-                       });
-            items.AddGroup()
-                        .Caption("Date Detail").CssClass("text-secondary")
-                               .Items(GroupItems =>
-                               {
-                                   GroupItems.AddSimpleFor(m => m.StartDate)
-                                                .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy").ReadOnly(true));
+                        <div class="h6 font-weight-normal">
+                            Version : @Model.Version
+                        </div>
 
-                                   GroupItems.AddSimpleFor(m => m.ExamDuration)
-                                                    .Editor(e => e.NumberBox().ShowSpinButtons(true).Min(1).ReadOnly(true));
+                        <div class="h6 font-weight-normal">
+                            Topic Name : @Model.Subject.SubjectName
+                        </div>
+            </text>);;
 
-                                   GroupItems.AddSimpleFor(m => m.EndDate).Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy").ReadOnly(true));
+items.AddGroup()
+.Caption("Date Detail").CssClass("text-secondary")
 
-                                   GroupItems.AddSimpleFor(m => m.RemainingDay).Editor(e => e.TextBox().ReadOnly(true));
+.Template(@<text>
 
-                               });
+        <div class="h6 font-weight-normal">
+            Start Date : @String.Format("{0:d MMMM yyyy}", @Model.StartDate)
+        </div>
 
-        })
+        <div class="h6 font-weight-normal">
+            End Date : @String.Format("{0:d MMMM yyyy}", @Model.EndDate)
+        </div>
+
+                    <div class="h6 font-weight-normal">
+                        Duration ( Days ) : @Model.ExamDuration
+                    </div>
+
+                    <div class="h6 font-weight-normal">
+                        RemainingDay : @Model.RemainingDay
+                    </div>
+
+</text>);;
+
+})
         )
-        <br />
         @(Html.DevExtreme().Button()
         .Text("Back")
         .Type(ButtonType.Back)
         .StylingMode(ButtonStylingMode.Contained)
         .OnClick("BacktoIndex")
         )
-        <br /><br />
+
     </div>
 
-    <div class="bg-white">&nbsp; &nbsp;&nbsp;</div>
-    <div class="col-sm-3" style="background-color:#efdfdf">
+
+    <div class="ml-3 col-sm-3 bg-light">
         <br />
-        <div class="bg-white p-1 text-center"><h6>List Question </h6></div>
+        <div class="bg-white p-1 text-center h6">List Questions</div>
         <br />
 
         @foreach (var eq in Model.QuestionExams)
         {
-            
-                <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
-                    <span>&#x2601;  @eq.Question.QuestionString </span><br />
-                </a>
-        
 
+            <a asp-action="Index" asp-controller="Question" asp-route-id="@eq.QuestionId">
+                <span>&bull;&nbsp;  @eq.Question.QuestionString </span><br />
+            </a>
 
         }
 
-        <br /><br /><br /><br />
+        <br />
         <div class="text-center">
-            <div class="row" style="background-color:#efdfdf">
+            <div class="row card-footer">
 
                 <div class="text-center col">
                     <h6>@Model.QuestionExams.Count</h6>

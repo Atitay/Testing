@@ -1,51 +1,55 @@
 ﻿@using Testing.Models
-@model  Testing.Models.UserExamQuestion
+@model Testing.Models.UserExamQuestion
 @{
     ViewData["Title"] = "Test";
 }
 
-<div class="h3">
-    Test : @Model.UserExam.Exam.ExamName
-</div>
-<br /> 
 
-@(Html.DevExtreme().DataGrid<Testing.Models.UserExamQuestion>()
-    .ID("gridContainer")
-        .DataSource(d => d.Mvc()
-        .Controller("Exam")
-        .LoadAction("GetExamQuestion")
+<div class="row">
 
-        .Area("Users")
+    <div class="col">
+        <br />
+        <div class="text-secondary p-1">
+            <h4>Exam Name :&nbsp;&nbsp;@Model.UserExam.Exam.ExamName</h4>
+        </div>
 
-        .Key("QuestionId")
+        @(Html.DevExtreme().DataGrid<Testing.Models.UserExamQuestion>()
+            .ID("gridContainer")
+                .DataSource(d => d.Mvc()
+                .Controller("Exam")
+                .LoadAction("GetExamQuestion")
 
-        .LoadParams(new { id = Model.UserExam.ExamId })
+                .Area("Users")
 
-        )
+                .Key("QuestionId")
+
+                .LoadParams(new { id = Model.UserExam.ExamId })
+
+                )
 
 
-    .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-    .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+            .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
 
-    .Paging(paging => paging.Enabled(true).PageSize(10))
+            .Paging(paging => paging.Enabled(true).PageSize(10))
 
-    .ShowBorders(true)
-    .HeaderFilter(headerFilter => headerFilter.Visible(true))
-    .Selection(s => s.Mode(SelectionMode.Single))
-    .HoverStateEnabled(true)
+            .ShowBorders(true)
+            .HeaderFilter(headerFilter => headerFilter.Visible(true))
+            .Selection(s => s.Mode(SelectionMode.Single))
+            .HoverStateEnabled(true)
 
-    .Editing(editing =>
-           {
-               editing.Mode(GridEditMode.Form).UseIcons(true);
-               editing.AllowUpdating(true);
-           })
+            .Editing(editing =>
+                   {
+                       editing.Mode(GridEditMode.Form).UseIcons(true);
+                       editing.AllowUpdating(true);
+                   })
 
-    .Columns(columns =>
-    {
-        columns.AddFor(m => m.Question.QuestionString).Caption("Questions")
-        .CellTemplate(@<text>
-                <a href="/Users/Exam/QuestionAnswer/<%= data.QuestionExamId %>"><%= data.Question.QuestionString %></a>
-        </text>
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.Question.QuestionString).Caption("Questions")
+                .CellTemplate(@<text>
+                            <a href="/Users/Exam/QuestionAnswer/<%= data.QuestionExamId %>"><%= data.Question.QuestionString %></a>
+                </text>
 );
 ;
 
@@ -62,15 +66,16 @@ columns.AddFor(m => m.Question.QuestionLevel).Visible(true).Caption("Question Le
 
 .Selection(s => s.Mode(SelectionMode.Multiple))
 .OnSelectionChanged("selection_changed")
-)
-
+        )
+    </div>
+</div>
 
 <form asp-action="Detail" asp-route-id="@Model.UserExam.ExamId">
 
     <input type="hidden" name="examQuestion" id="examQuestion">
     <br />
 
-    <input type="submit" class="btn btn-outline-success" value="SUBMIT" />
+    <input type="submit" class="btn btn-success" value="SUBMIT" />
 
     <script>
 

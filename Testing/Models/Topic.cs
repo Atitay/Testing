@@ -12,7 +12,8 @@ namespace Testing.Models
         [Key]    
         public Guid TopicId { get; set; }
 
-       
+
+        [Display(Name = ("Topic Name"))]
         public Guid? ParentId { get; set; }
         [ForeignKey("ParentId")]
 

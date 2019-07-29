@@ -24,8 +24,6 @@ namespace Testing.Models
         public DateTime StartDate { get; set; }
 
         public int ExamDuration { get; set; }
-        public int TotalPoint { get; set; }
-
 
         [NotMapped]
         public DateTime EndDate => StartDate.AddDays(ExamDuration);
