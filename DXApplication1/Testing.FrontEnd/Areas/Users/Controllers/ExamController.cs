@@ -1,6 +1,7 @@
 ﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,13 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
         public IActionResult Detail(Guid id) => View(_db.UserExams.First(a => a.ExamId == id));
         public IActionResult QuestionAnswer(Guid id)
         {
-            var _questAnswer = _db.QuestionExams.Where(a => a.QuestionExamId == id).ToList();
+            var _questAnswer = _db.UserExamQuestions.Where(a => a.UserExamQuestionId == id).ToList();
 
             foreach (var _questAns in _questAnswer)
             {
                 _questAnswer.ForEach(e =>
                 {
-                    if (e.ExamId == _questAns.ExamId)
+                    if (e.QuestionId == _questAns.QuestionId)
                     {
                         _db.SaveChanges();
                     }
@@ -42,20 +43,27 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
             return View(_questAnswer);
         }
 
+        [HttpGet]
+        public IActionResult Start(Guid id)
+        {
+            var _userExams = _db.UserExams.First(a => a.ExamId == id);
+            _userExams.StartExam();
+            _db.SaveChanges();
+
+            return RedirectToAction("Test", new { id = id });
+        }
+
 
         [HttpGet]
         public IActionResult Test(Guid id)
         {
             var _UserExams = _db.UserExamQuestions.Where(a => a.UserExam.ExamId == id).ToList();
-
-
             foreach (var _userExam in _UserExams)
             {
                 _UserExams.ForEach(u =>
                 {
                     if (u.UserExamQuestionId == _userExam.UserExamQuestionId)
                     {
-                        _userExam.UserExam.StartExam();
                         _userExam.UserExam.UpdateScore();
                         _db.SaveChanges();
 
@@ -71,8 +79,9 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
         [HttpGet]
         public object GetExamQuestion(DataSourceLoadOptions loadOptions, Guid id)
         {
-            return DataSourceLoader.Load(_db.QuestionExams.Where(m => m.ExamId == id), loadOptions);
+            return DataSourceLoader.Load(_db.UserExamQuestions.Where(m => m.UserExam.ExamId == id), loadOptions);
         }
+
 
         [HttpGet]
         public object GetChoice(DataSourceLoadOptions loadOptions, Guid id)
@@ -91,8 +100,8 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
             {
                 if (_questAns.QuestionId == QuestionId)
                 {
-
                     _questAns.SelectChoiceId = questionAnswer;
+                    _questAns.IsCompleted = true;
                 }
 
                 _questAns.VerifyAnswer();
@@ -106,16 +115,19 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
 
 
         [HttpPost, ActionName("Detail")]
-        public IActionResult DetailPost(Guid id, int examQuestion)
+        public IActionResult DetailPost(Guid id)
         {
 
             var _questionAnswer = _db.UserExamQuestions.Where(a => a.UserExam.ExamId == id).ToList();
 
-            if (_questionAnswer.Count == examQuestion)
+            foreach (var _questAns in _questionAnswer)
             {
-                return RedirectToAction("Detail", new { id = id });
+                if (_questAns.SelectChoiceId != null && _questAns.IsCompleted != false)
+                {
+
+                    return RedirectToAction("Detail", new { id = id });
+                }            
             }
-            
             return RedirectToAction("Test", new { id = id });
         }
 

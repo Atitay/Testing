@@ -36,8 +36,6 @@
     {
         columns.AddFor(m => m.Question.QuestionString).Caption("Questions");
 
-        columns.AddFor(m => m.Question.Point).Visible(true).Caption("Point");
-
         columns.AddFor(m => m.Question.TopicId).Visible(true).Caption("Topic Name")
         .Lookup(lookup => lookup
             .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
@@ -45,8 +43,9 @@
                 .DisplayExpr("TopicName")
             );
 
+         columns.AddFor(m => m.Question.Point).Visible(true).Caption("Point").Width(70);
 
-        columns.AddFor(m => m.Question.QuestionType).Visible(true).Caption("Question Type")
+        columns.AddFor(m => m.Question.QuestionType).Visible(true).Caption("Question Type").Visible(false)
         .Lookup(lookup => lookup
             .DataSource(Html.GetEnumSelectList<QuestionType>()
                     .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))
@@ -55,7 +54,7 @@
                 );
 
 
-         columns.AddFor(m => m.Question.QuestionLevel).Visible(true).Caption("Question Level")
+         columns.AddFor(m => m.Question.QuestionLevel).Visible(true).Caption("Question Level").Visible(false)
             .Lookup(lookup => lookup
                 .DataSource(Html.GetEnumSelectList<QuestionLevel>()
                         .Select(l => new { Value = int.Parse(l.Value), Text = l.Text }))

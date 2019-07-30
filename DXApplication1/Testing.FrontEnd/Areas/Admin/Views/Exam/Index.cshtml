@@ -7,7 +7,7 @@
     <div class="col">
         <br />
         <div class="text-secondary p-1">
-            <h4>Exam Name :&nbsp;&nbsp;@Model.ExamName</h4>
+            <h4>@Model.ExamCode :&nbsp;&nbsp;@Model.ExamName</h4>
         </div>
         <br />
 
@@ -29,60 +29,60 @@
             .Items(items =>
             {
             items.AddGroup()
-            .Caption("Exam Information").CssClass("text-secondary")
+            .Caption("Exam Information").CssClass("text-secondary font-weight-bold ")
            
             .Template(@<text>
 
-                        <div class="h6 font-weight-normal">
-                            Code : @Model.ExamCode
+                        <div class=" h6 font-weight-normal">
+                                        <b>Code :</b> @Model.ExamCode
                         </div>
 
                         <div class="h6 font-weight-normal">
-                            Name : @Model.ExamName
+                            <b>Name :</b> @Model.ExamName
                         </div>
 
                         <div class="h6 font-weight-normal">
-                            Version : @Model.Version
+                            <b>Version :</b> @Model.Version
                         </div>
 
                         <div class="h6 font-weight-normal">
-                            Topic Name : @Model.Subject.SubjectName
+                            <b>Topic Name :</b> @Model.Subject.SubjectName
                         </div>
             </text>);;
 
 items.AddGroup()
-.Caption("Date Detail").CssClass("text-secondary")
+.Caption("Date Detail").CssClass("text-secondary font-weight-bold")
 
 .Template(@<text>
 
         <div class="h6 font-weight-normal">
-            Start Date : @String.Format("{0:d MMMM yyyy}", @Model.StartDate)
+            <b>Start Date :</b> @String.Format("{0:d MMMM yyyy}", @Model.StartDate)
         </div>
 
         <div class="h6 font-weight-normal">
-            End Date : @String.Format("{0:d MMMM yyyy}", @Model.EndDate)
-        </div>
+            <b> End Date:</b> @String.Format("{0:d MMMM yyyy}", @Model.EndDate)
+     </div >
 
-                    <div class="h6 font-weight-normal">
-                        Duration ( Days ) : @Model.ExamDuration
-                    </div>
+     <div class="h6 font-weight-normal">
+         <b>Duration :</b> @Model.ExamDuration Days
+     </div>
 
-                    <div class="h6 font-weight-normal">
-                        RemainingDay : @Model.RemainingDay
-                    </div>
+     <div class="h6 font-weight-normal">
+         <b> Remaining Day:</b> @Model.RemainingDay Days
+  </div >
 
-</text>);;
+</text>); ;
 
 })
-        )
-        @(Html.DevExtreme().Button()
-        .Text("Back")
-        .Type(ButtonType.Back)
-        .StylingMode(ButtonStylingMode.Contained)
-        .OnClick("BacktoIndex")
-        )
+     )
+     @(Html.DevExtreme().Button()
+   .Text("Back")
+   .Type(ButtonType.Back)
+   .StylingMode(ButtonStylingMode.Contained)
+   .OnClick("BacktoIndex")
+     )
 
-    </div>
+     </div>
 
 
     <div class="ml-3 col-sm-3 bg-light">

@@ -66,7 +66,7 @@ namespace Testing_FrontEnd
             {
                 routes.MapRoute(
                   name: "areas",
-                  template: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"
+                  template: "{area=Authen}/{controller=Authen}/{action=SignIn}/{id?}"
                 );
             });
 

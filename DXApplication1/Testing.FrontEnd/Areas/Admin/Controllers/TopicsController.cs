@@ -30,6 +30,19 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             return DataSourceLoader.Load(_db.Topics, loadOptions);
         }
 
+        [HttpPost]
+        public IActionResult Post(string values)
+        {
+            var newTopic = new Topic();
+
+            JsonConvert.PopulateObject(values, newTopic);
+
+            _db.Topics.Add(newTopic);
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
         [HttpPut]
         public IActionResult Put(Guid key, string values)
         {
@@ -40,6 +53,15 @@ namespace Testing.FrontEnd.Areas.Admin.Controllers
             _db.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpDelete]
+        public void Delete(Guid key)
+        {
+            var _topic = _db.Topics.First(a => a.TopicId == key);
+
+            _db.Topics.Remove(_topic);
+            _db.SaveChanges();
         }
 
 

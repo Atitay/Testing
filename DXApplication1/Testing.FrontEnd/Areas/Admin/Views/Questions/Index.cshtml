@@ -59,18 +59,6 @@
         .DisplayExpr("TopicName")
         .ValueExpr("TopicId")
         )
-
-    //.FormItem(i => i
-    //.Editor(e => e.DropDownBox()
-    //.ID("TopicId")
-    //.DropDownOptions(o => o.Height(250))
-    //.DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-    //.DisplayExpr("TopicName")
-    //.ValueExpr("TopicId")
-    //.ShowClearButton(true)
-    //.OnValueChanged("treeBox_valueChanged")
-    //.ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
-    //)
     );
 
                columns.AddFor(m => m.QuestionType).Caption("Question Type").Visible(false)
@@ -111,89 +99,21 @@
 .OnCellDblClick("selection_changed")
 
         )
-
-        
-        <script>
-            function selection_changed(e) {
-                if (e.data.QuestionId != null) {
-            window.location.href = "/Admin/Question/Index/" + e.data.QuestionId ;
-            }
-            }
-            function slider_valueChanged(data) {
-                $("#slider-value").dxNumberBox("instance").option("value", data.value);
-            }
-
-            function numberBox_valueChanged(data) {
-                $("#handler-slider").dxSlider("instance").option("value", data.value);
-            }
-        </script>
-
-        @*tree view*@
-        @using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
-        {
-            @(Html.DevExtreme().TreeView()
-            .DataSource(d => d.Mvc().Controller("Questions").LoadAction("GetTopic").Key("TopicId"))
-            .KeyExpr("TopicId")
-            .DisplayExpr("TopicName")
-            .ParentIdExpr("ParentId")
-            .DataStructure(TreeViewDataStructure.Plain)
-            .SelectionMode(NavSelectionMode.Single)
-            .SelectByClick(true)
-            .Height(235)
-            .OnItemSelectionChanged(
-                                                                                                        @<text>
-                                                                                                            function(args) {
-                                                                                                            var nodes = args.component.getNodes(),
-                                                                                                            value = getSelectedItemsKeys(nodes);
-
-                                                                                                            component.option("value", value);
-                                                                                                            }
-                                                                                                        </text>)
-
-                       .OnContentReady(
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @<text>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                function(args) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                syncTreeViewSelection(args.component, component.option("value"));
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </text>)
-            )
-        }
-
-        <script>
-            //Func tree view box
-            function syncTreeViewSelection(treeView, value) {
-                if (!value) {
-                    treeView.unselectAll();
-                    return;
-                }
-                value.forEach(function (key) {
-                    treeView.selectItem(key);
-                });
-            }
-            function getSelectedItemsKeys(items) {
-                var result = [];
-                items.forEach(function (item) {
-                    if (item.selected) {
-                        result.push(item.key);
-                    }
-                    if (item.items.length) {
-                        result = result.concat(getSelectedItemsKeys(item.items));
-                    }
-                });
-                return result;
-            }
-            function treeBox_valueChanged(e) {
-                var $treeView = e.component.content().find(".dx-treeview");
-                if ($treeView.length) {
-                    syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
-                }
-            }
-
-        </script>
-
-    </div>
-   
-    <div class="ml-3 col-sm-3 bg-light">
     </div>
 </div>
 
+
+<script>
+    function selection_changed(e) {
+        if (e.data.QuestionId != null) {
+            window.location.href = "/Admin/Question/Index/" + e.data.QuestionId;
+        }
+    }
+    function slider_valueChanged(data) {
+        $("#slider-value").dxNumberBox("instance").option("value", data.value);
+    }
+
+    function numberBox_valueChanged(data) {
+        $("#handler-slider").dxSlider("instance").option("value", data.value);
+    }
+</script>

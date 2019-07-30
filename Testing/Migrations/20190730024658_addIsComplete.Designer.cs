@@ -10,8 +10,8 @@ using Testing.DAL;
 namespace Testing.Migrations
 {
     [DbContext(typeof(TestingDbContext))]
-    [Migration("20190727184919_addpercentNow")]
-    partial class addpercentNow
+    [Migration("20190730024658_addIsComplete")]
+    partial class addIsComplete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,8 +53,6 @@ namespace Testing.Migrations
                     b.Property<DateTime>("StartDate");
 
                     b.Property<Guid>("SubjectId");
-
-                    b.Property<int>("TotalPoint");
 
                     b.Property<string>("Version");
 
@@ -162,8 +160,6 @@ namespace Testing.Migrations
 
                     b.Property<Guid>("ExamId");
 
-                    b.Property<int>("PercentNow");
-
                     b.Property<int>("TotalEarnScore");
 
                     b.Property<int>("TotalQuestionScore");
@@ -185,6 +181,8 @@ namespace Testing.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("EarnScore");
+
+                    b.Property<bool>("IsCompleted");
 
                     b.Property<bool>("IsCorrect");
 

@@ -8,82 +8,84 @@
     <div class="col">
         <br />
         <div class="text-secondary">
-            <h4>Detail</h4> <hr />
+            <h4>@Model.Exam.ExamCode :&nbsp;&nbsp;@Model.Exam.ExamName</h4> <hr />
         </div>
 
         @(Html.DevExtreme().Form<Testing.Models.Exam>
-            ()
-            .ShowValidationSummary(true)
-            .ID("form")
-            .ShowColonAfterLabel(true)
-            .ColCount(2)
-            .LabelLocation(FormLabelLocation.Left)
+     ()
+     .ShowValidationSummary(true)
+     .ID("form")
+     .ShowColonAfterLabel(true)
+     .ColCount(2)
+     .LabelLocation(FormLabelLocation.Left)
 
-            .FormData(Model)
+     .FormData(Model)
 
-            .Items(items =>
-            {
-            items.AddGroup()
-            //.Caption("Exam Information").CssClass("text-secondary")
+     .Items(items =>
+     {
+     items.AddGroup()
+     .Caption("Exam Information").CssClass("text-secondary font-weight-bold ")
 
-            .Template(@<text>
+     .Template(@<text>
 
-                        <div class="h6 font-weight-normal">
-                            Code : @Model.Exam.ExamCode
-                        </div>
+                <div class=" h6 font-weight-normal">
+                    <b>Code :</b> @Model.Exam.ExamCode
+                </div>
 
-                        <div class="h6 font-weight-normal">
-                            Name : @Model.Exam.ExamName
-                        </div>
+                <div class="h6 font-weight-normal">
+                    <b>Name :</b> @Model.Exam.ExamName
+                </div>
 
-                        <div class="h6 font-weight-normal">
-                            Version : @Model.Exam.Version
-                        </div>
+                <div class="h6 font-weight-normal">
+                    <b>Version :</b> @Model.Exam.Version
+                </div>
 
-                        <div class="h6 font-weight-normal">
-                            Topic Name : @Model.Exam.Subject.SubjectName
-                        </div>
-                        <hr />
-
-                        <div class="h5 font-weight-normal">
-                            Questions : @Model.Exam.QuestionExams.Count()
-                        </div>
-
-                        <div class="h6 font-weight-normal">
-                            Total Score : @Model.TotalQuestionScore
-                        </div>
-
-                        <div class="h6 font-weight-normal">
-                            Your Score : @Model.TotalEarnScore
-                        </div>
-
-
-            </text>); ;
+                <div class="h6 font-weight-normal">
+                    <b>Topic Name :</b> @Model.Exam.Subject.SubjectName
+                </div>
+    </text>); ;
 
 items.AddGroup()
-//.Caption("Date Detail").CssClass("text-secondary")
+.Caption("Date Detail").CssClass("text-secondary font-weight-bold")
 
 .Template(@<text>
 
-                    <div class="h6 font-weight-normal">
-                        Start Date : @String.Format("{0:d MMMM yyyy}", @Model.Exam.StartDate)
-                    </div>
+            <div class="h6 font-weight-normal">
+                <b>Start Date :</b> @String.Format("{0:d MMMM yyyy}", @Model.Exam.StartDate)
+            </div>
 
-                    <div class="h6 font-weight-normal">
-                        End Date : @String.Format("{0:d MMMM yyyy}", @Model.Exam.EndDate)
-                    </div>
+            <div class="h6 font-weight-normal">
+                <b> End Date:</b> @String.Format("{0:d MMMM yyyy}", @Model.Exam.EndDate)
+            </div>
 
-                    <div class="h6 font-weight-normal">
-                        Duration ( Days ) : @Model.Exam.ExamDuration
-                    </div>
+            <div class="h6 font-weight-normal">
+                <b>Duration :</b> @Model.Exam.ExamDuration Days
+            </div>
 
-                    <div class="h6 font-weight-normal">
-                        Remaining Day : @Model.Exam.RemainingDay
-                    </div>
+            <div class="h6 font-weight-normal">
+                <b> Remaining Day:</b> @Model.Exam.RemainingDay Days
+            </div>
 
+    </text>); ;
 
+  items.AddGroup()
+.Template(@<text>
 
-</text>); ;
+        <div class="h6 font-weight-normal">
+            <b>Questions :</b> @Model.Exam.QuestionExams.Count()
+        </div>
+
+        <div class="h6 font-weight-normal">
+            <b> Total Score:</b> @Model.TotalQuestionScore
+        </div>
+
+        <div class="h6 font-weight-normal">
+            <b>Your Score :</b> @Model.TotalEarnScore
+        </div>
+
+       
+    </text>); ;
+
 
 })
         )
@@ -102,6 +104,6 @@ items.AddGroup()
 
 <script>
     function Start() {
-        window.location.href = "/Users/Exam/Test/@Model.ExamId";
+        window.location.href = "/Users/Exam/Start/@Model.ExamId";
     }
 </script>

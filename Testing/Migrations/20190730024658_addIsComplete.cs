@@ -2,22 +2,22 @@
 
 namespace Testing.Migrations
 {
-    public partial class addpercentNow : Migration
+    public partial class addIsComplete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "PercentNow",
-                table: "UserExams",
+            migrationBuilder.AddColumn<bool>(
+                name: "IsCompleted",
+                table: "UserExamQuestions",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PercentNow",
-                table: "UserExams");
+                name: "IsCompleted",
+                table: "UserExamQuestions");
         }
     }
 }

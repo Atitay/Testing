@@ -30,6 +30,7 @@ namespace Testing.Models
         public int QuestionScore { get; set; }
 
         public bool IsCorrect { get; set; }
+        public bool IsCompleted { get; set; }
 
         public void VerifyAnswer ()
         {

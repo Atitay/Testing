@@ -35,7 +35,7 @@
     .Columns(columns =>
     {
 
-    columns.AddFor(m => m.Exam.ExamName).Caption("Exam Name").Width(200);
+    columns.AddFor(m => m.Exam.ExamName).Caption("Exam Name");
 
     columns.AddFor(m => m.Exam.SubjectId).Caption("Subject Name")
     .Lookup(lookup => lookup
@@ -45,10 +45,10 @@
     );
 
     columns.AddFor(m => m.Exam.StartDate).Caption("Start Date").FormItem(i => i
-    .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
+    .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy"))).Width(150);
 
-    columns.AddFor(m => m.Exam.ExamDuration).Caption("Duration (Days)");
-    columns.AddFor(m => m.Exam.Version).Caption("Version");
+    columns.AddFor(m => m.Exam.ExamDuration).Caption("Duration (Days)").Width(100);
+    columns.AddFor(m => m.Exam.Version).Caption("Version").Width(100);
     })
 
     .ShowBorders(true)

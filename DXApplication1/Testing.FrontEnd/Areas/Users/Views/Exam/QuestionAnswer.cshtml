@@ -1,58 +1,61 @@
-﻿@model Testing.Models.QuestionExam
+﻿@model Testing.Models.UserExamQuestion
 @{
     ViewData["Title"] = "QuestionAnswer";
 }
 
 
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col">
-            <br />
-            <div class="text-secondary p-1">
-                <h4>Exam Name :&nbsp;&nbsp;@Model.Exam.ExamName</h4>
-                <h4>Question : &nbsp;&nbsp;@Model.Question.QuestionString</h4>
-            </div>
-            <br />
-            @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
-                ()
-                .ID("gridContainer")
-                .ShowBorders(true)
-
-                .Columns(columns =>
-                {
-                    columns.AddFor(m => m.ChoiceString).Caption("Choice ");
-                })
-
-                .DataSource(d => d.Mvc()
-                .LoadAction("GetChoice")
-
-                .Key("ChoiceId")
-
-
-                .LoadParams(new { id = Model.QuestionId })
-
-                )
-
-                .Selection(s => s.Mode(SelectionMode.Single))
-                .OnSelectionChanged("selection_changed")
-            )
-        </div>
-        <div class="col-1"></div>
-    </div>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col">
         <br />
-        <form asp-action="Test" asp-route-id="@Model.ExamId" asp-route-QuestionId="@Model.QuestionId">
+        <div class="text-secondary p-1">
+            <h4>Exam Name :&nbsp;&nbsp;@Model.UserExam.Exam.ExamName</h4>
+            <h4>Question : &nbsp;&nbsp;@Model.Question.QuestionString</h4>
+        </div>
+        <br />
+        @(Html.DevExtreme().DataGrid<Testing.Models.Choice>
+            ()
+            .ID("gridContainer")
+            .ShowBorders(true)
 
-            <input type="hidden" name="questionAnswer" id="questionAnswer" />
-            <div class="text-center card-body">
-                <input type="submit" class="btn btn-success" value="SUBMIT" />
-            </div>
-            <script>
-                function selection_changed(e) {
-                    var data = e.selectedRowKeys;
-                    document.getElementById("questionAnswer").value = data;
-                }
+            .Columns(columns =>
+            {
+                columns.AddFor(m => m.ChoiceString).Caption("Choice ");
+            })
 
-            </script>
+            .DataSource(d => d.Mvc()
+            .LoadAction("GetChoice")
 
-        </form>
-    
+            .Key("ChoiceId")
+
+
+            .LoadParams(new { id = Model.QuestionId })
+
+            )
+
+            .Selection(s => s.Mode(SelectionMode.Multiple))
+            .SelectedRowKeys((new Guid?[] { Model.SelectChoiceId }))
+            .OnSelectionChanged("selection_changed")
+        )
+    </div>
+    <div class="col-1"></div>
+</div>
+<br />
+<form asp-action="Test" asp-route-id="@Model.UserExam.ExamId" asp-route-QuestionId="@Model.QuestionId">
+
+    <input type="hidden" name="questionAnswer" id="questionAnswer" />
+    <div class="text-center card-body">
+        <input type="submit" class="btn btn-success" value="SUBMIT" />
+    </div>
+    <script>
+        function selection_changed(e) {
+            var data = e.selectedRowKeys;
+            if (data != null) {               
+                document.getElementById("questionAnswer").value = data;
+            }
+
+        }
+
+    </script>
+
+</form>

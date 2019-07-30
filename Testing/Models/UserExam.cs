@@ -26,7 +26,6 @@ namespace Testing.Models
         public int TotalEarnScore { get; set; }
         public int TotalQuestionScore { get; set; }
 
-        public int PercentNow { get; set; }
 
 
         [JsonIgnore]
@@ -36,7 +35,6 @@ namespace Testing.Models
         {
             TotalEarnScore = UserExamQuestions?.Sum(m => m.EarnScore) ?? 0;
             TotalQuestionScore = UserExamQuestions?.Sum(m => m.QuestionScore) ?? 0;
-           // PercentNow = (TotalEarnScore / TotalQuestionScore * 100);
         }
 
 

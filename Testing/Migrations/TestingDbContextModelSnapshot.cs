@@ -52,8 +52,6 @@ namespace Testing.Migrations
 
                     b.Property<Guid>("SubjectId");
 
-                    b.Property<int>("TotalPoint");
-
                     b.Property<string>("Version");
 
                     b.HasKey("ExamId");
@@ -160,8 +158,6 @@ namespace Testing.Migrations
 
                     b.Property<Guid>("ExamId");
 
-                    b.Property<int>("PercentNow");
-
                     b.Property<int>("TotalEarnScore");
 
                     b.Property<int>("TotalQuestionScore");
@@ -183,6 +179,8 @@ namespace Testing.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("EarnScore");
+
+                    b.Property<bool>("IsCompleted");
 
                     b.Property<bool>("IsCorrect");
 
