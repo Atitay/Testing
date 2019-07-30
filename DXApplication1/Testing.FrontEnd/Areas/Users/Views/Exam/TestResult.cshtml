@@ -1,0 +1,82 @@
+﻿@model Testing.Models.UserExamQuestion
+@{
+    ViewData["Title"] = "Test Result";
+}
+
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col">
+        <br />
+        <div class="text-secondary">
+            <h4>@Model.UserExam.Exam.ExamCode :&nbsp;&nbsp;@Model.UserExam.Exam.ExamName</h4> <hr />
+        </div>
+
+        @(Html.DevExtreme().Form<Testing.Models.Exam>
+     ()
+     .ShowValidationSummary(true)
+     .ID("form")
+     .ShowColonAfterLabel(true)
+     .ColCount(2)
+     .LabelLocation(FormLabelLocation.Left)
+
+     .FormData(Model)
+
+     .Items(items =>
+     {
+     items.AddGroup()
+     .Template(@<text>
+
+                <div class=" h6 font-weight-normal">
+                    <b>Code :</b> @Model.UserExam.Exam.ExamCode
+                </div>
+
+                <div class="h6 font-weight-normal">
+                    <b>Name :</b> @Model.UserExam.Exam.ExamName
+                </div>
+
+                <div class="h6 font-weight-normal">
+                    <b>Version :</b> @Model.UserExam.Exam.Version
+                </div>
+    </text>); ;
+
+items.AddGroup()
+.Template(@<text>
+
+            <div class="h6 font-weight-normal">
+                <b>Questions :</b> @Model.UserExam.Exam.QuestionExams.Count()
+            </div>
+            <div class="h6 font-weight-normal">
+                <b> Total Score:</b> @Model.UserExam.TotalQuestionScore
+            </div>
+            <div class="h6 font-weight-normal">
+                <b> Passing Score:</b> @Model.UserExam.Exam.PassingScore
+            </div>
+
+            <div class="h6 font-weight-normal">
+                <b> Your Score:</b> @Model.UserExam.TotalEarnScore
+            </div>
+
+            <div class="h6 font-weight-normal">
+                <b> Your Percentage :</b> @Model.UserExam.Percentage %
+            </div>
+
+    </text>); ;
+
+
+})
+        )
+        <br />
+        @if (Model.UserExam.TotalEarnScore >= Model.UserExam.Exam.PassingScore)
+        {
+            <div class="text-justify text-info h4">Congratulation! You pass this test!</div>
+        }
+        else
+        {
+            <div class="text-justify text-info h4">Sorry! You did not pass this test!</div>
+        }
+
+    </div>
+    <div class="col-1"></div>
+</div>
+
+<br />

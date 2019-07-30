@@ -63,6 +63,7 @@
             .Editor(e => e.DateBox().DisplayFormat("EEEE,dd MMM yyyy")));
         columns.AddFor(m => m.ExamDuration).Caption("Duration (Days)");
         columns.AddFor(m => m.Version).Caption("Version");
+        columns.AddFor(m => m.PassingScore).Caption("Passing Score").Visible(false);
     })
 
     .ShowBorders(true)

@@ -71,7 +71,7 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
             {
                 var _user = _db.Users.First(a => a.UserId == CurrentUserId);
                 List<Exam> examsList = JsonConvert.DeserializeObject<List<Exam>>(ExamName);
-
+                
                 _user.AddExams(examsList);
 
                 _db.SaveChanges();

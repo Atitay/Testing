@@ -29,9 +29,12 @@ namespace Testing.Models
         public int EarnScore { get; set; }
         public int QuestionScore { get; set; }
 
+        public int PassingScore { get; set; }
+
         public bool IsCorrect { get; set; }
         public bool IsCompleted { get; set; }
 
+       
         public void VerifyAnswer ()
         {
             if (SelectChoiceId != null && SelectChoiceId == Question.GetCorrectChoiceId())

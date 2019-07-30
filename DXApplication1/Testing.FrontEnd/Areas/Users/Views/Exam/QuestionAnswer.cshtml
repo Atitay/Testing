@@ -33,7 +33,7 @@
 
             )
 
-            .Selection(s => s.Mode(SelectionMode.Multiple))
+            .Selection(s => s.Mode(SelectionMode.Single))
             .SelectedRowKeys((new Guid?[] { Model.SelectChoiceId }))
             .OnSelectionChanged("selection_changed")
         )
@@ -43,17 +43,14 @@
 <br />
 <form asp-action="Test" asp-route-id="@Model.UserExam.ExamId" asp-route-QuestionId="@Model.QuestionId">
 
-    <input type="hidden" name="questionAnswer" id="questionAnswer" />
+    <input type="hidden" value="@Model.SelectChoiceId" name="questionAnswer" id="questionAnswer" />
     <div class="text-center card-body">
         <input type="submit" class="btn btn-success" value="SUBMIT" />
     </div>
     <script>
         function selection_changed(e) {
-            var data = e.selectedRowKeys;
-            if (data != null) {               
-                document.getElementById("questionAnswer").value = data;
-            }
-
+            var data = e.selectedRowKeys;                       
+                document.getElementById("questionAnswer").value = data;         
         }
 
     </script>

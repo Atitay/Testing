@@ -25,6 +25,8 @@ namespace Testing.Models
 
         public int ExamDuration { get; set; }
 
+        public int PassingScore { get; set; }
+
         [NotMapped]
         public DateTime EndDate => StartDate.AddDays(ExamDuration);
 

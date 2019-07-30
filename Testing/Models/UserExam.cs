@@ -26,6 +26,8 @@ namespace Testing.Models
         public int TotalEarnScore { get; set; }
         public int TotalQuestionScore { get; set; }
 
+        [NotMapped]
+        public int Percentage => (TotalEarnScore * 100 )/ TotalQuestionScore;
 
 
         [JsonIgnore]

@@ -24,6 +24,9 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
         }
 
         public IActionResult Detail(Guid id) => View(_db.UserExams.First(a => a.ExamId == id));
+
+        public IActionResult TestResult(Guid id) => View(_db.UserExamQuestions.First(a => a.UserExam.ExamId == id));
+
         public IActionResult QuestionAnswer(Guid id)
         {
             var _questAnswer = _db.UserExamQuestions.Where(a => a.UserExamQuestionId == id).ToList();
@@ -105,7 +108,6 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
                 }
 
                 _questAns.VerifyAnswer();
-
             }
 
             _db.SaveChanges();
@@ -124,11 +126,10 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
             {
                 if (_questAns.SelectChoiceId != null && _questAns.IsCompleted != false)
                 {
-
-                    return RedirectToAction("Detail", new { id = id });
-                }            
+                    return RedirectToAction("TestResult" , new { id=id});
+                }
             }
-            return RedirectToAction("Test", new { id = id });
+            return RedirectToAction("Test");
         }
 
     }
