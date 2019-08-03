@@ -23,7 +23,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link @checkCurrentAction("TestedBy")" asp-action="TestedBy" asp-route-id="@Model.ExamId">
-                <span class="badge badge-danger ">0</span>&nbsp;Tested By
+                <span class="badge badge-danger ">@Model.UserExams.Count</span>&nbsp;Tested By
             </a>
         </li>
         

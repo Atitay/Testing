@@ -39,6 +39,7 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
             return DataSourceLoader.Load(userExam, loadOptions);
         }
 
+
         [HttpGet]
         public object GetSubject(DataSourceLoadOptions loadOptions)
         {
@@ -46,6 +47,11 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Result()
         {
             return View();
         }

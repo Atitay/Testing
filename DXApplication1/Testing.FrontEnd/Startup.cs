@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,8 +26,12 @@ namespace Testing_FrontEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             //sql server
             services.AddDbContext<TestingDbContext>();
+            
+            //report
+           
 
             // Add framework services.
             services
@@ -47,6 +52,8 @@ namespace Testing_FrontEnd
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();

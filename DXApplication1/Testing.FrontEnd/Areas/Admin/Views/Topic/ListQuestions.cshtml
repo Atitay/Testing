@@ -5,13 +5,12 @@
 }
 
     <div class="row">
-        <div class="col-1"></div>
         <div class="col-sm pb-4">
-          
+          <br />
             <div class="text-secondary p-1">
-                <h5>List Questions of Topic :&nbsp;&nbsp;@Model.TopicName</h5>
+                <h4>List Questions of Topic :&nbsp;&nbsp;@Model.TopicName</h4><hr />
             </div>
-           <hr />
+           
             <partial name="_lstQuestions" />
             <br />
 
@@ -22,7 +21,6 @@
                     .OnClick("BacktoIndex")
             )
         </div>
-        <div class="col-1"></div>
     </div>
 
 <script>

@@ -30,11 +30,11 @@
             {
             items.AddGroup()
             .Caption("Exam Information").CssClass("text-secondary font-weight-bold ")
-           
+
             .Template(@<text>
 
                         <div class=" h6 font-weight-normal">
-                                        <b>Code :</b> @Model.ExamCode
+                            <b>Code :</b> @Model.ExamCode
                         </div>
 
                         <div class="h6 font-weight-normal">
@@ -48,41 +48,45 @@
                         <div class="h6 font-weight-normal">
                             <b>Topic Name :</b> @Model.Subject.SubjectName
                         </div>
-            </text>);;
+
+                        <div class="h6 font-weight-normal">
+                            <b>Passing Score :</b> @Model.PassingScore %
+                        </div>
+            </text>); ;
 
 items.AddGroup()
 .Caption("Date Detail").CssClass("text-secondary font-weight-bold")
 
 .Template(@<text>
 
-        <div class="h6 font-weight-normal">
-            <b>Start Date :</b> @String.Format("{0:d MMMM yyyy}", @Model.StartDate)
-        </div>
+                    <div class="h6 font-weight-normal">
+                        <b>Start Date :</b> @String.Format("{0:d MMMM yyyy}", @Model.StartDate)
+                    </div>
 
-        <div class="h6 font-weight-normal">
-            <b> End Date:</b> @String.Format("{0:d MMMM yyyy}", @Model.EndDate)
-     </div >
+                    <div class="h6 font-weight-normal">
+                        <b> End Date:</b> @String.Format("{0:d MMMM yyyy}", @Model.EndDate)
+                    </div>
 
-     <div class="h6 font-weight-normal">
-         <b>Duration :</b> @Model.ExamDuration Days
-     </div>
+                    <div class="h6 font-weight-normal">
+                        <b>Duration :</b> @Model.ExamDuration Days
+                    </div>
 
-     <div class="h6 font-weight-normal">
-         <b> Remaining Day:</b> @Model.RemainingDay Days
-  </div >
+                    <div class="h6 font-weight-normal">
+                        <b> Remaining Day:</b> @Model.RemainingDay Days
+                    </div>
 
-</text>); ;
+    </text>); ;
 
 })
-     )
-     @(Html.DevExtreme().Button()
-   .Text("Back")
-   .Type(ButtonType.Back)
-   .StylingMode(ButtonStylingMode.Contained)
-   .OnClick("BacktoIndex")
-     )
+        )
+        @(Html.DevExtreme().Button()
+      .Text("Back")
+      .Type(ButtonType.Back)
+      .StylingMode(ButtonStylingMode.Contained)
+      .OnClick("BacktoIndex")
+        )
 
-     </div>
+    </div>
 
 
     <div class="ml-3 col-sm-3 bg-light">

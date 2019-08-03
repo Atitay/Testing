@@ -1,0 +1,101 @@
+﻿<div class="row">
+    <div class="col-sm">
+        @model Testing.Models.User
+        <br />
+        <h2 class="text-secondary">Result List</h2>
+        <br />
+
+        @(Html.DevExtreme().DataGrid<Testing.Models.UserExam>
+    ().DataSource(d => d.Mvc()
+    .Controller("Exams")
+    .LoadAction("GetUserExam")
+
+    .Area("Users")
+    .Key("ExamId")
+
+    )
+
+    .ID("gridContainer")
+
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+    .Placeholder("Search...")
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .HoverStateEnabled(true)
+    .Selection(s => s.Mode(SelectionMode.Single))
+
+    .Columns(columns =>
+    {
+
+        columns.AddFor(m => m.Exam.ExamName).Caption("Exam Name").Width(300);
+        columns.AddFor(m => m.TotalQuestionScore).Caption("Total Score");
+        columns.AddFor(m => m.TotalEarnScore).Caption("Earn Score)");
+        columns.AddFor(m => m.Percentage).Caption("Percentage");
+    })
+
+    .ShowBorders(true)
+    .OnCellDblClick("selection_changed")
+        )
+        <br />
+    </div>
+</div>
+
+<script>
+    function selection_changed(e) {
+        if (e.data.ExamId != null) {
+            window.location.href = "/Users/Exam/TestResult/" + e.data.ExamId ;
+        }
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

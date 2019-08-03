@@ -35,8 +35,7 @@ namespace Testing.FrontEnd.Controllers
         public object GetOtherQuestion(DataSourceLoadOptions loadOptions,Guid id)
         {
             var _question = _db.Questions.ToList();
-            
-            
+
             return DataSourceLoader.Load(_question, loadOptions);
         }
 

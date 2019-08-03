@@ -42,9 +42,7 @@
                .FormItem(i => i.Editor(e => e.TextArea().Height(100)));
 
                columns.AddFor(m => m.Point).Visible(false)
-               .FormItem(i => i.Editor(e => e.Slider().ID("handler-slider").Max(100).Min(0)
-               .Step(2)
-               .Tooltip(t => t.Enabled(true))));
+               .FormItem(i => i.Editor(e => e.NumberBox().ShowSpinButtons(true).Min(0).Max(100)));
 
 
                columns.AddFor(m => m.TopicId).Caption("Topic Name")

@@ -27,6 +27,21 @@ namespace Testing.FrontEnd.Areas.Users.Controllers
 
         public IActionResult TestResult(Guid id) => View(_db.UserExamQuestions.First(a => a.UserExam.ExamId == id));
 
+
+        public IActionResult GenReport (Guid id)
+        {
+            var _exam = _db.UserExams.ToList();
+            var report = new Testing.FrontEnd.ReportResult.ReportResult()
+            {
+                DataSource = _exam
+            };
+
+            report.ExportToPdf("D:/Download/report.pdf");
+
+            return RedirectToAction("Index","Home");
+        }
+
+
         public IActionResult QuestionAnswer(Guid id)
         {
             var _questAnswer = _db.UserExamQuestions.Where(a => a.UserExamQuestionId == id).ToList();

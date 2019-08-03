@@ -8,8 +8,7 @@
                     .LoadAction("GetOtherQuestion")
                     .Key("QuestionId")
                     
-                   
-
+                    .LoadParams(new { id = Model.ExamId })
                     )
 
                 .ID("grid-container")

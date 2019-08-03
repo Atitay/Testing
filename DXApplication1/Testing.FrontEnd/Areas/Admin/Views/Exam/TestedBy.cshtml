@@ -1,4 +1,4 @@
-﻿@model  Testing.Models.Exam
+﻿@model Testing.Models.Exam
 @{
     ViewData["Title"] = "TestedBy";
 }
@@ -8,18 +8,52 @@
         <br />
         <div class="text-secondary p-1">
             <h4>Tested By : </h4>
-        </div> 
+        </div>
         <br />
         <partial name="_NavExam" />
         <br />
 
+        @(Html.DevExtreme().DataGrid<Testing.Models.UserExam>()
+        .ID("gridContainer")
+        .DataSource(d => d.Mvc()
+        .Controller("Exams")
+        .LoadAction("GetUserExam")
+        .Area("Admin")
+
+        .Key("ExamId")
+
+        .LoadParams(new { id = Model.ExamId })
+
+        )
+
+
+    .FilterRow(filterRow => filterRow.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+    .SearchPanel(searchPanel => searchPanel.Visible(true).Width(240).Placeholder("Search..."))
+
+    .Paging(paging => paging.Enabled(true).PageSize(10))
+
+    .ShowBorders(true)
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .HoverStateEnabled(false)
+
+
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.User.UserName).Caption("User");
+
+        columns.AddFor(m => m.TotalEarnScore).Caption("Earn Score");
+
+        columns.AddFor(m => m.Percentage).Caption("Percentage");
+
+    })
+        )
+<br />
         @(Html.DevExtreme().Button()
                 .Text("Back")
                 .Type(ButtonType.Back)
                 .StylingMode(ButtonStylingMode.Contained)
                 .OnClick("BacktoIndex")
         )
-
     </div>
 
    

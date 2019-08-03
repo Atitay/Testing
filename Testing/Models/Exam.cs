@@ -36,6 +36,10 @@ namespace Testing.Models
         [JsonIgnore]
         public virtual ICollection<QuestionExam> QuestionExams { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<UserExam> UserExams { get; set; }
+
+
         public void AddQuestionns(List<Question> questionsList)
         {
             //if null => add new

@@ -1,81 +1,81 @@
 ﻿@using Testing.Models
 @model Testing.Models.Subject
-    <div class="row ">
+<div class="row ">
 
-        <div class="col-1"></div>
-        <div class="col-sm pb-4">
-            <br />
-            <form method="post">
-                @(Html.DevExtreme().Form<Testing.Models.Subject>()
-                .ShowValidationSummary(true)
-                .ID("form")
-                .ShowColonAfterLabel(true)
-                .ColCount(1)
-                .LabelLocation(FormLabelLocation.Left)
+    <div class="col-1"></div>
+    <div class="col-sm pb-4">
+        <br />
+        <form method="post">
+            @(Html.DevExtreme().Form<Testing.Models.Subject>()
+            .ShowValidationSummary(true)
+            .ID("form")
+            .ShowColonAfterLabel(true)
+            .ColCount(1)
+            .LabelLocation(FormLabelLocation.Left)
 
-                .FormData(Model)
-
-
-                .Items(groupItems =>
-                {
-                    groupItems.AddGroup()
-                           .Caption("Subject Infomation").CssClass("text-secondary")
-
-                           .Template(@<text>
-
-                                    <div class="h6 font-weight-normal">
-                                        Subject Name : @Model.SubjectName
-                                    </div>
-
-                                    <div class="h6 font-weight-normal">
-                                        Subject Level : @Model.SubjectLevel
-                                    </div>
+            .FormData(Model)
 
 
-                        </text>);
+            .Items(groupItems =>
+            {
+                groupItems.AddGroup()
+                       .Caption("Subject Infomation").CssClass("text-secondary font-weight-bold")
+
+                       .Template(@<text>
+
+                                <div class="h6 font-weight-normal">
+                                    <b> Subject Name :</b> @Model.SubjectName
+                                </div>
+
+                                <div class="h6 font-weight-normal">
+                                    <b>Subject Level :</b> @Model.SubjectLevel
+                                </div>
+
+
+                    </text>);
 
 
 groupItems.AddButton()
-              .HorizontalAlignment(HorizontalAlignment.Left)
-              .ButtonOptions(b => b.Text("Back")
-              .Type(ButtonType.Back)
-              .StylingMode(ButtonStylingMode.Contained)
-              .OnClick("BacktoIndex")
-              );
+   .HorizontalAlignment(HorizontalAlignment.Left)
+   .ButtonOptions(b => b.Text("Back")
+   .Type(ButtonType.Back)
+   .StylingMode(ButtonStylingMode.Contained)
+   .OnClick("BacktoIndex")
+   );
 })
-                )
+            )
 
-                <script>
-                    function BacktoIndex() {
-                        window.location.href = "/Admin/Subjects/Index";
-                    }
-                </script>
+            <script>
+                function BacktoIndex() {
+                    window.location.href = "/Admin/Subjects/Index";
+                }
+            </script>
 
-            </form>
-        </div>
-
-        <div class="col-1"></div>
-        <div class="col-sm-3 bg-light">
-            <br />
-            <div class="bg-white p-1 text-center h6"><span class="badge badge-danger badge-pill">@Model.Exams.Count</span>  List Exams!</div>
-            <br />
-
-            @foreach (var eq in Model.Exams)
-            {
-                <a asp-action="Index" asp-controller="Exam" asp-route-id="@eq.ExamId">
-                    <span>&bull; &nbsp; @eq.ExamName </span><br />
-                </a>
-            }
-
-            <br />
-            @if (Model.Exams.Count != 0)
-            {
-                <div class="card-footer text-center">
-                    <a asp-action="ListExams" asp-route-id="@Model.SubjectId">
-                        See More Exams!<br />
-                    </a>
-                </div>
-            }
-            
-        </div>
+        </form>
     </div>
+
+    <div class="col-1"></div>
+    <div class="col-sm-3 bg-light">
+        <br />
+        <div class="bg-white p-1 text-center h6"><span class="badge badge-danger badge-pill">@Model.Exams.Count</span>  List Exams!</div>
+        <br />
+
+        @foreach (var eq in Model.Exams)
+        {
+            <a asp-action="Index" asp-controller="Exam" asp-route-id="@eq.ExamId">
+                <span>&bull; &nbsp; @eq.ExamName </span><br />
+            </a>
+        }
+
+        <br />
+        @if (Model.Exams.Count != 0)
+        {
+            <div class="card-footer text-center">
+                <a asp-action="ListExams" asp-route-id="@Model.SubjectId">
+                    See More Exams!<br />
+                </a>
+            </div>
+        }
+
+    </div>
+</div>

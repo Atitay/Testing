@@ -27,7 +27,23 @@ namespace Testing.Models
         public int TotalQuestionScore { get; set; }
 
         [NotMapped]
-        public int Percentage => (TotalEarnScore * 100 )/ TotalQuestionScore;
+        public int Percentage
+        {
+            get
+            {
+                if (TotalQuestionScore == 0)
+                    return 0;
+                else 
+                    return (TotalEarnScore* 100 )/ TotalQuestionScore;
+            }
+        }
+       
+
+        [NotMapped]
+        public int PassingScore => (TotalQuestionScore * Exam.PassingScore) / 100;
+
+        //[NotMapped]
+        //public DateTime TestAt => DateTime.Today.Date;
 
 
         [JsonIgnore]

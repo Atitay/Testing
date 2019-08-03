@@ -19,26 +19,26 @@
                        .Items(groupItems =>
                        {
                            groupItems.AddGroup()
-                           .Caption("Topic Infomation").CssClass("text-secondary")
+                           .Caption("Topic Infomation").CssClass("text-secondary font-weight-bold ")
 
                            .Template(@<text>
 
                                     <div class="h6 font-weight-normal">
-                                        Topic Name : @Model.TopicName
+                                                                   <b>Topic Name :</b> @Model.TopicName
                                     </div>
 
                                     <div class="h6 font-weight-normal">
                                         @if (Model.Parent != null)
-                                                {<p>Parent Name : @Model.Parent.TopicName</p>}
+                                                {<p><b>Parent Name :</b> @Model.Parent.TopicName</p>}
                                                     else
                                                     {
-                                                <p>Parent Name : No Parent </p>
+                                                <p><b>Parent Name :</b> No Parent </p>
                                                     }
                                     </div>
 
                                     <div class="h6 font-weight-normal">
 
-                                        List Childs : <span class="badge badge-danger badge-pill">@Model.Childs.Count</span>
+                                        <b>List Childs :</b> <span class="badge badge-danger badge-pill">@Model.Childs.Count</span>
 
                                         <br />
                                         @foreach (var eq in Model.Childs)

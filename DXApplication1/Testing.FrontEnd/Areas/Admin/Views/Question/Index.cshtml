@@ -12,14 +12,14 @@
             .ShowValidationSummary(true)
             .ID("form")
             .ShowColonAfterLabel(true)
-            .ColCount(2)
+            .ColCount(1)
             .LabelLocation(FormLabelLocation.Left)
 
             .FormData(Model)
             .Items(items =>
             {
             items.AddGroup()
-                       .Caption("Question Information").CssClass("text-secondary")
+                       .Caption("Question Information").CssClass("font-weight-bold")
                        .Items(groupItems =>
                        {
                            groupItems.AddSimpleFor(m => m.QuestionString).Editor(e => e.TextArea().Height(100));
@@ -54,7 +54,7 @@
 
                        });
             items.AddGroup()
-                        .Caption("Choice Information").CssClass("text-secondary ")
+                        .Caption("Choice Information").CssClass("font-weight-bold")
                                .Items(GroupItems =>
                                {
                                    GroupItems.AddSimpleFor(m => m.Point)
@@ -70,25 +70,48 @@
                                    .Template(@<text><br /><partial name="_Choices" /></text>);
 
 
-});
+                               });
 
-items.AddButton()
-.HorizontalAlignment(HorizontalAlignment.Left)
-.ButtonOptions(b => b.Text("Back")
-.Type(ButtonType.Back)
-.StylingMode(ButtonStylingMode.Contained)
-.OnClick("BacktoIndex")
-);
-items.AddButton()
-.HorizontalAlignment(HorizontalAlignment.Right)
-.ButtonOptions(b => b.Text("Update")
-.Type(ButtonType.Success)
-.StylingMode(ButtonStylingMode.Contained)
-.UseSubmitBehavior(true)
-);
 
-})
+                //items.AddButton()
+                //.HorizontalAlignment(HorizontalAlignment.Left)
+                //.ButtonOptions(b => b.Text("Back")
+                //.Type(ButtonType.Back)
+                //.StylingMode(ButtonStylingMode.Contained)
+                //.OnClick("BacktoIndex")
+                //);
+                //items.AddButton()
+                //.HorizontalAlignment(HorizontalAlignment.Right)
+                //.ButtonOptions(b => b.Text("Update")
+                //.Type(ButtonType.Success)
+                //.StylingMode(ButtonStylingMode.Contained)
+                //.UseSubmitBehavior(true)
+                //);
+
+            })
             )
+
+        <div class="row">
+            <div class="col text-left">
+                @(Html.DevExtreme().Button()
+                    .Type(ButtonType.Back)
+                    .StylingMode(ButtonStylingMode.Contained)
+                    .OnClick("BacktoIndex")
+                )
+            </div>
+
+            <div class="col text-right">
+                @(Html.DevExtreme().Button()
+                    .Type(ButtonType.Success).Text("Update")
+                    .StylingMode(ButtonStylingMode.Contained)
+                    .UseSubmitBehavior(true)
+                )
+            </div>
+        </div>
+
+            
+
+
             <partial name="_Choices" />
 
             <script>
